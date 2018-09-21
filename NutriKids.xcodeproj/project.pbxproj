@@ -8,20 +8,40 @@
 
 /* Begin PBXBuildFile section */
 		324468DC211CA0C00031011D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324468DB211CA0C00031011D /* AppDelegate.swift */; };
-		324468DE211CA0C00031011D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324468DD211CA0C00031011D /* ViewController.swift */; };
+		324468DE211CA0C00031011D /* InicioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324468DD211CA0C00031011D /* InicioViewController.swift */; };
 		324468E1211CA0C00031011D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 324468DF211CA0C00031011D /* Main.storyboard */; };
 		324468E3211CA1130031011D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 324468E2211CA1130031011D /* Assets.xcassets */; };
 		324468E6211CA1140031011D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 324468E4211CA1140031011D /* LaunchScreen.storyboard */; };
+		324468F0211CAC7C0031011D /* RegistroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324468EF211CAC7C0031011D /* RegistroViewController.swift */; };
+		324468F2211CACCD0031011D /* LlenarFormularioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324468F1211CACCD0031011D /* LlenarFormularioViewController.swift */; };
+		324468F4211CAD170031011D /* IniciarSesionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324468F3211CAD170031011D /* IniciarSesionViewController.swift */; };
+		324468F6211CAD480031011D /* RevisarFormularioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324468F5211CAD480031011D /* RevisarFormularioViewController.swift */; };
+		324468F8211CAD790031011D /* MedicionesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324468F7211CAD790031011D /* MedicionesViewController.swift */; };
+		324468FA211CAD9E0031011D /* ResultadosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324468F9211CAD9E0031011D /* ResultadosViewController.swift */; };
+		324468FF211CB3A40031011D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 324468FE211CB3A30031011D /* Default-568h@2x.png */; };
+		32446901211CDF2B0031011D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32446900211CDF2B0031011D /* GoogleService-Info.plist */; };
+		44EEF954EA557EF104049524 /* Pods_NutriKids.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55CEDF7CEC13858BDDC8943E /* Pods_NutriKids.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		233EA9548B7A9909375BF103 /* Pods-NutriKids.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NutriKids.release.xcconfig"; path = "Pods/Target Support Files/Pods-NutriKids/Pods-NutriKids.release.xcconfig"; sourceTree = "<group>"; };
 		324468D8211CA0C00031011D /* NutriKids.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NutriKids.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		324468DB211CA0C00031011D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		324468DD211CA0C00031011D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		324468DD211CA0C00031011D /* InicioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InicioViewController.swift; sourceTree = "<group>"; };
 		324468E0211CA0C00031011D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		324468E2211CA1130031011D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		324468E5211CA1140031011D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		324468E7211CA1140031011D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		324468EF211CAC7C0031011D /* RegistroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RegistroViewController.swift; path = NutriKids/Controller/RegistroViewController.swift; sourceTree = SOURCE_ROOT; };
+		324468F1211CACCD0031011D /* LlenarFormularioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LlenarFormularioViewController.swift; path = NutriKids/Controller/LlenarFormularioViewController.swift; sourceTree = SOURCE_ROOT; };
+		324468F3211CAD170031011D /* IniciarSesionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IniciarSesionViewController.swift; path = NutriKids/Controller/IniciarSesionViewController.swift; sourceTree = SOURCE_ROOT; };
+		324468F5211CAD480031011D /* RevisarFormularioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevisarFormularioViewController.swift; sourceTree = "<group>"; };
+		324468F7211CAD790031011D /* MedicionesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicionesViewController.swift; sourceTree = "<group>"; };
+		324468F9211CAD9E0031011D /* ResultadosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultadosViewController.swift; sourceTree = "<group>"; };
+		324468FE211CB3A30031011D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		32446900211CDF2B0031011D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		55CEDF7CEC13858BDDC8943E /* Pods_NutriKids.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NutriKids.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6F03A915C9FF386B57956C5 /* Pods-NutriKids.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NutriKids.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NutriKids/Pods-NutriKids.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +49,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44EEF954EA557EF104049524 /* Pods_NutriKids.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1570C8C68EED5D0F13C7CA37 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				55CEDF7CEC13858BDDC8943E /* Pods_NutriKids.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		324468CF211CA0BC0031011D = {
 			isa = PBXGroup;
 			children = (
+				324468FE211CB3A30031011D /* Default-568h@2x.png */,
 				324468DA211CA0C00031011D /* NutriKids */,
 				324468D9211CA0C00031011D /* Products */,
+				78A6A660CEDD8245E0AF8920 /* Pods */,
+				1570C8C68EED5D0F13C7CA37 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +86,46 @@
 		324468DA211CA0C00031011D /* NutriKids */ = {
 			isa = PBXGroup;
 			children = (
-				324468DB211CA0C00031011D /* AppDelegate.swift */,
-				324468DD211CA0C00031011D /* ViewController.swift */,
-				324468DF211CA0C00031011D /* Main.storyboard */,
+				324468ED211CA8210031011D /* View */,
+				324468EE211CA8AC0031011D /* Controller */,
 				324468E2211CA1130031011D /* Assets.xcassets */,
-				324468E4211CA1140031011D /* LaunchScreen.storyboard */,
 				324468E7211CA1140031011D /* Info.plist */,
+				32446900211CDF2B0031011D /* GoogleService-Info.plist */,
 			);
 			path = NutriKids;
+			sourceTree = "<group>";
+		};
+		324468ED211CA8210031011D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				324468DF211CA0C00031011D /* Main.storyboard */,
+				324468E4211CA1140031011D /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		324468EE211CA8AC0031011D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				324468DB211CA0C00031011D /* AppDelegate.swift */,
+				324468DD211CA0C00031011D /* InicioViewController.swift */,
+				324468EF211CAC7C0031011D /* RegistroViewController.swift */,
+				324468F1211CACCD0031011D /* LlenarFormularioViewController.swift */,
+				324468F3211CAD170031011D /* IniciarSesionViewController.swift */,
+				324468F5211CAD480031011D /* RevisarFormularioViewController.swift */,
+				324468F7211CAD790031011D /* MedicionesViewController.swift */,
+				324468F9211CAD9E0031011D /* ResultadosViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		78A6A660CEDD8245E0AF8920 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A6F03A915C9FF386B57956C5 /* Pods-NutriKids.debug.xcconfig */,
+				233EA9548B7A9909375BF103 /* Pods-NutriKids.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +135,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 324468EA211CA1140031011D /* Build configuration list for PBXNativeTarget "NutriKids" */;
 			buildPhases = (
+				E6693D62657AE02750AEB00B /* [CP] Check Pods Manifest.lock */,
 				324468D4211CA0BF0031011D /* Sources */,
 				324468D5211CA0BF0031011D /* Frameworks */,
 				324468D6211CA0BF0031011D /* Resources */,
+				021D0769E943AE9712C432F2 /* [CP] Embed Pods Frameworks */,
+				D38F5EBA84E91D8AE63763DB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -96,6 +163,7 @@
 				TargetAttributes = {
 					324468D7211CA0BF0031011D = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 					};
 				};
 			};
@@ -125,17 +193,89 @@
 				324468E6211CA1140031011D /* LaunchScreen.storyboard in Resources */,
 				324468E3211CA1130031011D /* Assets.xcassets in Resources */,
 				324468E1211CA0C00031011D /* Main.storyboard in Resources */,
+				324468FF211CB3A40031011D /* Default-568h@2x.png in Resources */,
+				32446901211CDF2B0031011D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		021D0769E943AE9712C432F2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-NutriKids/Pods-NutriKids-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NutriKids/Pods-NutriKids-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D38F5EBA84E91D8AE63763DB /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NutriKids/Pods-NutriKids-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E6693D62657AE02750AEB00B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NutriKids-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		324468D4211CA0BF0031011D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				324468DE211CA0C00031011D /* ViewController.swift in Sources */,
+				324468F2211CACCD0031011D /* LlenarFormularioViewController.swift in Sources */,
+				324468DE211CA0C00031011D /* InicioViewController.swift in Sources */,
+				324468F4211CAD170031011D /* IniciarSesionViewController.swift in Sources */,
+				324468F6211CAD480031011D /* RevisarFormularioViewController.swift in Sources */,
+				324468F0211CAC7C0031011D /* RegistroViewController.swift in Sources */,
+				324468F8211CAD790031011D /* MedicionesViewController.swift in Sources */,
+				324468FA211CAD9E0031011D /* ResultadosViewController.swift in Sources */,
 				324468DC211CA0C00031011D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -278,6 +418,7 @@
 		};
 		324468EB211CA1140031011D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A6F03A915C9FF386B57956C5 /* Pods-NutriKids.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -289,13 +430,14 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.MG.NutriKids;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		324468EC211CA1140031011D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 233EA9548B7A9909375BF103 /* Pods-NutriKids.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -307,7 +449,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.MG.NutriKids;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
