@@ -27,6 +27,13 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         retrieveUserInfo()
         SVProgressHUD.dismiss()
+        
+        nombre.delegate = self
+        apellidos.delegate = self
+        ID.delegate = self
+        fechaNacimiento.delegate = self
+        sexo.delegate = self
+        pesoKg.delegate = self
     }
 
     override func didReceiveMemoryWarning() {

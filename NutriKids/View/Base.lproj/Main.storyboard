@@ -125,7 +125,7 @@
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="coc-nC-dX6">
                                 <rect key="frame" x="16" y="360" width="343" height="36"/>
-                                <color key="backgroundColor" red="0.0048598507420000003" green="0.096086271109999996" blue="0.57499289509999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
                                 <state key="normal" title="Iniciar Sesión">
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -134,9 +134,18 @@
                                     <action selector="iniciarSesionPressed:" destination="MQn-gk-CmA" eventType="touchUpInside" id="aW1-3e-zSF"/>
                                 </connections>
                             </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="*Usuario o contraseña incorrectos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3kM-6x-Fa2">
+                                <rect key="frame" x="16" y="404" width="343" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="ypN-yz-cwu"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="3kM-6x-Fa2" firstAttribute="top" secondItem="coc-nC-dX6" secondAttribute="bottom" constant="8" symbolic="YES" id="1ek-dw-Vzj"/>
                             <constraint firstItem="2e0-dL-AGD" firstAttribute="trailing" secondItem="4wx-OA-iRd" secondAttribute="trailing" constant="16" id="2ec-hL-2Uf"/>
                             <constraint firstItem="D1E-Ch-tAR" firstAttribute="top" secondItem="4wx-OA-iRd" secondAttribute="bottom" constant="8" id="3nm-aP-1ZM"/>
                             <constraint firstItem="2e0-dL-AGD" firstAttribute="trailing" secondItem="D1E-Ch-tAR" secondAttribute="trailing" constant="16" id="3zj-lW-75c"/>
@@ -149,15 +158,19 @@
                             <constraint firstItem="coc-nC-dX6" firstAttribute="leading" secondItem="2e0-dL-AGD" secondAttribute="leading" constant="16" id="ZOM-HA-cfa"/>
                             <constraint firstItem="8xr-5W-3dL" firstAttribute="bottom" secondItem="2e0-dL-AGD" secondAttribute="bottom" id="de3-sA-8e6"/>
                             <constraint firstItem="coc-nC-dX6" firstAttribute="top" secondItem="D1E-Ch-tAR" secondAttribute="bottom" constant="8" id="dyU-YN-WYd"/>
+                            <constraint firstItem="3kM-6x-Fa2" firstAttribute="trailing" secondItem="coc-nC-dX6" secondAttribute="trailing" id="lW0-JJ-ZL0"/>
                             <constraint firstItem="8xr-5W-3dL" firstAttribute="trailing" secondItem="2e0-dL-AGD" secondAttribute="trailing" id="mSn-7H-Vxr"/>
                             <constraint firstItem="4wx-OA-iRd" firstAttribute="top" secondItem="2e0-dL-AGD" secondAttribute="top" constant="220" id="oyz-oB-JUf"/>
                             <constraint firstItem="D1E-Ch-tAR" firstAttribute="top" secondItem="4wx-OA-iRd" secondAttribute="bottom" constant="8" id="wlS-Zu-AXM"/>
+                            <constraint firstItem="3kM-6x-Fa2" firstAttribute="leading" secondItem="coc-nC-dX6" secondAttribute="leading" id="xv0-go-jJC"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2e0-dL-AGD"/>
                     </view>
                     <navigationItem key="navigationItem" title="Iniciar Sesión" id="t5C-zi-Fki"/>
                     <connections>
                         <outlet property="emailTextField" destination="4wx-OA-iRd" id="1z7-Bh-wbi"/>
+                        <outlet property="inicioSesionBtn" destination="coc-nC-dX6" id="Fji-ct-WPs"/>
+                        <outlet property="mensaje" destination="3kM-6x-Fa2" id="8dK-bx-yWm"/>
                         <outlet property="passwordTextField" destination="D1E-Ch-tAR" id="GQD-2V-VlU"/>
                         <segue destination="XaZ-OS-aL2" kind="show" identifier="goToFormulario2" id="xr0-wE-kGC"/>
                     </connections>
