@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class ResultadosViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        SVProgressHUD.dismiss()
         // Do any additional setup after loading the view.
     }
 

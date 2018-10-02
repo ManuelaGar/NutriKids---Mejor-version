@@ -38,6 +38,12 @@ class ViewController: UIViewController {
         pickerView.allowsEditing = false
         print("tipomarcador3 \(tipoMarcador)")
         print("tipomarcador4 \(tipoMarcador2)")
+        if self.medida == 1 {
+            navigationItem.title = "Medida Horizontal"
+        }
+        if self.medida == 2 {
+            navigationItem.title = "Medida Vertical"
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

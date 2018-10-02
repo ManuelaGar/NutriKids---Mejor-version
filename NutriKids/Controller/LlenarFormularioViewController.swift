@@ -21,14 +21,24 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var PesoKg: UITextField!
     @IBOutlet weak var masculinoBtn: UIButton!
     @IBOutlet weak var femeninoBtn: UIButton!
+    @IBOutlet weak var estatura: UITextField!
+    @IBOutlet weak var perimetroBraquial: UITextField!
+    @IBOutlet weak var continuarBtn: UIButton!
     
     
     var sexo = ""
     var edadMeses = ""
     var fechaDeNacimiento = ""
+    var tipoMedida = 0
+    var estaturaMedida: Float = 0
+    var MUAC: Float = 0
+    var mmX: Float = 0
+    var mmY: Float = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        continuarBtn.isEnabled = false
         
         self.nombreBtn.delegate = self
         self.apellidosBtn.delegate = self
@@ -38,6 +48,24 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
         self.edadA.delegate = self
         
         SVProgressHUD.dismiss()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        MUAC = UserDefaults.standard.float(forKey: "MUAC")
+        mmX = UserDefaults.standard.float(forKey: "mmEnX")
+        mmY = UserDefaults.standard.float(forKey: "mmEnY")
+        
+        if mmX != 0 && mmY != 0 {
+            estatura.text = "\(mmX)"
+        }
+        if MUAC != 0 {
+            perimetroBraquial.text = "\(MUAC)"
+        }
+        
+        if check() {
+            continuarBtn.isEnabled = true
+            continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -84,9 +112,43 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToMediciones" {
+            let vc = segue.destination as! SeleccionarMedidaViewController
+            
+            vc.tipoMedida = self.tipoMedida
+        } else if segue.identifier == "goToResultados" {
+            // cuando esten todos los campos llenos
+        }
+    }
+    
+    func check() -> Bool {
+        if nombreBtn.text != "" && apellidosBtn.text != "" && ID.text != "" && edadDD.text != "" && edadMM.text != "" && edadA.text != "" && sexo != "" && PesoKg.text != "" && estatura.text != "" && perimetroBraquial.text != "" {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    
+    @IBAction func medirPressed(_ sender: UIButton) {
+        if sender.tag == 0 {
+            // estatura
+            print("Estatura")
+            tipoMedida = 1
+            performSegue(withIdentifier: "goToMediciones", sender: self)
+        } else if sender.tag == 1 {
+            // MUAC
+            print("MUAC")
+            tipoMedida = 2
+            performSegue(withIdentifier: "goToMediciones", sender: self)
+        }
+    }
+    
+    
     @IBAction func continuarPressed(_ sender: UIButton) {
         SVProgressHUD.show()
-        
+
         nombreBtn.isEnabled = false
         apellidosBtn.isEnabled = false
         ID.isEnabled = false
@@ -94,10 +156,11 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
         edadMM.isEnabled = false
         edadA.isEnabled = false
         PesoKg.isEnabled = false
-        
-        
+        estatura.isEnabled = false
+        perimetroBraquial.isEnabled = false
+
         let currentDate = NSCalendar.init(calendarIdentifier: NSCalendar.Identifier.gregorian)
-        
+
         if edadMM.hasText && edadA.hasText && edadDD.hasText {
             let currentYear = (currentDate?.component(NSCalendar.Unit.year, from: Date()) ?? 0)
             let currentMonth = currentDate?.component(NSCalendar.Unit.month, from: Date()) ?? 0
@@ -105,13 +168,13 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
             print(currentMonth)
             edadMeses = String((currentMonth - Int(edadMM.text!)!) + (currentYear - Int(edadA.text!)!)*12)
         }
-        
+
         fechaDeNacimiento = "\(edadDD.text!)/\(edadMM.text!)/\(edadA.text!)"
-        
+
         let usuariosDB = Database.database().reference().child("Usuarios")
         let usuarioDiccionario =
             [
-                "Email": Auth.auth().currentUser?.email,
+                "Email": Auth.auth().currentUser?.email! as Any,
                 "Nombre": nombreBtn.text!,
                 "Apellidos": apellidosBtn.text!,
                 "ID": ID.text!,
@@ -119,14 +182,13 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
                 "Fecha nacimiento": fechaDeNacimiento,
                 "Edad meses": edadMeses,
                 "PesoKg": PesoKg.text!,
-                "mmX": "",
-                "mmY": "",
-                "h": ""
-            ]
+                "Estatura": estatura.text!,
+                "MUAC": perimetroBraquial.text!
+                ] as [String : Any]
         let userID = Auth.auth().currentUser?.uid
         usuariosDB.child(userID!).setValue(usuarioDiccionario) {
             (error, reference) in
-            
+
             if error != nil {
                 print(error!)
             } else {
@@ -137,16 +199,20 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
                 self.edadDD.isEnabled = true
                 self.edadMM.isEnabled = true
                 self.edadA.isEnabled = true
-                
+                self.estatura.isEnabled = true
+                self.perimetroBraquial.isEnabled = true
+
                 self.nombreBtn.text = ""
                 self.apellidosBtn.text = ""
                 self.ID.text = ""
                 self.edadDD.text = ""
                 self.edadMM.text = ""
                 self.edadA.text = ""
+                self.estatura.text = ""
+                self.perimetroBraquial.text = ""
             }
         }
-        performSegue(withIdentifier: "goToMediciones", sender: self)
+        performSegue(withIdentifier: "goToResultados", sender: self)
     }
     
 }
