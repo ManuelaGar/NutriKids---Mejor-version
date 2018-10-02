@@ -16,11 +16,13 @@
 		324468F2211CACCD0031011D /* LlenarFormularioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324468F1211CACCD0031011D /* LlenarFormularioViewController.swift */; };
 		324468F4211CAD170031011D /* IniciarSesionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324468F3211CAD170031011D /* IniciarSesionViewController.swift */; };
 		324468F6211CAD480031011D /* RevisarFormularioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324468F5211CAD480031011D /* RevisarFormularioViewController.swift */; };
-		324468F8211CAD790031011D /* MedicionesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324468F7211CAD790031011D /* MedicionesViewController.swift */; };
 		324468FA211CAD9E0031011D /* ResultadosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324468F9211CAD9E0031011D /* ResultadosViewController.swift */; };
 		324468FF211CB3A40031011D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 324468FE211CB3A30031011D /* Default-568h@2x.png */; };
 		32446901211CDF2B0031011D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32446900211CDF2B0031011D /* GoogleService-Info.plist */; };
 		44EEF954EA557EF104049524 /* Pods_NutriKids.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55CEDF7CEC13858BDDC8943E /* Pods_NutriKids.framework */; };
+		D0A50F7C2163D8E70063ED44 /* SeleccionarMedidaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A50F7B2163D8E70063ED44 /* SeleccionarMedidaViewController.swift */; };
+		D0A50F7E2163D90D0063ED44 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A50F7D2163D90D0063ED44 /* ViewController.swift */; };
+		D0A50F802163D9200063ED44 /* CropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A50F7F2163D9200063ED44 /* CropViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,12 +38,14 @@
 		324468F1211CACCD0031011D /* LlenarFormularioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LlenarFormularioViewController.swift; path = NutriKids/Controller/LlenarFormularioViewController.swift; sourceTree = SOURCE_ROOT; };
 		324468F3211CAD170031011D /* IniciarSesionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IniciarSesionViewController.swift; path = NutriKids/Controller/IniciarSesionViewController.swift; sourceTree = SOURCE_ROOT; };
 		324468F5211CAD480031011D /* RevisarFormularioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevisarFormularioViewController.swift; sourceTree = "<group>"; };
-		324468F7211CAD790031011D /* MedicionesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicionesViewController.swift; sourceTree = "<group>"; };
 		324468F9211CAD9E0031011D /* ResultadosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultadosViewController.swift; sourceTree = "<group>"; };
 		324468FE211CB3A30031011D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		32446900211CDF2B0031011D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		55CEDF7CEC13858BDDC8943E /* Pods_NutriKids.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NutriKids.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6F03A915C9FF386B57956C5 /* Pods-NutriKids.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NutriKids.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NutriKids/Pods-NutriKids.debug.xcconfig"; sourceTree = "<group>"; };
+		D0A50F7B2163D8E70063ED44 /* SeleccionarMedidaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeleccionarMedidaViewController.swift; sourceTree = "<group>"; };
+		D0A50F7D2163D90D0063ED44 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D0A50F7F2163D9200063ED44 /* CropViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,7 +117,9 @@
 				324468F1211CACCD0031011D /* LlenarFormularioViewController.swift */,
 				324468F3211CAD170031011D /* IniciarSesionViewController.swift */,
 				324468F5211CAD480031011D /* RevisarFormularioViewController.swift */,
-				324468F7211CAD790031011D /* MedicionesViewController.swift */,
+				D0A50F7B2163D8E70063ED44 /* SeleccionarMedidaViewController.swift */,
+				D0A50F7D2163D90D0063ED44 /* ViewController.swift */,
+				D0A50F7F2163D9200063ED44 /* CropViewController.swift */,
 				324468F9211CAD9E0031011D /* ResultadosViewController.swift */,
 			);
 			path = Controller;
@@ -140,7 +146,6 @@
 				324468D5211CA0BF0031011D /* Frameworks */,
 				324468D6211CA0BF0031011D /* Resources */,
 				021D0769E943AE9712C432F2 /* [CP] Embed Pods Frameworks */,
-				D38F5EBA84E91D8AE63763DB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -211,6 +216,8 @@
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/HorizontalDial/HorizontalDial.framework",
+				"${BUILT_PRODUCTS_DIR}/IGRPhotoTweaks/IGRPhotoTweaks.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -220,6 +227,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HorizontalDial.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IGRPhotoTweaks.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -227,21 +236,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NutriKids/Pods-NutriKids-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D38F5EBA84E91D8AE63763DB /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NutriKids/Pods-NutriKids-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E6693D62657AE02750AEB00B /* [CP] Check Pods Manifest.lock */ = {
@@ -269,13 +263,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0A50F7E2163D90D0063ED44 /* ViewController.swift in Sources */,
+				D0A50F7C2163D8E70063ED44 /* SeleccionarMedidaViewController.swift in Sources */,
 				324468F2211CACCD0031011D /* LlenarFormularioViewController.swift in Sources */,
 				324468DE211CA0C00031011D /* InicioViewController.swift in Sources */,
 				324468F4211CAD170031011D /* IniciarSesionViewController.swift in Sources */,
 				324468F6211CAD480031011D /* RevisarFormularioViewController.swift in Sources */,
 				324468F0211CAC7C0031011D /* RegistroViewController.swift in Sources */,
-				324468F8211CAD790031011D /* MedicionesViewController.swift in Sources */,
 				324468FA211CAD9E0031011D /* ResultadosViewController.swift in Sources */,
+				D0A50F802163D9200063ED44 /* CropViewController.swift in Sources */,
 				324468DC211CA0C00031011D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
