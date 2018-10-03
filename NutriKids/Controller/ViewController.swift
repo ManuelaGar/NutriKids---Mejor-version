@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var doneItem: UIBarButtonItem!
     
     @IBOutlet weak var medidaLabel: UILabel!
-    fileprivate var image: UIImage!
+    var image: UIImage!
     
     var imageWasTapped = false
     var medida = 0
@@ -30,12 +30,13 @@ class ViewController: UIViewController {
     var mmX: Float = 0
     var mmY: Float = 0
     var altura: Float = 0
-    let pickerView = UIImagePickerController.init()
+    var aux = 0
+//    let pickerView = UIImagePickerController.init()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        pickerView.delegate = self
-        pickerView.allowsEditing = false
+//        pickerView.delegate = self
+//        pickerView.allowsEditing = false
         print("tipomarcador3 \(tipoMarcador)")
         print("tipomarcador4 \(tipoMarcador2)")
         if self.medida == 1 {
@@ -51,9 +52,10 @@ class ViewController: UIViewController {
         UserDefaults.standard.set(false, forKey: "Cancel")
         mmEnImagenCortada()
         //doneItem.isEnabled = true
-        if (self.image == nil) {
-            openLibrary()
+        if (self.aux == 0) {
+            edit(image: image)
             self.medidaLabel?.text = ""
+            aux = 1
         }
     }
     
@@ -79,21 +81,21 @@ class ViewController: UIViewController {
     
     // MARK: - Funcs
     
-    @objc func openLibrary() {
-        pickerView.sourceType = UIImagePickerController.SourceType.photoLibrary
-        self.present(pickerView, animated: true, completion: nil)
-    }
-    
-    
-    @IBAction func openCameraPressed(_ sender: UIBarButtonItem) {
-        pickerView.sourceType = UIImagePickerController.SourceType.camera
-        self.present(pickerView, animated: true, completion: nil)
-    }
-    
-    @IBAction func openLibraryPressed(_ sender: UIBarButtonItem) {
-        pickerView.sourceType = UIImagePickerController.SourceType.photoLibrary
-        self.present(pickerView, animated: true, completion: nil)
-    }
+//    @objc func openLibrary() {
+//        pickerView.sourceType = UIImagePickerController.SourceType.photoLibrary
+//        self.present(pickerView, animated: true, completion: nil)
+//    }
+//
+//
+//    @IBAction func openCameraPressed(_ sender: UIBarButtonItem) {
+//        pickerView.sourceType = UIImagePickerController.SourceType.camera
+//        self.present(pickerView, animated: true, completion: nil)
+//    }
+//
+//    @IBAction func openLibraryPressed(_ sender: UIBarButtonItem) {
+//        pickerView.sourceType = UIImagePickerController.SourceType.photoLibrary
+//        self.present(pickerView, animated: true, completion: nil)
+//    }
     
     func edit(image: UIImage) {
         self.performSegue(withIdentifier: "showCrop", sender: image)
@@ -144,14 +146,10 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         
         self.image = image
         let imageSize1 = image.size
-        let imageWidth: CGFloat = image.size.width
-        let imageHeight: CGFloat = image.size.height
-        
+
         print("Original Image")
         print(imageSize1)
-        print(imageWidth)
-        print(imageHeight)
-        
+
         picker.dismiss(animated: true) {
             self.edit(image: image)
         }

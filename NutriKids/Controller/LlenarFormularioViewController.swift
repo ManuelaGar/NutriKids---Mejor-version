@@ -131,6 +131,13 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if check() {
+            continuarBtn.isEnabled = true
+            continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
+        }
+    }
+    
     @IBAction func medirPressed(_ sender: UIButton) {
         if sender.tag == 0 {
             // estatura

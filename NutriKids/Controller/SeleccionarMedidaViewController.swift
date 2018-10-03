@@ -9,18 +9,22 @@
 import UIKit
 import Firebase
 import SVProgressHUD
+import IGRPhotoTweaks
 
-class SeleccionarMedidaViewController: UIViewController {
+class SeleccionarMedidaViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var check1: UIImageView!
     @IBOutlet weak var check2: UIImageView!
     @IBOutlet weak var check3: UIImageView!
     @IBOutlet weak var check4: UIImageView!
+    @IBOutlet weak var check5: UIImageView!
+    
     @IBOutlet weak var continuarBtn: UIButton!
     @IBOutlet weak var perimetroElipse: UILabel!
     
     @IBOutlet weak var marcador1Btn: UIButton!
     @IBOutlet weak var marcador2Btn: UIButton!
+    @IBOutlet weak var fotoBtn: UIButton!
     @IBOutlet weak var medidaHBnt: UIButton!
     @IBOutlet weak var medidaVBtn: UIButton!
     @IBOutlet weak var marcadoresLabel: UILabel!
@@ -36,6 +40,10 @@ class SeleccionarMedidaViewController: UIViewController {
     var mmY: Float = 0
     var mmZ: Float = 0
     
+    var image: UIImage!
+    var imageView: UIImage!
+    let pickerView = UIImagePickerController.init()
+    
     var d1: Float = 0
     var d2: Float = 0
     var aux: Float = 0
@@ -43,6 +51,8 @@ class SeleccionarMedidaViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         SVProgressHUD.dismiss()
+        pickerView.delegate = self
+        pickerView.allowsEditing = false
         perimetroElipse.isHidden = true
         continuarBtn.isEnabled = false
         UserDefaults.standard.set(0, forKey: "MUAC")
@@ -50,7 +60,7 @@ class SeleccionarMedidaViewController: UIViewController {
         if tipoMedida == 1 {
             marcador1Btn.setTitle(" Marcador", for: .normal)
             marcador2Btn.isHidden = true
-            marcadoresLabel.text = " Seleccione el marcador"
+            marcadoresLabel.text = "1. Seleccione el marcador"
 
             medidaHBnt.setTitle(" Medida de estatura", for: .normal)
             medidaVBtn.isHidden = true
@@ -129,6 +139,13 @@ class SeleccionarMedidaViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let userPickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            self.image = userPickedImage
+        }
+        pickerView.dismiss(animated: true, completion: nil)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showMedida" {
             let vc = segue.destination as! ViewController
@@ -136,9 +153,15 @@ class SeleccionarMedidaViewController: UIViewController {
             vc.medida = self.medida
             vc.tipoMarcador = self.tipoMarcador
             vc.tipoMarcador2 = self.tipoMarcador2
-        } else if segue.identifier == "goToResultados" {
-            // nada aun
+            vc.image = self.image
+            print("holaaa \(String(describing: image))")
+//            vc.imageView.image = self.imageView
         }
+//         else if segue.identifier == "showCrop" {
+//            let exampleCropViewController = segue.destination as! CropViewController
+//            exampleCropViewController.image = sender as? UIImage
+//            exampleCropViewController.delegate = self
+//        }
     }
     
     @IBAction func marcador1(_ sender: UIButton) {
@@ -263,18 +286,40 @@ class SeleccionarMedidaViewController: UIViewController {
     }
     
     
+    @IBAction func fotoBtnPressed(_ sender: UIButton) {
+        let actionSheet = UIAlertController(title: nil,
+                                            message: nil,
+                                            preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Camara de fotos", style: .default) { (action) in
+            // Abrir camara
+            self.pickerView.sourceType = UIImagePickerController.SourceType.camera
+            self.present(self.pickerView, animated: true, completion: nil)
+            self.check5.isHidden = false
+        })
+        
+        actionSheet.addAction(UIAlertAction(title: "Librería de imagenes", style: .default) { (action) in
+            // Abrir librería
+            self.pickerView.sourceType = UIImagePickerController.SourceType.photoLibrary
+            self.present(self.pickerView, animated: true, completion: nil)
+            self.check5.isHidden = false
+        })
+        
+        actionSheet.addAction(UIAlertAction(title: "Cancelar", style: .cancel))
+        present(actionSheet, animated: true, completion: nil)
+    }
+    
     @IBAction func medidaHorizontal(_ sender: UIButton) {
         // Si la medida es horizontal
         self.medida = 1
-        self.check3.isHidden = false
         self.performSegue(withIdentifier: "showMedida", sender: self)
+        self.check3.isHidden = false
     }
     
     @IBAction func medidaVertical(_ sender: UIButton) {
         // Si la medida es vertical
         self.medida = 2
-        self.check4.isHidden = false
         self.performSegue(withIdentifier: "showMedida", sender: self)
+        self.check4.isHidden = false
     }
     
     func perElipse(mmX: Float,mmY: Float,mmZ: Float) {

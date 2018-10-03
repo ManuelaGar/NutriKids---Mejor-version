@@ -26,6 +26,9 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var medicion2: UIButton!
     
     var tipoMedida = 0
+    var MUAC: Float = 0
+    var mmX: Float = 0
+    var mmY: Float = 0
     var ref: DatabaseReference!
     let userID = Auth.auth().currentUser?.uid
     
@@ -48,6 +51,17 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        MUAC = UserDefaults.standard.float(forKey: "MUAC")
+        mmX = UserDefaults.standard.float(forKey: "mmEnX")
+        mmY = UserDefaults.standard.float(forKey: "mmEnY")
+        
+        if mmX != 0 && mmY != 0 {
+            estatura.text = "\(mmX)"
+        }
+        if MUAC != 0 {
+            perimetroBraquial.text = "\(MUAC)"
+        }
+        
         if check() {
             continuarBtn.isEnabled = true
             continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
@@ -107,6 +121,13 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         }
         else {
             return false
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if check() {
+            continuarBtn.isEnabled = true
+            continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
         }
     }
     
