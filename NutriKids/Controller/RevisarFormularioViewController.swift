@@ -36,7 +36,10 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         retrieveUserInfo()
         SVProgressHUD.dismiss()
-        continuarBtn.isEnabled = false
+        
+        continuarBtn.isEnabled = true
+        continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
+        
         medicion1.isEnabled = false
         medicion2.isEnabled = false
         
@@ -60,11 +63,6 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         }
         if MUAC != 0 {
             perimetroBraquial.text = "\(MUAC)"
-        }
-        
-        if check() {
-            continuarBtn.isEnabled = true
-            continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
         }
     }
 
@@ -97,7 +95,8 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
             
             vc.tipoMedida = self.tipoMedida
         } else if segue.identifier == "goToResultados" {
-            // cuando esten todos los campos llenos
+            let resultados = segue.destination as! ResultadosViewController
+            
         }
     }
     
@@ -115,19 +114,20 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func check() -> Bool {
-        if nombre.text != "" && apellidos.text != "" && ID.text != "" && fechaNacimiento.text != "" && sexo.text != "" && pesoKg.text != "" && estatura.text != "" && perimetroBraquial.text != "" {
-            return true
+    func check() {
+        if nombre.hasText && apellidos.hasText && ID.hasText && fechaNacimiento.hasText && sexo.hasText && pesoKg.hasText && estatura.hasText && perimetroBraquial.hasText {
+            continuarBtn.isEnabled = true
+            continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
         }
         else {
-            return false
+            continuarBtn.isEnabled = false
+            continuarBtn.backgroundColor = UIColor.lightGray
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if check() {
-            continuarBtn.isEnabled = true
-            continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
+        if textField == nombre || textField == apellidos || textField == ID || textField == fechaNacimiento || textField == sexo || textField == pesoKg || textField == estatura || textField == perimetroBraquial {
+            check()
         }
     }
     

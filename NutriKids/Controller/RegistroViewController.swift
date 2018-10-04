@@ -46,17 +46,15 @@ class RegistroViewController: UIViewController,UITextFieldDelegate {
             registrarseBtn.isEnabled = false
             registrarseBtn.backgroundColor = UIColor.lightGray
         }
-        if emailTextField.hasText {
-            if passwordTextField.hasText {
-                self.registrarseBtn.isEnabled = true
-                self.mensaje.isHidden = true
-                self.registrarseBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
-            }
+        if emailTextField.hasText && passwordTextField.hasText {
+            self.registrarseBtn.isEnabled = true
+            self.mensaje.isHidden = true
+            self.registrarseBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField == passwordTextField {
+        if textField == emailTextField || textField == passwordTextField {
             verificacion()
         }
     }

@@ -16,9 +16,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var imageMeasure: UIImageView!
     
     @IBOutlet weak var editItem: UIBarButtonItem!
-    @IBOutlet weak var libraryItem: UIBarButtonItem!
     @IBOutlet weak var doneItem: UIBarButtonItem!
+    @IBOutlet weak var cancelItem: UIBarButtonItem!
     
+    @IBOutlet weak var infoLabel: UILabel!
     @IBOutlet weak var medidaLabel: UILabel!
     var image: UIImage!
     
@@ -81,22 +82,6 @@ class ViewController: UIViewController {
     
     // MARK: - Funcs
     
-//    @objc func openLibrary() {
-//        pickerView.sourceType = UIImagePickerController.SourceType.photoLibrary
-//        self.present(pickerView, animated: true, completion: nil)
-//    }
-//
-//
-//    @IBAction func openCameraPressed(_ sender: UIBarButtonItem) {
-//        pickerView.sourceType = UIImagePickerController.SourceType.camera
-//        self.present(pickerView, animated: true, completion: nil)
-//    }
-//
-//    @IBAction func openLibraryPressed(_ sender: UIBarButtonItem) {
-//        pickerView.sourceType = UIImagePickerController.SourceType.photoLibrary
-//        self.present(pickerView, animated: true, completion: nil)
-//    }
-    
     func edit(image: UIImage) {
         self.performSegue(withIdentifier: "showCrop", sender: image)
     }
@@ -119,8 +104,10 @@ class ViewController: UIViewController {
         print("image tapped \(imageWasTapped)")
         imageWasTapped = true
         self.tap = 1
+        infoLabel.isHidden = true
         edit(image: image)
         self.doneItem.isEnabled = true
+        self.cancelItem.isEnabled = false
     }
     
     @objc func mmEnImagenCortada(){

@@ -22,6 +22,7 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
     @IBOutlet weak var continuarBtn: UIButton!
     @IBOutlet weak var perimetroElipse: UILabel!
     
+    
     @IBOutlet weak var marcador1Btn: UIButton!
     @IBOutlet weak var marcador2Btn: UIButton!
     @IBOutlet weak var fotoBtn: UIButton!
@@ -154,14 +155,8 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
             vc.tipoMarcador = self.tipoMarcador
             vc.tipoMarcador2 = self.tipoMarcador2
             vc.image = self.image
-            print("holaaa \(String(describing: image))")
-//            vc.imageView.image = self.imageView
+
         }
-//         else if segue.identifier == "showCrop" {
-//            let exampleCropViewController = segue.destination as! CropViewController
-//            exampleCropViewController.image = sender as? UIImage
-//            exampleCropViewController.delegate = self
-//        }
     }
     
     @IBAction func marcador1(_ sender: UIButton) {

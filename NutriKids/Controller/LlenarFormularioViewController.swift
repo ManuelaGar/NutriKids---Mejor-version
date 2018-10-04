@@ -46,6 +46,8 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
         self.edadDD.delegate = self
         self.edadMM.delegate = self
         self.edadA.delegate = self
+        self.estatura.delegate = self
+        self.perimetroBraquial.delegate = self
         
         SVProgressHUD.dismiss()
     }
@@ -62,10 +64,7 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
             perimetroBraquial.text = "\(MUAC)"
         }
         
-        if check() {
-            continuarBtn.isEnabled = true
-            continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
-        }
+        check()
     }
 
     override func didReceiveMemoryWarning() {
@@ -108,6 +107,8 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
         edadMM.resignFirstResponder()
         edadA.resignFirstResponder()
         PesoKg.resignFirstResponder()
+        estatura.resignFirstResponder()
+        perimetroBraquial.resignFirstResponder()
         
         return true
     }
@@ -122,19 +123,21 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func check() -> Bool {
-        if nombreBtn.text != "" && apellidosBtn.text != "" && ID.text != "" && edadDD.text != "" && edadMM.text != "" && edadA.text != "" && sexo != "" && PesoKg.text != "" && estatura.text != "" && perimetroBraquial.text != "" {
-            return true
+    func check() {
+        if nombreBtn.hasText && apellidosBtn.hasText && ID.hasText && edadDD.hasText && edadMM.hasText && edadA.hasText && sexo != "" && PesoKg.hasText && estatura.hasText && perimetroBraquial.hasText {
+            continuarBtn.isEnabled = true
+            continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
         }
         else {
-            return false
+            continuarBtn.isEnabled = false
+            continuarBtn.backgroundColor = UIColor.lightGray
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if check() {
-            continuarBtn.isEnabled = true
-            continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
+        if textField == nombreBtn || textField == apellidosBtn || textField == ID || textField == edadDD || textField == edadMM
+            || textField == edadA || textField == PesoKg || textField == estatura || textField == perimetroBraquial {
+            check()
         }
     }
     
@@ -215,6 +218,7 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
                 self.edadDD.text = ""
                 self.edadMM.text = ""
                 self.edadA.text = ""
+                self.PesoKg.text = ""
                 self.estatura.text = ""
                 self.perimetroBraquial.text = ""
             }
