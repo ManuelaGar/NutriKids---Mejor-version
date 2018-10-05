@@ -29,6 +29,7 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
     var MUAC: Float = 0
     var mmX: Float = 0
     var mmY: Float = 0
+    var edadMeses = 0
     var ref: DatabaseReference!
     let userID = Auth.auth().currentUser?.uid
     
@@ -96,7 +97,11 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
             vc.tipoMedida = self.tipoMedida
         } else if segue.identifier == "goToResultados" {
             let resultados = segue.destination as! ResultadosViewController
-            
+            resultados.pesoKgMedido = Float(self.pesoKg.text!) ?? 0
+            resultados.estaturaMedida = Float(self.estatura.text!) ?? 0
+            resultados.perimetroBraquialMedido = Float(self.perimetroBraquial.text!) ?? 0
+            resultados.edadEnMeses = self.edadMeses
+            resultados.sexo = self.sexo.text ?? ""
         }
     }
     
@@ -111,6 +116,7 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
             self.pesoKg.text = snapshot.childSnapshot(forPath: "PesoKg").value as? String
             self.estatura.text = snapshot.childSnapshot(forPath: "Estatura").value as? String
             self.perimetroBraquial.text = snapshot.childSnapshot(forPath: "MUAC").value as? String
+            self.edadMeses = snapshot.childSnapshot(forPath: "Edad meses").value as? Int ?? 0
         }
     }
     

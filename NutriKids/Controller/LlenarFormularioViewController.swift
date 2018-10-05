@@ -119,7 +119,12 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
             
             vc.tipoMedida = self.tipoMedida
         } else if segue.identifier == "goToResultados" {
-            // cuando esten todos los campos llenos
+            let resultados = segue.destination as! ResultadosViewController
+            resultados.pesoKgMedido = Float(self.PesoKg.text!) ?? 0
+            resultados.estaturaMedida = Float(self.estatura.text!) ?? 0
+            resultados.perimetroBraquialMedido = Float(self.perimetroBraquial.text!) ?? 0
+            resultados.edadEnMeses = Int(self.edadMeses) ?? 0
+            resultados.sexo = self.sexo
         }
     }
     

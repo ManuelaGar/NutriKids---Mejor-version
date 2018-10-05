@@ -585,11 +585,11 @@
                         <constraints>
                             <constraint firstItem="BpH-9u-M7b" firstAttribute="leading" secondItem="2qj-kJ-TIh" secondAttribute="leading" id="2cN-0U-UZQ"/>
                             <constraint firstItem="BpH-9u-M7b" firstAttribute="bottom" secondItem="ITp-cB-vGY" secondAttribute="bottom" id="EHh-p9-dee"/>
-                            <constraint firstAttribute="bottom" secondItem="ahS-5y-GxO" secondAttribute="bottom" constant="20" symbolic="YES" id="Ebo-7I-bDO"/>
+                            <constraint firstItem="ahS-5y-GxO" firstAttribute="centerX" secondItem="BpH-9u-M7b" secondAttribute="centerX" id="JUX-oB-eQU"/>
                             <constraint firstAttribute="trailing" secondItem="BpH-9u-M7b" secondAttribute="trailing" id="Rh2-ce-U25"/>
-                            <constraint firstItem="ahS-5y-GxO" firstAttribute="centerX" secondItem="BpH-9u-M7b" secondAttribute="centerX" id="beC-tT-Dih"/>
-                            <constraint firstItem="ahS-5y-GxO" firstAttribute="leading" secondItem="2qj-kJ-TIh" secondAttribute="leadingMargin" id="tfx-od-VVL"/>
-                            <constraint firstItem="ahS-5y-GxO" firstAttribute="top" secondItem="ITp-cB-vGY" secondAttribute="top" constant="27" id="uv6-E2-ma2"/>
+                            <constraint firstItem="ahS-5y-GxO" firstAttribute="leading" secondItem="2qj-kJ-TIh" secondAttribute="leadingMargin" id="UM8-9d-QRm"/>
+                            <constraint firstItem="ahS-5y-GxO" firstAttribute="top" secondItem="ITp-cB-vGY" secondAttribute="top" constant="27" id="lMu-ix-RHB"/>
+                            <constraint firstAttribute="bottom" secondItem="ahS-5y-GxO" secondAttribute="bottom" constant="20" symbolic="YES" id="qTh-nw-pI9"/>
                             <constraint firstItem="BpH-9u-M7b" firstAttribute="top" secondItem="ITp-cB-vGY" secondAttribute="top" id="vmh-zF-ddh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ITp-cB-vGY"/>
@@ -601,6 +601,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="infoLabel" destination="ahS-5y-GxO" id="9FC-sn-rec"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dsD-c1-K6C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -12,24 +12,56 @@ import Firebase
 
 class ResultadosViewController: UIViewController {
     
-    var estatura: Float = 0
-    var pesoKg: Float = 0
-    var edadEnMeses: Float = 0
-    var perimetroBraquial: Float = 0
-    var IMC: Float = 0
+    @IBOutlet weak var infoLabel: UILabel!
+    
+    var estaturaMedida: Float = 0
+    var estaturaTeo_sd0: Float = 0
+    var estaturaTeo_sd1: Float = 0
+    var estaturaTeo_sd2: Float = 0
+    var estaturaTeo_sd3: Float = 0
+    var estaturaTeo_nsd1: Float = 0
+    var estaturaTeo_nsd2: Float = 0
+    var estaturaTeo_nsd3: Float = 0
+    
+    var pesoKgMedido: Float = 0
+    var pesoKgTeo_sd0: Float = 0
+    var pesoKgTeo_sd1: Float = 0
+    var pesoKgTeo_sd2: Float = 0
+    var pesoKgTeo_sd3: Float = 0
+    var pesoKgTeo_nsd1: Float = 0
+    var pesoKgTeo_nsd2: Float = 0
+    var pesoKgTeo_nsd3: Float = 0
+    
+    var IMCMedido: Float = 0
+    var IMCTeo_sd0: Float = 0
+    var IMCTeo_sd1: Float = 0
+    var IMCTeo_sd2: Float = 0
+    var IMCTeo_sd3: Float = 0
+    var IMCTeo_nsd1: Float = 0
+    var IMCTeo_nsd2: Float = 0
+    var IMCTeo_nsd3: Float = 0
+    
+    var edadEnMeses = 0
+    var perimetroBraquialMedido: Float = 0
+    var sexo = ""
+    
+    var a: String = ""
+    var b: String = ""
+    var c: String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
         SVProgressHUD.dismiss()
+        IMCMedido = IMC(peso: pesoKgMedido, altura: estaturaMedida)
         
-//        print(estaturaParaLaEdad0_24(edad: 10))
-//        print(estaturaParaLaEdad24_60(edad: 25))
-//        print(pesoParaLaEdad(edad: 10))
-//        print(pesoParaLaLongitud0_24(longitud: 80))
-//        print(pesoParaLaLongitud24_60(longitud: 80))
-//        print(IMCParaLaEdad0_24(edad: 10))
-//        print(IMCParaLaEdad24_60(edad: 50))
-//        print(MUACparaLaEdad3_60(edad: 10))
+//        print(estaturaParaLaEdad0_24F(edad: 10))
+//        print(estaturaParaLaEdad24_60F(edad: 25))
+//        print(pesoParaLaEdadF(edad: 10))
+//        print(pesoParaLaLongitud0_24F(longitud: 80))
+//        print(pesoParaLaLongitud24_60F(longitud: 80))
+//        print(IMCParaLaEdad0_24F(edad: 10))
+//        print(IMCParaLaEdad24_60F(edad: 50))
+//        print(MUACparaLaEdad3_60F(edad: 10))
         
 //        print(estaturaParaLaEdad0_24M(edad: 10))
 //        print(estaturaParaLaEdad24_60M(edad: 25))
@@ -47,22 +79,12 @@ class ResultadosViewController: UIViewController {
     }
     
     
-    @IBAction func salirBtn(_ sender: Any) {
-        do {
-            try Auth.auth().signOut()
-            navigationController?.popToRootViewController(animated: true)
-        }
-        catch {
-            print("Error, hubo un problema al salir.")
-        }
-    }
-    
     func IMC(peso: Float, altura: Float) -> Float {
         let variable = peso/(powf(altura, 2))
         return variable
     }
     
-    // MARK: Mujeres
+    // MARK: Funciones para Mujeres
     
     func estaturaParaLaEdad0_24F(edad: Float) -> (sd0: Float,nsd1: Float,nsd2: Float,nsd3: Float,sd1: Float,sd2: Float, sd3: Float) {
         let aux_sd0 = ((-1.213*powf(10, -6))*powf(edad, 6)) + ((0.0001053)*powf(edad, 5)) + ((-0.003672)*powf(edad, 4)) + ((0.06613)*powf(edad, 3)) + ((-0.6722)*powf(edad, 2)) + ((5.08)*edad) + (49.14)
@@ -273,7 +295,7 @@ class ResultadosViewController: UIViewController {
     
     
     
-    // Mark: Hombres
+    // Mark: Funciones para Hombres
     
     func estaturaParaLaEdad0_24M(edad: Float) -> (sd0: Float,nsd1: Float,nsd2: Float,nsd3: Float,sd1: Float,sd2: Float, sd3: Float) {
         let aux_sd0 = ((-7.117*powf(10, -7))*powf(edad, 6)) + ((6.937*powf(10, -5))*powf(edad, 5)) + ((-0.002741)*powf(edad, 4)) + ((0.05637)*powf(edad, 3)) + ((-0.6543)*powf(edad, 2)) + ((5.36)*edad) + (49.91)
@@ -518,6 +540,158 @@ class ResultadosViewController: UIViewController {
         let aux_sd3 = ((-5.569*powf(10, -9))*powf(edad, 6)) + ((1.152*powf(10, -6))*powf(edad, 5)) + ((-9.327*powf(10, -5))*powf(edad, 4)) + ((0.003727)*powf(edad, 3)) + ((-0.07588)*powf(edad, 2)) + ((0.7989)*edad) + (14.98)
         
         return (aux_sd0,aux_nsd1,aux_nsd2,aux_nsd3,aux_sd1,aux_sd2,aux_sd3)
+    }
+    
+    // Mark: Calculos
+    
+    func calculos() {
+        if sexo == "Femenino" {
+            // Estatura para la edad
+            if edadEnMeses <= 24 {
+                let estaturaTeo = estaturaParaLaEdad0_24F(edad: Float(edadEnMeses))
+                estaturaTeo_sd0 = estaturaTeo.sd0
+                estaturaTeo_sd1 = estaturaTeo.sd1
+                estaturaTeo_sd2 = estaturaTeo.sd2
+                estaturaTeo_sd3 = estaturaTeo.sd3
+                estaturaTeo_nsd1 = estaturaTeo.nsd1
+                estaturaTeo_nsd2 = estaturaTeo.nsd2
+                estaturaTeo_nsd3 = estaturaTeo.nsd3
+            } else {
+                let estaturaTeo = estaturaParaLaEdad24_60F(edad: Float(edadEnMeses))
+                estaturaTeo_sd0 = estaturaTeo.sd0
+                estaturaTeo_sd1 = estaturaTeo.sd1
+                estaturaTeo_sd2 = estaturaTeo.sd2
+                estaturaTeo_sd3 = estaturaTeo.sd3
+                estaturaTeo_nsd1 = estaturaTeo.nsd1
+                estaturaTeo_nsd2 = estaturaTeo.nsd2
+                estaturaTeo_nsd3 = estaturaTeo.nsd3
+            }
+        
+            if estaturaMedida >= estaturaTeo_nsd1 {
+                // Talla adecuada para la edad
+                a = "Talla adecuada para la edad"
+            } else if (estaturaTeo_nsd2 <= estaturaMedida) && (estaturaMedida < estaturaTeo_nsd1) {
+                // Riesgo de talla baja
+                a = "Riesgo de talla baja"
+            } else if estaturaMedida < estaturaTeo_nsd2 {
+                // Talla Baja para la Edad o Retraso en Talla
+                a = "Talla Baja para la Edad o Retraso en Talla"
+            }
+            
+            // Peso para la edad
+            let pesoParaEdad = pesoParaLaEdadF(edad: Float(edadEnMeses))
+            
+            if (pesoParaEdad.nsd1 <= pesoKgMedido) && (pesoKgMedido <= pesoParaEdad.sd1) {
+                // Peso Adecuado para la Edad
+                b = "Peso Adecuado para la Edad"
+            } else if (pesoParaEdad.nsd2 <= pesoKgMedido) && (pesoKgMedido < pesoParaEdad.nsd1) {
+                // Riesgo de Desnutrición Global.
+                b = "Riesgo de Desnutrición Global"
+            } else if pesoKgMedido < pesoParaEdad.nsd2 {
+                // Desnutrición Global
+                b = "Desnutrición Global"
+            }
+            
+            // Peso para la longitud
+            if edadEnMeses <= 24 {
+                let pesoTeo = pesoParaLaLongitud0_24F(longitud: estaturaMedida)
+                pesoKgTeo_sd0 = pesoTeo.sd0
+                pesoKgTeo_sd1 = pesoTeo.sd1
+                pesoKgTeo_sd2 = pesoTeo.sd2
+                pesoKgTeo_sd3 = pesoTeo.sd3
+                pesoKgTeo_nsd1 = pesoTeo.nsd1
+                pesoKgTeo_nsd2 = pesoTeo.nsd2
+                pesoKgTeo_nsd3 = pesoTeo.nsd3
+
+            } else {
+                let pesoTeo = estaturaParaLaEdad24_60F(edad: Float(edadEnMeses))
+                pesoKgTeo_sd0 = pesoTeo.sd0
+                pesoKgTeo_sd1 = pesoTeo.sd1
+                pesoKgTeo_sd2 = pesoTeo.sd2
+                pesoKgTeo_sd3 = pesoTeo.sd3
+                pesoKgTeo_nsd1 = pesoTeo.nsd1
+                pesoKgTeo_nsd2 = pesoTeo.nsd2
+                pesoKgTeo_nsd3 = pesoTeo.nsd3
+            }
+            
+            if pesoKgMedido > pesoKgTeo_sd3 {
+                // Obesidad
+                c = "Obesidad"
+            } else if (pesoKgTeo_sd2 < pesoKgMedido) && (pesoKgMedido <= pesoKgTeo_sd3) {
+                // Sobrepeso
+                c = "Sobrepeso"
+            } else if (pesoKgTeo_sd1 < pesoKgMedido) && (pesoKgMedido <= pesoKgTeo_sd2) {
+                // Riesgo de Sobrepeso
+                c = "Riesgo de Sobrepeso"
+            } else if (pesoKgTeo_nsd1 <= pesoKgMedido) && (pesoKgMedido <= pesoKgTeo_sd1) {
+                // Peso Adecuado para la Talla
+                c = "Peso Adecuado para la Talla"
+            } else if (pesoKgTeo_nsd2 <= pesoKgMedido) && (pesoKgMedido < pesoKgTeo_nsd1) {
+                // Riesgo de Desnutrición Aguda
+                c = "Riesgo de Desnutrición Aguda"
+            } else if (pesoKgTeo_nsd3 <= pesoKgMedido) && (pesoKgMedido < pesoKgTeo_nsd2) {
+                // Desnutrición Aguda Moderada
+                c = "Desnutrición Aguda Moderada"
+            } else if pesoKgMedido < pesoKgTeo_nsd3 {
+                // Desnutrición Aguda Severa
+                c = "Desnutrición Aguda Severa"
+            }
+            
+            // IMC para la edad
+            if edadEnMeses <= 24 {
+                let IMCTeo = pesoParaLaLongitud0_24F(longitud: estaturaMedida)
+                IMCTeo_sd0 = IMCTeo.sd0
+                IMCTeo_sd1 = IMCTeo.sd1
+                IMCTeo_sd2 = IMCTeo.sd2
+                IMCTeo_sd3 = IMCTeo.sd3
+                IMCTeo_nsd1 = IMCTeo.nsd1
+                IMCTeo_nsd2 = IMCTeo.nsd2
+                IMCTeo_nsd3 = IMCTeo.nsd3
+                
+            } else {
+                let IMCTeo = pesoParaLaLongitud24_60F(longitud: estaturaMedida)
+                IMCTeo_sd0 = IMCTeo.sd0
+                IMCTeo_sd1 = IMCTeo.sd1
+                IMCTeo_sd2 = IMCTeo.sd2
+                IMCTeo_sd3 = IMCTeo.sd3
+                IMCTeo_nsd1 = IMCTeo.nsd1
+                IMCTeo_nsd2 = IMCTeo.nsd2
+                IMCTeo_nsd3 = IMCTeo.nsd3
+            }
+            
+            if IMCMedido > IMCTeo_sd3 {
+                // Obesidad
+                
+            } else if (IMCTeo_sd2 < IMCMedido) && (IMCMedido <= IMCTeo_sd3) {
+                // Sobrepeso
+                
+            } else if (IMCTeo_sd1 < IMCMedido) && (IMCMedido <= IMCTeo_sd2) {
+                // Riesgo de Sobrepeso
+                
+            }
+            
+            // De la OMS
+            if (estaturaMedida < estaturaTeo_nsd2) || (IMCMedido < IMCTeo_nsd2) {
+                // Emanciado
+                
+            } else if (estaturaMedida < estaturaTeo_nsd3) || (IMCMedido < IMCTeo_nsd3) {
+                // Severamente Emanciado
+                
+            }
+            
+        }
+        
+        
+    }
+    
+    @IBAction func salirBtn(_ sender: Any) {
+        do {
+            try Auth.auth().signOut()
+            navigationController?.popToRootViewController(animated: true)
+        }
+        catch {
+            print("Error, hubo un problema al salir.")
+        }
     }
 
 }
