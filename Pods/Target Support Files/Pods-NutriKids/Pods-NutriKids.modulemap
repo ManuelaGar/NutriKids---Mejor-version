@@ -1,0 +1,6 @@
+framework module Pods_NutriKids {
+  umbrella header "Pods-NutriKids-umbrella.h"
+
+  export *
+  module * { export * }
+}

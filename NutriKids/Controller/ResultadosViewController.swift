@@ -678,7 +678,7 @@ class ResultadosViewController: UIViewController {
                 // Severamente Emanciado
                 
             }
-            
+            //Cualquier cosa
         }
         
         
