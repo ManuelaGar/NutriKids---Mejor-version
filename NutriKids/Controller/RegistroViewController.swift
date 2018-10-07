@@ -40,7 +40,7 @@ class RegistroViewController: UIViewController,UITextFieldDelegate {
         
         return true
     }
-// TODO: Revisar esto
+
     func verificacion() {
         if emailTextField.text == "" || passwordTextField.text == "" {
             registrarseBtn.isEnabled = false

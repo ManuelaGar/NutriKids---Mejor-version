@@ -10,9 +10,30 @@ import UIKit
 import SVProgressHUD
 import Firebase
 
-class ResultadosViewController: UIViewController {
+class ResultadosViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var infoLabel: UILabel!
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (Indicador.count)
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ResultadosViewControllerTableViewCell
+        cell.indicador.text = Indicador[indexPath.row]
+        cell.sd.text = puntoDeCorte[indexPath.row]
+        cell.clasificacion.text = clasificacion[indexPath.row]
+        return (cell)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 89
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
     
     var estaturaMedida: Float = 0
     var estaturaTeo_sd0: Float = 0
@@ -41,18 +62,39 @@ class ResultadosViewController: UIViewController {
     var IMCTeo_nsd2: Float = 0
     var IMCTeo_nsd3: Float = 0
     
-    var edadEnMeses = 0
     var perimetroBraquialMedido: Float = 0
-    var sexo = ""
+    var MUACTeo_sd0: Float = 0
+    var MUACTeo_sd1: Float = 0
+    var MUACTeo_sd2: Float = 0
+    var MUACTeo_sd3: Float = 0
+    var MUACTeo_nsd1: Float = 0
+    var MUACTeo_nsd2: Float = 0
+    var MUACTeo_nsd3: Float = 0
     
     var a: String = ""
     var b: String = ""
     var c: String = ""
+    var d: String = ""
+    var e: String = ""
+    
+    var sd1 = ""
+    var sd2 = ""
+    var sd3 = ""
+    var sd4 = ""
+    var sd5 = ""
+    
+    var edadEnMeses = 0
+    
+    var sexo = ""
+    let Indicador = ["Indicador", "Peso para la talla", "Talla para la edad", "IMC para la edad", "Peso para la edad", "Perimetro brazo para la edad"]
+    var puntoDeCorte = ["Punto de corte (desviaciones estandar DE)", "sd1", "sd2", "sd3", "sd4", "sd5"]
+    var clasificacion = ["Clasificación antropométrica", "a", "b", "c", "d", "e"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         SVProgressHUD.dismiss()
         IMCMedido = IMC(peso: pesoKgMedido, altura: estaturaMedida)
+        tableView.tableFooterView = UIView()
         
 //        print(estaturaParaLaEdad0_24F(edad: 10))
 //        print(estaturaParaLaEdad24_60F(edad: 25))
@@ -74,10 +116,11 @@ class ResultadosViewController: UIViewController {
         
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        calculos()
+        tableView.reloadData()
     }
-    
     
     func IMC(peso: Float, altura: Float) -> Float {
         let variable = peso/(powf(altura, 2))
@@ -569,26 +612,36 @@ class ResultadosViewController: UIViewController {
         
             if estaturaMedida >= estaturaTeo_nsd1 {
                 // Talla adecuada para la edad
+                sd1 = ">= -1 SD"
                 a = "Talla adecuada para la edad"
             } else if (estaturaTeo_nsd2 <= estaturaMedida) && (estaturaMedida < estaturaTeo_nsd1) {
                 // Riesgo de talla baja
+                sd1 = ">= -2 SD a < -1 SD"
                 a = "Riesgo de talla baja"
             } else if estaturaMedida < estaturaTeo_nsd2 {
                 // Talla Baja para la Edad o Retraso en Talla
+                sd1 = "< -2 SD"
                 a = "Talla Baja para la Edad o Retraso en Talla"
             }
             
             // Peso para la edad
             let pesoParaEdad = pesoParaLaEdadF(edad: Float(edadEnMeses))
             
-            if (pesoParaEdad.nsd1 <= pesoKgMedido) && (pesoKgMedido <= pesoParaEdad.sd1) {
+            if pesoParaEdad.sd1 < pesoKgMedido {
+                // No Aplica (Verificar con IMC/E)
+                sd2 = ">= -1 SD a < a 1 SD"
+                b = "No Aplica (Verificar con IMC/E)"
+            } else if (pesoParaEdad.nsd1 <= pesoKgMedido) && (pesoKgMedido <= pesoParaEdad.sd1) {
                 // Peso Adecuado para la Edad
+                sd2 = ">= -1 SD a < a 1 SD"
                 b = "Peso Adecuado para la Edad"
             } else if (pesoParaEdad.nsd2 <= pesoKgMedido) && (pesoKgMedido < pesoParaEdad.nsd1) {
-                // Riesgo de Desnutrición Global.
+                // Riesgo de Desnutrición Global
+                sd2 = ">= -2 SD a < a -1 SD"
                 b = "Riesgo de Desnutrición Global"
             } else if pesoKgMedido < pesoParaEdad.nsd2 {
                 // Desnutrición Global
+                sd2 = "< -2 SD"
                 b = "Desnutrición Global"
             }
             
@@ -616,24 +669,31 @@ class ResultadosViewController: UIViewController {
             
             if pesoKgMedido > pesoKgTeo_sd3 {
                 // Obesidad
+                sd3 = "> 3 SD"
                 c = "Obesidad"
             } else if (pesoKgTeo_sd2 < pesoKgMedido) && (pesoKgMedido <= pesoKgTeo_sd3) {
                 // Sobrepeso
+                sd3 = "> 2 SD a <= 3 SD"
                 c = "Sobrepeso"
             } else if (pesoKgTeo_sd1 < pesoKgMedido) && (pesoKgMedido <= pesoKgTeo_sd2) {
                 // Riesgo de Sobrepeso
+                sd3 = "> 1 SD a <= 2 SD"
                 c = "Riesgo de Sobrepeso"
             } else if (pesoKgTeo_nsd1 <= pesoKgMedido) && (pesoKgMedido <= pesoKgTeo_sd1) {
                 // Peso Adecuado para la Talla
+                sd3 = ">= -1 SD a <= 1 SD"
                 c = "Peso Adecuado para la Talla"
             } else if (pesoKgTeo_nsd2 <= pesoKgMedido) && (pesoKgMedido < pesoKgTeo_nsd1) {
                 // Riesgo de Desnutrición Aguda
+                sd3 = ">= -2 SD a < -1 SD"
                 c = "Riesgo de Desnutrición Aguda"
             } else if (pesoKgTeo_nsd3 <= pesoKgMedido) && (pesoKgMedido < pesoKgTeo_nsd2) {
                 // Desnutrición Aguda Moderada
+                sd3 = ">= -3 SD a < -2 SD"
                 c = "Desnutrición Aguda Moderada"
             } else if pesoKgMedido < pesoKgTeo_nsd3 {
                 // Desnutrición Aguda Severa
+                sd3 = "< -3 SD"
                 c = "Desnutrición Aguda Severa"
             }
             
@@ -661,27 +721,227 @@ class ResultadosViewController: UIViewController {
             
             if IMCMedido > IMCTeo_sd3 {
                 // Obesidad
+                sd4 = "> 3 SD"
+                d = "Obesidad"
                 
             } else if (IMCTeo_sd2 < IMCMedido) && (IMCMedido <= IMCTeo_sd3) {
                 // Sobrepeso
+                sd4 = "> 2 SD a <= 3 SD"
+                d = "Sobrepeso"
                 
             } else if (IMCTeo_sd1 < IMCMedido) && (IMCMedido <= IMCTeo_sd2) {
                 // Riesgo de Sobrepeso
-                
+                sd4 = "> 1 SD a <= 2 SD"
+                d = "Riesgo de Sobrepeso"
+            } else if IMCTeo_sd1 >= IMCMedido {
+                // No Aplica (Verificar con P/T)
+                sd4 = "<= 1 SD"
+                d = "No Aplica (Verificar con P/T)"
             }
             
-            // De la OMS
-            if (estaturaMedida < estaturaTeo_nsd2) || (IMCMedido < IMCTeo_nsd2) {
-                // Emanciado
-                
-            } else if (estaturaMedida < estaturaTeo_nsd3) || (IMCMedido < IMCTeo_nsd3) {
-                // Severamente Emanciado
-                
+            // MUAC para la edad
+            let MUACTeo = MUACparaLaEdad3_60F(edad: Float(edadEnMeses))
+            MUACTeo_sd0 = MUACTeo.sd0
+            MUACTeo_sd1 = MUACTeo.sd1
+            MUACTeo_sd2 = MUACTeo.sd2
+            MUACTeo_sd3 = MUACTeo.sd3
+            MUACTeo_nsd1 = MUACTeo.nsd1
+            MUACTeo_nsd2 = MUACTeo.nsd2
+            MUACTeo_nsd3 = MUACTeo.nsd3
+            
+            if perimetroBraquialMedido < 11.5 {
+                sd5 = "N/A"
+                e = "Desnutrición aguda severa y riesgo de muerte por desnutrición"
+            } else if (11.5 < perimetroBraquialMedido) && (perimetroBraquialMedido <= 12.5) {
+                sd5 = "N/A"
+                e = "Desnutrición aguda moderada"
+            } else if perimetroBraquialMedido <= 12.5 {
+                sd5 = "N/A"
+                e = "Desnutrición aguda global"
+            } else if perimetroBraquialMedido > 12.5 {
+                sd5 = "N/A"
+                e = "Perimetro adecuado para la edad"
             }
-            //Cualquier cosa
+            
         }
-        
-        
+        if sexo == "Masculino" {
+            // Estatura para la edad
+            if edadEnMeses <= 24 {
+                let estaturaTeo = estaturaParaLaEdad0_24M(edad: Float(edadEnMeses))
+                estaturaTeo_sd0 = estaturaTeo.sd0
+                estaturaTeo_sd1 = estaturaTeo.sd1
+                estaturaTeo_sd2 = estaturaTeo.sd2
+                estaturaTeo_sd3 = estaturaTeo.sd3
+                estaturaTeo_nsd1 = estaturaTeo.nsd1
+                estaturaTeo_nsd2 = estaturaTeo.nsd2
+                estaturaTeo_nsd3 = estaturaTeo.nsd3
+            } else {
+                let estaturaTeo = estaturaParaLaEdad24_60M(edad: Float(edadEnMeses))
+                estaturaTeo_sd0 = estaturaTeo.sd0
+                estaturaTeo_sd1 = estaturaTeo.sd1
+                estaturaTeo_sd2 = estaturaTeo.sd2
+                estaturaTeo_sd3 = estaturaTeo.sd3
+                estaturaTeo_nsd1 = estaturaTeo.nsd1
+                estaturaTeo_nsd2 = estaturaTeo.nsd2
+                estaturaTeo_nsd3 = estaturaTeo.nsd3
+            }
+            
+            if estaturaMedida >= estaturaTeo_nsd1 {
+                // Talla adecuada para la edad
+                sd1 = ">= -1 SD"
+                a = "Talla adecuada para la edad"
+            } else if (estaturaTeo_nsd2 <= estaturaMedida) && (estaturaMedida < estaturaTeo_nsd1) {
+                // Riesgo de talla baja
+                sd1 = ">= -2 SD a < -1 SD"
+                a = "Riesgo de talla baja"
+            } else if estaturaMedida < estaturaTeo_nsd2 {
+                // Talla Baja para la Edad o Retraso en Talla
+                sd1 = "< -2 SD"
+                a = "Talla Baja para la Edad o Retraso en Talla"
+            }
+            
+            // Peso para la edad
+            let pesoParaEdad = pesoParaLaEdadM(edad: Float(edadEnMeses))
+            
+            if pesoParaEdad.sd1 < pesoKgMedido {
+                // No Aplica (Verificar con IMC/E)
+                sd2 = ">= -1 SD a < a 1 SD"
+                b = "No Aplica (Verificar con IMC/E)"
+            } else if (pesoParaEdad.nsd1 <= pesoKgMedido) && (pesoKgMedido <= pesoParaEdad.sd1) {
+                // Peso Adecuado para la Edad
+                sd2 = ">= -1 SD a < a 1 SD"
+                b = "Peso Adecuado para la Edad"
+            } else if (pesoParaEdad.nsd2 <= pesoKgMedido) && (pesoKgMedido < pesoParaEdad.nsd1) {
+                // Riesgo de Desnutrición Global
+                sd2 = ">= -2 SD a < a -1 SD"
+                b = "Riesgo de Desnutrición Global"
+            } else if pesoKgMedido < pesoParaEdad.nsd2 {
+                // Desnutrición Global
+                sd2 = "< -2 SD"
+                b = "Desnutrición Global"
+            }
+            
+            // Peso para la longitud
+            if edadEnMeses <= 24 {
+                let pesoTeo = pesoParaLaLongitud0_24M(longitud: estaturaMedida)
+                pesoKgTeo_sd0 = pesoTeo.sd0
+                pesoKgTeo_sd1 = pesoTeo.sd1
+                pesoKgTeo_sd2 = pesoTeo.sd2
+                pesoKgTeo_sd3 = pesoTeo.sd3
+                pesoKgTeo_nsd1 = pesoTeo.nsd1
+                pesoKgTeo_nsd2 = pesoTeo.nsd2
+                pesoKgTeo_nsd3 = pesoTeo.nsd3
+                
+            } else {
+                let pesoTeo = estaturaParaLaEdad24_60M(edad: Float(edadEnMeses))
+                pesoKgTeo_sd0 = pesoTeo.sd0
+                pesoKgTeo_sd1 = pesoTeo.sd1
+                pesoKgTeo_sd2 = pesoTeo.sd2
+                pesoKgTeo_sd3 = pesoTeo.sd3
+                pesoKgTeo_nsd1 = pesoTeo.nsd1
+                pesoKgTeo_nsd2 = pesoTeo.nsd2
+                pesoKgTeo_nsd3 = pesoTeo.nsd3
+            }
+            
+            if pesoKgMedido > pesoKgTeo_sd3 {
+                // Obesidad
+                sd3 = "> 3 SD"
+                c = "Obesidad"
+            } else if (pesoKgTeo_sd2 < pesoKgMedido) && (pesoKgMedido <= pesoKgTeo_sd3) {
+                // Sobrepeso
+                sd3 = "> 2 SD a <= 3 SD"
+                c = "Sobrepeso"
+            } else if (pesoKgTeo_sd1 < pesoKgMedido) && (pesoKgMedido <= pesoKgTeo_sd2) {
+                // Riesgo de Sobrepeso
+                sd3 = "> 1 SD a <= 2 SD"
+                c = "Riesgo de Sobrepeso"
+            } else if (pesoKgTeo_nsd1 <= pesoKgMedido) && (pesoKgMedido <= pesoKgTeo_sd1) {
+                // Peso Adecuado para la Talla
+                sd3 = ">= -1 SD a <= 1 SD"
+                c = "Peso Adecuado para la Talla"
+            } else if (pesoKgTeo_nsd2 <= pesoKgMedido) && (pesoKgMedido < pesoKgTeo_nsd1) {
+                // Riesgo de Desnutrición Aguda
+                sd3 = ">= -2 SD a < -1 SD"
+                c = "Riesgo de Desnutrición Aguda"
+            } else if (pesoKgTeo_nsd3 <= pesoKgMedido) && (pesoKgMedido < pesoKgTeo_nsd2) {
+                // Desnutrición Aguda Moderada
+                sd3 = ">= -3 SD a < -2 SD"
+                c = "Desnutrición Aguda Moderada"
+            } else if pesoKgMedido < pesoKgTeo_nsd3 {
+                // Desnutrición Aguda Severa
+                sd3 = "< -3 SD"
+                c = "Desnutrición Aguda Severa"
+            }
+            
+            // IMC para la edad
+            if edadEnMeses <= 24 {
+                let IMCTeo = pesoParaLaLongitud0_24M(longitud: estaturaMedida)
+                IMCTeo_sd0 = IMCTeo.sd0
+                IMCTeo_sd1 = IMCTeo.sd1
+                IMCTeo_sd2 = IMCTeo.sd2
+                IMCTeo_sd3 = IMCTeo.sd3
+                IMCTeo_nsd1 = IMCTeo.nsd1
+                IMCTeo_nsd2 = IMCTeo.nsd2
+                IMCTeo_nsd3 = IMCTeo.nsd3
+                
+            } else {
+                let IMCTeo = pesoParaLaLongitud24_60M(longitud: estaturaMedida)
+                IMCTeo_sd0 = IMCTeo.sd0
+                IMCTeo_sd1 = IMCTeo.sd1
+                IMCTeo_sd2 = IMCTeo.sd2
+                IMCTeo_sd3 = IMCTeo.sd3
+                IMCTeo_nsd1 = IMCTeo.nsd1
+                IMCTeo_nsd2 = IMCTeo.nsd2
+                IMCTeo_nsd3 = IMCTeo.nsd3
+            }
+            
+            if IMCMedido > IMCTeo_sd3 {
+                // Obesidad
+                sd4 = "> 3 SD"
+                d = "Obesidad"
+                
+            } else if (IMCTeo_sd2 < IMCMedido) && (IMCMedido <= IMCTeo_sd3) {
+                // Sobrepeso
+                sd4 = "> 2 SD a <= 3 SD"
+                d = "Sobrepeso"
+                
+            } else if (IMCTeo_sd1 < IMCMedido) && (IMCMedido <= IMCTeo_sd2) {
+                // Riesgo de Sobrepeso
+                sd4 = "> 1 SD a <= 2 SD"
+                d = "Riesgo de Sobrepeso"
+            } else if IMCTeo_sd1 >= IMCMedido {
+                // No Aplica (Verificar con P/T)
+                sd4 = "<= 1 SD"
+                d = "No Aplica (Verificar con P/T)"
+            }
+            
+            // MUAC para la edad
+            let MUACTeo = MUACparaLaEdad3_60M(edad: Float(edadEnMeses))
+            MUACTeo_sd0 = MUACTeo.sd0
+            MUACTeo_sd1 = MUACTeo.sd1
+            MUACTeo_sd2 = MUACTeo.sd2
+            MUACTeo_sd3 = MUACTeo.sd3
+            MUACTeo_nsd1 = MUACTeo.nsd1
+            MUACTeo_nsd2 = MUACTeo.nsd2
+            MUACTeo_nsd3 = MUACTeo.nsd3
+            
+            if perimetroBraquialMedido < 11.5 {
+                sd5 = "N/A"
+                e = "Desnutrición aguda severa y riesgo de muerte por desnutrición"
+            } else if (11.5 < perimetroBraquialMedido) && (perimetroBraquialMedido <= 12.5) {
+                sd5 = "N/A"
+                e = "Desnutrición aguda moderada"
+            } else if perimetroBraquialMedido <= 12.5 {
+                sd5 = "N/A"
+                e = "Desnutrición aguda global"
+            } else if perimetroBraquialMedido > 12.5 {
+                sd5 = "N/A"
+                e = "Perimetro adecuado para la edad"
+            }
+        }
+            
+        puntoDeCorte = ["Punto de corte (desviaciones estandar DE)",sd1, sd2, sd3, sd4, sd5]
+        clasificacion = ["Clasificación antropométrica",a, b, c, d, e]
     }
     
     @IBAction func salirBtn(_ sender: Any) {

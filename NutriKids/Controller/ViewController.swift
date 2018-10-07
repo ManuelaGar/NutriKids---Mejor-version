@@ -52,7 +52,6 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
         UserDefaults.standard.set(false, forKey: "Cancel")
         mmEnImagenCortada()
-        //doneItem.isEnabled = true
         if (self.aux == 0) {
             edit(image: image)
             self.medidaLabel?.text = ""

@@ -69,11 +69,6 @@ extension IGRPhotoTweakViewController {
             mmTotalesX = mmTotalesY/aspect
         }
         
-        //        UserDefaults.standard.set(mmTotalesX, forKey:"mmEnX")
-        //        print(mmTotalesX)
-        //        UserDefaults.standard.set(mmTotalesY, forKey:"mmEnY")
-        //        print(mmTotalesY)
-        
         print("xScale \(xScale)")
         print("yScale \(yScale)")
         print("height \(image.size.height)")

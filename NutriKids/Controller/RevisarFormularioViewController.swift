@@ -17,6 +17,9 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var apellidos: UITextField!
     @IBOutlet weak var ID: UITextField!
     @IBOutlet weak var fechaNacimiento: UITextField!
+    @IBOutlet weak var edadDD: UITextField!
+    @IBOutlet weak var edadMM: UITextField!
+    @IBOutlet weak var edadA: UITextField!
     @IBOutlet weak var sexo: UITextField!
     @IBOutlet weak var pesoKg: UITextField!
     @IBOutlet weak var estatura: UITextField!
@@ -24,19 +27,25 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var continuarBtn: UIButton!
     @IBOutlet weak var medicion1: UIButton!
     @IBOutlet weak var medicion2: UIButton!
+    @IBOutlet weak var MasculinoBtn: UIButton!
+    @IBOutlet weak var FemeninoBtn: UIButton!
+    @IBOutlet weak var stackFecha: UIStackView!
+    
     
     var tipoMedida = 0
     var MUAC: Float = 0
-    var mmX: Float = 0
-    var mmY: Float = 0
+    var cmX: Float = 0
+    var cmY: Float = 0
     var edadMeses = 0
+    var fechaDeNacimiento = ""
+    var sexoMF = ""
+    var aux = 0
     var ref: DatabaseReference!
     let userID = Auth.auth().currentUser?.uid
     
     override func viewDidLoad() {
         super.viewDidLoad()
         retrieveUserInfo()
-        SVProgressHUD.dismiss()
         
         continuarBtn.isEnabled = true
         continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
@@ -55,15 +64,18 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        MUAC = UserDefaults.standard.float(forKey: "MUAC")
-        mmX = UserDefaults.standard.float(forKey: "mmEnX")
-        mmY = UserDefaults.standard.float(forKey: "mmEnY")
-        
-        if mmX != 0 && mmY != 0 {
-            estatura.text = "\(mmX)"
-        }
-        if MUAC != 0 {
-            perimetroBraquial.text = "\(MUAC)"
+        if (self.aux == 0) {
+            aux = 1
+        } else {
+            MUAC = UserDefaults.standard.float(forKey: "MUAC")/10
+            cmX = UserDefaults.standard.float(forKey: "mmEnX")/10
+            cmY = UserDefaults.standard.float(forKey: "mmEnY")/10
+            if cmX != 0 && cmY != 0 {
+                estatura.text = "\(cmX)"
+            }
+            if MUAC != 0 {
+                perimetroBraquial.text = "\(MUAC)"
+            }
         }
     }
 
@@ -101,7 +113,7 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
             resultados.estaturaMedida = Float(self.estatura.text!) ?? 0
             resultados.perimetroBraquialMedido = Float(self.perimetroBraquial.text!) ?? 0
             resultados.edadEnMeses = self.edadMeses
-            resultados.sexo = self.sexo.text ?? ""
+            resultados.sexo = self.sexoMF
         }
     }
     
@@ -113,15 +125,18 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
             self.ID.text = snapshot.childSnapshot(forPath: "ID").value as? String
             self.fechaNacimiento.text = snapshot.childSnapshot(forPath: "Fecha nacimiento").value as? String
             self.sexo.text = snapshot.childSnapshot(forPath: "Sexo").value as? String
+            self.sexoMF = (snapshot.childSnapshot(forPath: "Sexo").value as? String ?? "")
             self.pesoKg.text = snapshot.childSnapshot(forPath: "PesoKg").value as? String
             self.estatura.text = snapshot.childSnapshot(forPath: "Estatura").value as? String
             self.perimetroBraquial.text = snapshot.childSnapshot(forPath: "MUAC").value as? String
             self.edadMeses = snapshot.childSnapshot(forPath: "Edad meses").value as? Int ?? 0
+            self.fechaDeNacimiento = snapshot.childSnapshot(forPath: "Fecha nacimiento").value as? String ?? ""
         }
+        SVProgressHUD.dismiss()
     }
     
     func check() {
-        if nombre.hasText && apellidos.hasText && ID.hasText && fechaNacimiento.hasText && sexo.hasText && pesoKg.hasText && estatura.hasText && perimetroBraquial.hasText {
+        if nombre.hasText && apellidos.hasText && ID.hasText && edadMM.hasText && edadA.hasText && edadDD.hasText && sexoMF != "" && pesoKg.hasText && estatura.hasText && perimetroBraquial.hasText {
             continuarBtn.isEnabled = true
             continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
         }
@@ -132,7 +147,7 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField == nombre || textField == apellidos || textField == ID || textField == fechaNacimiento || textField == sexo || textField == pesoKg || textField == estatura || textField == perimetroBraquial {
+        if textField == nombre || textField == apellidos || textField == ID || textField == edadDD || textField == edadMM || textField == edadA || textField == pesoKg || textField == estatura || textField == perimetroBraquial {
             check()
         }
     }
@@ -161,12 +176,41 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    
+    @IBAction func sexoBtnPressed(_ sender: UIButton) {
+        if sender.tag == 1 {
+            sexoMF = "Masculino"
+            MasculinoBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
+            FemeninoBtn.backgroundColor = UIColor.lightGray
+        } else if sender.tag == 2 {
+            sexoMF = "Femenino"
+            FemeninoBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
+            MasculinoBtn.backgroundColor = UIColor.lightGray
+        }
+    }
+    
     @IBAction func editarPressed(_ sender: UIBarButtonItem) {
+        let fecha = fechaDeNacimiento.components(separatedBy: "/")
+        edadDD.text = fecha[0]
+        edadMM.text = fecha[1]
+        edadA.text = fecha[2]
+        
+        if sexoMF == "Masculino" {
+            MasculinoBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
+            FemeninoBtn.backgroundColor = UIColor.lightGray
+        } else if sexoMF == "Femenino" {
+            FemeninoBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
+            MasculinoBtn.backgroundColor = UIColor.lightGray
+        }
+        
         nombre.isEnabled = true
         apellidos.isEnabled = true
         ID.isEnabled = true
-        fechaNacimiento.isEnabled = true
-        sexo.isEnabled = true
+        fechaNacimiento.isHidden = true
+        stackFecha.isHidden = false
+        sexo.isHidden = true
+        MasculinoBtn.isHidden = false
+        FemeninoBtn.isHidden = false
         pesoKg.isEnabled = true
         estatura.isEnabled = true
         perimetroBraquial.isEnabled = true
@@ -179,8 +223,6 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         nombre.textColor = UIColor.black
         apellidos.textColor = UIColor.black
         ID.textColor = UIColor.black
-        fechaNacimiento.textColor = UIColor.black
-        sexo.textColor = UIColor.black
         pesoKg.textColor = UIColor.black
         estatura.textColor = UIColor.black
         perimetroBraquial.textColor = UIColor.black
@@ -194,7 +236,6 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         apellidos.isEnabled = false
         ID.isEnabled = false
         fechaNacimiento.isEnabled = false
-        sexo.isEnabled = false
         pesoKg.isEnabled = false
         estatura.isEnabled = false
         perimetroBraquial.isEnabled = false
@@ -202,18 +243,26 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         nombre.textColor = UIColor.gray
         apellidos.textColor = UIColor.gray
         ID.textColor = UIColor.gray
-        fechaNacimiento.textColor = UIColor.gray
-        sexo.textColor = UIColor.gray
         pesoKg.textColor = UIColor.gray
         estatura.textColor = UIColor.gray
         perimetroBraquial.textColor = UIColor.gray
+        
+        let currentDate = NSCalendar.init(calendarIdentifier: NSCalendar.Identifier.gregorian)
+        let currentYear = (currentDate?.component(NSCalendar.Unit.year, from: Date()) ?? 0)
+        let currentMonth = currentDate?.component(NSCalendar.Unit.month, from: Date()) ?? 0
+        print(currentYear)
+        print(currentMonth)
+        edadMeses = (currentMonth - Int(edadMM.text!)!) + (currentYear - Int(edadA.text!)!)*12
+        fechaDeNacimiento = "\(edadDD.text!)/\(edadMM.text!)/\(edadA.text!)"
+        
         Database.database().reference().child("Usuarios").child(userID!).updateChildValues(
             [
                 "Nombre": nombre.text! as NSString,
                 "Apellidos": apellidos.text! as NSString,
                 "ID": ID.text! as NSString,
-                "Fecha nacimiento": fechaNacimiento.text! as NSString,
-                "Sexo": sexo.text! as NSString,
+                "Fecha nacimiento": fechaDeNacimiento,
+                "Edad meses": String(edadMeses),
+                "Sexo": sexoMF,
                 "PesoKg": pesoKg.text! as NSString,
                 "Estatura": estatura.text! as NSString,
                 "MUAC": perimetroBraquial.text! as NSString

@@ -32,8 +32,10 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
     var tipoMedida = 0
     var estaturaMedida: Float = 0
     var MUAC: Float = 0
-    var mmX: Float = 0
-    var mmY: Float = 0
+    var cmX: Float = 0
+    var cmY: Float = 0
+    var aux = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,17 +55,21 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        MUAC = UserDefaults.standard.float(forKey: "MUAC")
-        mmX = UserDefaults.standard.float(forKey: "mmEnX")
-        mmY = UserDefaults.standard.float(forKey: "mmEnY")
-        
-        if mmX != 0 && mmY != 0 {
-            estatura.text = "\(mmX)"
+        if (self.aux == 0) {
+            self.estatura.text = ""
+            self.perimetroBraquial.text = ""
+            aux = 1
+        } else {
+            MUAC = UserDefaults.standard.float(forKey: "MUAC")/10
+            cmX = UserDefaults.standard.float(forKey: "mmEnX")/10
+            cmY = UserDefaults.standard.float(forKey: "mmEnY")/10
+            if cmX != 0 && cmY != 0 {
+                estatura.text = "\(cmX)"
+            }
+            if MUAC != 0 {
+                perimetroBraquial.text = "\(MUAC)"
+            }
         }
-        if MUAC != 0 {
-            perimetroBraquial.text = "\(MUAC)"
-        }
-        
         check()
     }
 
