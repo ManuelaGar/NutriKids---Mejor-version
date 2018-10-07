@@ -84,8 +84,12 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
     var sd5 = ""
     
     var edadEnMeses = 0
-    
     var sexo = ""
+    
+    var ref: DatabaseReference!
+    let userID = Auth.auth().currentUser?.uid
+    
+    
     let Indicador = ["Indicador", "Peso para la talla", "Talla para la edad", "IMC para la edad", "Peso para la edad", "Perimetro brazo para la edad"]
     var puntoDeCorte = ["Punto de corte (desviaciones estandar DE)", "sd1", "sd2", "sd3", "sd4", "sd5"]
     var clasificacion = ["Clasificación antropométrica", "a", "b", "c", "d", "e"]
@@ -120,11 +124,20 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
         super.viewWillAppear(animated)
         calculos()
         tableView.reloadData()
+        saveUserInfo()
     }
     
     func IMC(peso: Float, altura: Float) -> Float {
         let variable = peso/(powf(altura, 2))
         return variable
+    }
+    
+    func saveUserInfo() {
+        let resultado = ["Indicadores": Indicador, "Punto de corte": puntoDeCorte, "Clasificación": clasificacion]
+        Database.database().reference().child("Usuarios").child(userID!).updateChildValues(
+            [ "Resultado": resultado as NSDictionary
+            ])
+        print("Resultado actualizado y guardado con exito")
     }
     
     // MARK: Funciones para Mujeres
@@ -939,7 +952,7 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
                 e = "Perimetro adecuado para la edad"
             }
         }
-            
+        //resultado = "\(sd1) \(a), \(sd1) \(b), \(sd1) \(c), \(sd1) \(d), \(sd1) \(e)"
         puntoDeCorte = ["Punto de corte (desviaciones estandar DE)",sd1, sd2, sd3, sd4, sd5]
         clasificacion = ["Clasificación antropométrica",a, b, c, d, e]
     }

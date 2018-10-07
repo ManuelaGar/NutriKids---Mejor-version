@@ -25,7 +25,6 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
     
     @IBOutlet weak var marcador1Btn: UIButton!
     @IBOutlet weak var marcador2Btn: UIButton!
-    @IBOutlet weak var fotoBtn: UIButton!
     @IBOutlet weak var medidaHBnt: UIButton!
     @IBOutlet weak var medidaVBtn: UIButton!
     @IBOutlet weak var marcadoresLabel: UILabel!

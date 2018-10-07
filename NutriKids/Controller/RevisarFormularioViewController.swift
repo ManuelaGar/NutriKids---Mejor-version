@@ -195,6 +195,14 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         edadMM.text = fecha[1]
         edadA.text = fecha[2]
         
+        let currentDate = NSCalendar.init(calendarIdentifier: NSCalendar.Identifier.gregorian)
+        let currentYear = (currentDate?.component(NSCalendar.Unit.year, from: Date()) ?? 0)
+        let currentMonth = currentDate?.component(NSCalendar.Unit.month, from: Date()) ?? 0
+        print(currentYear)
+        print(currentMonth)
+        edadMeses = (currentMonth - Int(edadMM.text!)!) + (currentYear - Int(edadA.text!)!)*12
+        fechaDeNacimiento = "\(edadDD.text!)/\(edadMM.text!)/\(edadA.text!)"
+        
         if sexoMF == "Masculino" {
             MasculinoBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
             FemeninoBtn.backgroundColor = UIColor.lightGray
@@ -247,13 +255,6 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         estatura.textColor = UIColor.gray
         perimetroBraquial.textColor = UIColor.gray
         
-        let currentDate = NSCalendar.init(calendarIdentifier: NSCalendar.Identifier.gregorian)
-        let currentYear = (currentDate?.component(NSCalendar.Unit.year, from: Date()) ?? 0)
-        let currentMonth = currentDate?.component(NSCalendar.Unit.month, from: Date()) ?? 0
-        print(currentYear)
-        print(currentMonth)
-        edadMeses = (currentMonth - Int(edadMM.text!)!) + (currentYear - Int(edadA.text!)!)*12
-        fechaDeNacimiento = "\(edadDD.text!)/\(edadMM.text!)/\(edadA.text!)"
         
         Database.database().reference().child("Usuarios").child(userID!).updateChildValues(
             [

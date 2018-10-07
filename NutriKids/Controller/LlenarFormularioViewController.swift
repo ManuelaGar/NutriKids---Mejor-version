@@ -166,6 +166,10 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    func verificacion() {
+        
+    }
+    
     
     @IBAction func continuarPressed(_ sender: UIButton) {
         SVProgressHUD.show()
@@ -204,7 +208,8 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
                 "Edad meses": edadMeses,
                 "PesoKg": PesoKg.text!,
                 "Estatura": estatura.text!,
-                "MUAC": perimetroBraquial.text!
+                "MUAC": perimetroBraquial.text!,
+                "Resultado": ""
                 ] as [String : Any]
         let userID = Auth.auth().currentUser?.uid
         usuariosDB.child(userID!).setValue(usuarioDiccionario) {
