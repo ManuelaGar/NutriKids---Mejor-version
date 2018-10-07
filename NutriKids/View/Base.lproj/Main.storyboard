@@ -287,7 +287,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Apellido de padre y madre" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0aG-VH-Y00">
-                                <rect key="frame" x="16" y="161.5" width="343" height="30"/>
+                                <rect key="frame" x="16" y="162" width="332" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no"/>
@@ -494,7 +494,7 @@
                             <constraint firstItem="ILv-F7-CG1" firstAttribute="leading" secondItem="oqL-q6-iE9" secondAttribute="trailing" constant="37" id="Jh5-ea-eBI"/>
                             <constraint firstItem="E3W-tG-FMF" firstAttribute="top" secondItem="Wn0-yw-ZZ5" secondAttribute="bottom" constant="28" id="KsF-fg-Znz"/>
                             <constraint firstItem="qBL-F9-2Ez" firstAttribute="trailing" secondItem="p3z-YW-ecL" secondAttribute="trailing" id="MWD-fM-SgE"/>
-                            <constraint firstItem="Cb3-HA-qMP" firstAttribute="centerX" secondItem="0aG-VH-Y00" secondAttribute="centerX" id="MXr-W9-WPw"/>
+                            <constraint firstItem="Cb3-HA-qMP" firstAttribute="centerX" secondItem="0aG-VH-Y00" secondAttribute="centerX" constant="5.5" id="MXr-W9-WPw"/>
                             <constraint firstItem="oqL-q6-iE9" firstAttribute="leading" secondItem="p3z-YW-ecL" secondAttribute="leading" id="Mjl-yV-it0"/>
                             <constraint firstItem="Wn0-yw-ZZ5" firstAttribute="leading" secondItem="bZ0-gX-qKp" secondAttribute="leading" id="N5B-S4-daX"/>
                             <constraint firstItem="bnY-9w-k6u" firstAttribute="leading" secondItem="YK2-cP-meO" secondAttribute="leading" id="NR1-kD-lps"/>
@@ -561,7 +561,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oL0-bM-WTf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3900" y="-206"/>
+            <point key="canvasLocation" x="3900" y="-206.44677661169416"/>
         </scene>
         <!--Resutlados-->
         <scene sceneID="PTz-Y5-pfu">
@@ -757,7 +757,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nombre completo" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="asp-jM-PUV">
-                                <rect key="frame" x="16" y="103.5" width="214" height="30"/>
+                                <rect key="frame" x="16" y="104" width="332" height="30"/>
                                 <color key="textColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no"/>
@@ -769,7 +769,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Apellido de padre y madre" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="q95-Xy-Ivg">
-                                <rect key="frame" x="16" y="165" width="214" height="30"/>
+                                <rect key="frame" x="16" y="165" width="332" height="30"/>
                                 <color key="textColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no"/>
@@ -910,7 +910,7 @@
                             <constraint firstItem="AIm-on-oDQ" firstAttribute="trailing" secondItem="Wy0-Vm-EgO" secondAttribute="trailing" id="3VG-xB-tqr"/>
                             <constraint firstItem="TVA-Mf-duj" firstAttribute="trailing" secondItem="dbI-1r-erp" secondAttribute="trailing" id="4Qk-Up-jQN"/>
                             <constraint firstItem="e9Z-XR-cAo" firstAttribute="leading" secondItem="rcf-rP-xmb" secondAttribute="leading" id="8bn-Cd-oyq"/>
-                            <constraint firstItem="asp-jM-PUV" firstAttribute="trailing" secondItem="pAz-Rf-azC" secondAttribute="trailing" id="9Sc-l0-yh2"/>
+                            <constraint firstItem="asp-jM-PUV" firstAttribute="trailing" secondItem="pAz-Rf-azC" secondAttribute="trailing" constant="118" id="9Sc-l0-yh2"/>
                             <constraint firstItem="pVe-rT-i1R" firstAttribute="leading" secondItem="XdY-A8-2hi" secondAttribute="leading" id="BFi-HU-qBV"/>
                             <constraint firstItem="TVA-Mf-duj" firstAttribute="leading" secondItem="dbI-1r-erp" secondAttribute="leading" id="BeG-aB-3vO"/>
                             <constraint firstItem="IJD-hU-U79" firstAttribute="trailing" secondItem="XdY-A8-2hi" secondAttribute="trailing" id="BhL-IE-Dwa"/>
@@ -926,7 +926,7 @@
                             <constraint firstItem="AIm-on-oDQ" firstAttribute="leading" secondItem="Wy0-Vm-EgO" secondAttribute="leading" id="Fi9-np-aAh"/>
                             <constraint firstItem="IJD-hU-U79" firstAttribute="leading" secondItem="Bdz-nf-2Mg" secondAttribute="leading" id="Hn8-hV-Cic"/>
                             <constraint firstItem="IIB-R3-7rW" firstAttribute="top" secondItem="q95-Xy-Ivg" secondAttribute="bottom" constant="8" symbolic="YES" id="HyR-eh-6eJ"/>
-                            <constraint firstItem="n6C-Sk-WnT" firstAttribute="trailing" secondItem="asp-jM-PUV" secondAttribute="trailing" id="I8Q-K0-5fG"/>
+                            <constraint firstItem="n6C-Sk-WnT" firstAttribute="trailing" secondItem="asp-jM-PUV" secondAttribute="trailing" constant="-118" id="I8Q-K0-5fG"/>
                             <constraint firstItem="Udt-D5-Whe" firstAttribute="trailing" secondItem="e9Z-XR-cAo" secondAttribute="trailing" constant="209" id="JsI-Gl-OaJ"/>
                             <constraint firstItem="ZLk-Rp-bXX" firstAttribute="top" secondItem="TVA-Mf-duj" secondAttribute="top" id="KGA-cL-XFc"/>
                             <constraint firstItem="pAz-Rf-azC" firstAttribute="leading" secondItem="q95-Xy-Ivg" secondAttribute="leading" id="KOP-79-DZW"/>
@@ -962,7 +962,7 @@
                             <constraint firstItem="asp-jM-PUV" firstAttribute="top" secondItem="n6C-Sk-WnT" secondAttribute="bottom" constant="8" symbolic="YES" id="iqe-yn-YIo"/>
                             <constraint firstItem="glV-49-JSo" firstAttribute="leading" secondItem="K4h-OK-Ftf" secondAttribute="leading" id="l5L-ms-qqf"/>
                             <constraint firstItem="pVe-rT-i1R" firstAttribute="leading" secondItem="ZLk-Rp-bXX" secondAttribute="leading" id="lKb-PX-uHf"/>
-                            <constraint firstItem="pAz-Rf-azC" firstAttribute="trailing" secondItem="q95-Xy-Ivg" secondAttribute="trailing" id="lj6-rt-mpJ"/>
+                            <constraint firstItem="pAz-Rf-azC" firstAttribute="trailing" secondItem="q95-Xy-Ivg" secondAttribute="trailing" constant="-118" id="lj6-rt-mpJ"/>
                             <constraint firstItem="pAz-Rf-azC" firstAttribute="top" secondItem="asp-jM-PUV" secondAttribute="bottom" constant="8" symbolic="YES" id="lti-QC-DSH"/>
                             <constraint firstItem="Udt-D5-Whe" firstAttribute="bottom" secondItem="glV-49-JSo" secondAttribute="bottom" constant="34" id="oHQ-1V-OKu"/>
                             <constraint firstItem="IIB-R3-7rW" firstAttribute="leading" secondItem="AIm-on-oDQ" secondAttribute="leading" id="pHO-2J-Fa9"/>
@@ -974,7 +974,7 @@
                             <constraint firstItem="XdY-A8-2hi" firstAttribute="top" secondItem="Bdz-nf-2Mg" secondAttribute="bottom" constant="1" id="tdn-sh-7ZK"/>
                             <constraint firstItem="Bdz-nf-2Mg" firstAttribute="top" secondItem="IJD-hU-U79" secondAttribute="bottom" constant="7" id="usO-YZ-0Xv"/>
                             <constraint firstItem="Soi-vH-5bL" firstAttribute="trailing" secondItem="ZLk-Rp-bXX" secondAttribute="trailing" id="vZ7-9b-7TS"/>
-                            <constraint firstItem="q95-Xy-Ivg" firstAttribute="trailing" secondItem="IIB-R3-7rW" secondAttribute="trailing" id="vZq-x6-wsT"/>
+                            <constraint firstItem="q95-Xy-Ivg" firstAttribute="trailing" secondItem="IIB-R3-7rW" secondAttribute="trailing" constant="118" id="vZq-x6-wsT"/>
                             <constraint firstItem="K4h-OK-Ftf" firstAttribute="top" secondItem="ZLk-Rp-bXX" secondAttribute="bottom" constant="8" symbolic="YES" id="wBS-Hl-7TN"/>
                             <constraint firstItem="BFT-wK-lIq" firstAttribute="leading" secondItem="IJD-hU-U79" secondAttribute="leading" id="yFd-xx-Tri"/>
                         </constraints>
@@ -1448,7 +1448,7 @@
         <image name="group-happy-jumping-children-isolated-white-background-stock-vector-cartoon-illustration-54481498" width="800" height="496"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0Ev-5q-2sB"/>
-        <segue reference="SUb-aT-Si2"/>
+        <segue reference="CL8-SE-rgP"/>
+        <segue reference="qN0-OJ-KZJ"/>
     </inferredMetricsTieBreakers>
 </document>

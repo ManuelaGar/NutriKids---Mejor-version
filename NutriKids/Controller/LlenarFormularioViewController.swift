@@ -36,6 +36,8 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
     var cmY: Float = 0
     var aux = 0
     
+    var ref: DatabaseReference!
+    let userID = Auth.auth().currentUser?.uid
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -195,50 +197,64 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
         }
 
         fechaDeNacimiento = "\(edadDD.text!)/\(edadMM.text!)/\(edadA.text!)"
-
-        let usuariosDB = Database.database().reference().child("Usuarios")
-        let usuarioDiccionario =
+        
+        Database.database().reference().child("Usuarios").child(userID!).updateChildValues(
             [
-                "Email": Auth.auth().currentUser?.email! as Any,
-                "Nombre": nombreBtn.text!,
-                "Apellidos": apellidosBtn.text!,
-                "ID": ID.text!,
-                "Sexo": sexo,
+                "Nombre": nombreBtn.text! as NSString,
+                "Apellidos": apellidosBtn.text! as NSString,
+                "ID": ID.text! as NSString,
                 "Fecha nacimiento": fechaDeNacimiento,
-                "Edad meses": edadMeses,
-                "PesoKg": PesoKg.text!,
-                "Estatura": estatura.text!,
-                "MUAC": perimetroBraquial.text!,
-                "Resultado": ""
-                ] as [String : Any]
-        let userID = Auth.auth().currentUser?.uid
-        usuariosDB.child(userID!).setValue(usuarioDiccionario) {
-            (error, reference) in
+                "Edad meses": String(edadMeses),
+                "Sexo": sexo,
+                "PesoKg": PesoKg.text! as NSString,
+                "Estatura": estatura.text! as NSString,
+                "MUAC": perimetroBraquial.text! as NSString
+            ])
 
-            if error != nil {
-                print(error!)
-            } else {
-                print("Usuario guardado con exito")
-                self.nombreBtn.isEnabled = true
-                self.apellidosBtn.isEnabled = true
-                self.ID.isEnabled = true
-                self.edadDD.isEnabled = true
-                self.edadMM.isEnabled = true
-                self.edadA.isEnabled = true
-                self.estatura.isEnabled = true
-                self.perimetroBraquial.isEnabled = true
-
-                self.nombreBtn.text = ""
-                self.apellidosBtn.text = ""
-                self.ID.text = ""
-                self.edadDD.text = ""
-                self.edadMM.text = ""
-                self.edadA.text = ""
-                self.PesoKg.text = ""
-                self.estatura.text = ""
-                self.perimetroBraquial.text = ""
-            }
-        }
+//        let usuariosDB = Database.database().reference().child("Usuarios")
+//        let usuarioDiccionario =
+//            [
+//                "Email": Auth.auth().currentUser?.email! as Any,
+//                "Nombre": nombreBtn.text!,
+//                "Apellidos": apellidosBtn.text!,
+//                "ID": ID.text!,
+//                "Sexo": sexo,
+//                "Fecha nacimiento": fechaDeNacimiento,
+//                "Edad meses": edadMeses,
+//                "PesoKg": PesoKg.text!,
+//                "Estatura": estatura.text!,
+//                "MUAC": perimetroBraquial.text!,
+//                "Imagen": "",
+//                "Resultado": ""
+//                ] as [String : Any]
+//        let userID = Auth.auth().currentUser?.uid
+//        usuariosDB.child(userID!).setValue(usuarioDiccionario) {
+//            (error, reference) in
+//
+//            if error != nil {
+//                print(error!)
+//            } else {
+//                print("Usuario guardado con exito")
+//                self.nombreBtn.isEnabled = true
+//                self.apellidosBtn.isEnabled = true
+//                self.ID.isEnabled = true
+//                self.edadDD.isEnabled = true
+//                self.edadMM.isEnabled = true
+//                self.edadA.isEnabled = true
+//                self.estatura.isEnabled = true
+//                self.perimetroBraquial.isEnabled = true
+//
+//                self.nombreBtn.text = ""
+//                self.apellidosBtn.text = ""
+//                self.ID.text = ""
+//                self.edadDD.text = ""
+//                self.edadMM.text = ""
+//                self.edadA.text = ""
+//                self.PesoKg.text = ""
+//                self.estatura.text = ""
+//                self.perimetroBraquial.text = ""
+//            }
+//        }
         performSegue(withIdentifier: "goToResultados", sender: self)
     }
     

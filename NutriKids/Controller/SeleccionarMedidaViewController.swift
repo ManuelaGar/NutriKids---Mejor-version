@@ -40,6 +40,9 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
     var mmY: Float = 0
     var mmZ: Float = 0
     
+    var ref: DatabaseReference!
+    let userID = Auth.auth().currentUser?.uid
+    
     var image: UIImage!
     var imageView: UIImage!
     let pickerView = UIImagePickerController.init()
@@ -155,6 +158,28 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
             vc.tipoMarcador2 = self.tipoMarcador2
             vc.image = self.image
 
+        }
+    }
+    
+    func guardarImagen() {
+        let storageRef = Storage.storage().reference()
+        let data = Data()
+        let stgRef = storageRef.child("images.jpg")
+        _ = stgRef.putData(data, metadata: nil) { (metadata, error) in
+            guard metadata != nil else {
+                print(error!)
+                return
+            }
+            
+            storageRef.downloadURL { (url, error) in
+                guard url != nil else {
+                    print(error!)
+                    return
+                }
+                Database.database().reference().child("Usuarios").child(self.userID!).updateChildValues(
+                    ["Imagen": url ?? ""])
+                print("url: \(String(describing: url))")
+            }
         }
     }
     
@@ -335,15 +360,6 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
         perimetroElipse.text = "MUAC: \(c)"
         print("a \(a)")
         print("b \(b)")
-        //        print("aux1 \(aux1)")
-        //        print("aux2 \(aux2)")
-        //        print("aux3 \(aux3)")
-        //        print("aux4 \(aux4)")
-        //        print("aux5 \(aux5)")
-        //        print("aux6 \(aux6)")
-        //        print("aux7 \(aux7)")
-        //        print("aux8 \(aux8)")
-        //        print("aux9 \(aux9)")
         print("Circunferencia \(c)")
         UserDefaults.standard.set(c, forKey: "MUAC")
     }
@@ -360,7 +376,7 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
     
     
     @IBAction func continuarPressed(_ sender: UIButton) {
-        //performSegue(withIdentifier: "goToResultados", sender: self)
+        //guardarImagen()
         navigationController?.popViewController(animated: true)
     }
 }

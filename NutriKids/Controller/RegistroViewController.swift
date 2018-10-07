@@ -80,6 +80,34 @@ class RegistroViewController: UIViewController,UITextFieldDelegate {
             }
             else {
                 print("Registro Exitoso")
+                
+                let usuariosDB = Database.database().reference().child("Usuarios")
+                let usuarioDiccionario =
+                    [
+                        "Email": Auth.auth().currentUser?.email! as Any,
+                        "Nombre": "",
+                        "Apellidos": "",
+                        "ID": "",
+                        "Sexo": "",
+                        "Fecha nacimiento": "",
+                        "Edad meses": "",
+                        "PesoKg": "",
+                        "Estatura": "",
+                        "MUAC": "",
+                        "Imagen": "",
+                        "Resultado": ""
+                        ] as [String : Any]
+                let userID = Auth.auth().currentUser?.uid
+                usuariosDB.child(userID!).setValue(usuarioDiccionario) {
+                    (error, reference) in
+                    
+                    if error != nil {
+                        print(error!)
+                    } else {
+                        print("Usuario creado con exito")
+                    }
+                }
+                
                 SVProgressHUD.show()
                 self.mensaje.isHidden = true
                 self.performSegue(withIdentifier: "goToFormulario", sender: self)
