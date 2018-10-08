@@ -28,7 +28,7 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 89
+        return 75.857
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -85,12 +85,14 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
     var c: String = ""
     var d: String = ""
     var e: String = ""
+    var f: String = ""
     
     var sd1 = ""
     var sd2 = ""
     var sd3 = ""
     var sd4 = ""
     var sd5 = ""
+    var sd6 = ""
     
     var edadEnMeses = 0
     var sexo = ""
@@ -99,9 +101,9 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
     let userID = Auth.auth().currentUser?.uid
     
     
-    let Indicador = ["Indicador", "Peso para la talla", "Talla para la edad", "IMC para la edad", "Peso para la edad", "Perimetro brazo para la edad"]
-    var puntoDeCorte = ["Punto de corte (desviaciones estandar DE)", "sd1", "sd2", "sd3", "sd4", "sd5"]
-    var clasificacion = ["Clasificación antropométrica", "a", "b", "c", "d", "e"]
+    let Indicador = ["Indicador", "Peso para la talla", "Talla para la edad", "P. cefálico para la edad", "IMC para la edad", "Peso para la edad", "P. brazo para la edad"]
+    var puntoDeCorte = ["Punto de corte (desviaciones estandar DE)", "sd1", "sd2", "sd3", "sd4", "sd5", "sd6"]
+    var clasificacion = ["Clasificación antropométrica", "a", "b", "c", "d", "e", "f"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -339,7 +341,17 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
         return (aux_sd0,aux_nsd1,aux_nsd2,aux_nsd3,aux_sd1,aux_sd2,aux_sd3)
     }
     
-    
+    func pCefalicoParaLaEdad0_60F(edad: Float) -> (sd0: Float,nsd1: Float,nsd2: Float,nsd3: Float,sd1: Float,sd2: Float, sd3: Float) {
+        let aux_sd0 = ((3.32*powf(10, -10))*powf(edad, 7)) + ((-7.943*powf(10, -8))*powf(edad, 6)) + ((7.815*powf(10, -6))*powf(edad, 5)) + ((-0.0004087)*powf(edad, 4)) + ((0.01229)*powf(edad, 3)) + ((-0.2164)*powf(edad, 2)) + ((2.285)*edad) + (34.15)
+        let aux_nsd1 = ((3.154*powf(10, -10))*powf(edad, 7)) + ((-7.588*powf(10, -8))*powf(edad, 6)) + ((7.505*powf(10, -6))*powf(edad, 5)) + ((-0.0003944)*powf(edad, 4)) + ((0.01191)*powf(edad, 3)) + ((-0.2104)*powf(edad, 2)) + ((2.23)*edad) + (33.02)
+        let aux_nsd2 = ((3.416*powf(10, -10))*powf(edad, 7)) + ((-8.177*powf(10, -8))*powf(edad, 6)) + ((8.028*powf(10, -6))*powf(edad, 5)) + ((-0.0004175)*powf(edad, 4)) + ((0.01242)*powf(edad, 3)) + ((-0.2154)*powf(edad, 2)) + ((2.232)*edad) + (31.82)
+        let aux_nsd3 = ((3.452*powf(10, -10))*powf(edad, 7)) + ((-8.225*powf(10, -8))*powf(edad, 6)) + ((8.037*powf(10, -6))*powf(edad, 5)) + ((-0.0004158)*powf(edad, 4)) + ((0.0123)*powf(edad, 3)) + ((-0.2119)*powf(edad, 2)) + ((2.183)*edad) + (30.71)
+        let aux_sd1 = ((3.033*powf(10, -10))*powf(edad, 7)) + ((-7.403*powf(10, -8))*powf(edad, 6)) + ((7.425*powf(10, -6))*powf(edad, 5)) + ((-0.0003954)*powf(edad, 4)) + ((0.01209)*powf(edad, 3)) + ((-0.2159)*powf(edad, 2)) + ((2.309)*edad) + (35.31)
+        let aux_sd2 = ((3.148*powf(10, -10))*powf(edad, 7)) + ((-7.603*powf(10, -8))*powf(edad, 6)) + ((7.562*powf(10, -6))*powf(edad, 5)) + ((-0.0004005)*powf(edad, 4)) + ((0.01222)*powf(edad, 3)) + ((-0.2186)*powf(edad, 2)) + ((2.349)*edad) + (36.44)
+        let aux_sd3 = ((2.831*powf(10, -10))*powf(edad, 7)) + ((-7.006*powf(10, -8))*powf(edad, 6)) + ((7.134*powf(10, -6))*powf(edad, 5)) + ((-0.0003862)*powf(edad, 4)) + ((0.01201)*powf(edad, 3)) + ((-0.2185)*powf(edad, 2)) + ((2.377)*edad) + (37.6)
+        
+        return (aux_sd0,aux_nsd1,aux_nsd2,aux_nsd3,aux_sd1,aux_sd2,aux_sd3)
+    }
     
     // Mark: Funciones para Hombres
     
@@ -588,6 +600,18 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
         return (aux_sd0,aux_nsd1,aux_nsd2,aux_nsd3,aux_sd1,aux_sd2,aux_sd3)
     }
     
+    func pCefalicoParaLaEdad0_60M(edad: Float) -> (sd0: Float,nsd1: Float,nsd2: Float,nsd3: Float,sd1: Float,sd2: Float, sd3: Float) {
+        let aux_sd0 = ((3.453*powf(10, -10))*powf(edad, 7)) + ((-8.32*powf(10, -8))*powf(edad, 6)) + ((8.244*powf(10, -6))*powf(edad, 5)) + ((-0.0004343)*powf(edad, 4)) + ((0.01316)*powf(edad, 3)) + ((-0.2333)*powf(edad, 2)) + ((2.448)*edad) + (34.74)
+        let aux_nsd1 = ((3.676*powf(10, -10))*powf(edad, 7)) + ((-8.849*powf(10, -8))*powf(edad, 6)) + ((8.744*powf(10, -6))*powf(edad, 5)) + ((-0.0004583)*powf(edad, 4)) + ((0.01377)*powf(edad, 3)) + ((-0.2409)*powf(edad, 2)) + ((2.479)*edad) + (33.51)
+        let aux_nsd2 = ((3.835*powf(10, -10))*powf(edad, 7)) + ((-9.229*powf(10, -8))*powf(edad, 6)) + ((9.107*powf(10, -6))*powf(edad, 5)) + ((-0.0004758)*powf(edad, 4)) + ((0.01421)*powf(edad, 3)) + ((-0.2466)*powf(edad, 2)) + ((2.501)*edad) + (32.3)
+        let aux_nsd3 = ((4.415*powf(10, -10))*powf(edad, 7)) + ((-1.05*powf(10, -7))*powf(edad, 6)) + ((1.021*powf(10, -5))*powf(edad, 5)) + ((-0.0005244)*powf(edad, 4)) + ((0.01534)*powf(edad, 3)) + ((-0.2591)*powf(edad, 2)) + ((2.544)*edad) + (31.11)
+        let aux_sd1 = ((3.22*powf(10, -10))*powf(edad, 7)) + ((-7.839*powf(10, -8))*powf(edad, 6)) + ((7.856*powf(10, -6))*powf(edad, 5)) + ((-0.0004189)*powf(edad, 4)) + ((0.01285)*powf(edad, 3)) + ((-0.2306)*powf(edad, 2)) + ((2.451)*edad) + (35.91)
+        let aux_sd2 = ((3.137*powf(10, -10))*powf(edad, 7)) + ((-7.627*powf(10, -8))*powf(edad, 6)) + ((7.635*powf(10, -6))*powf(edad, 5)) + ((-0.000407)*powf(edad, 4)) + ((0.0125)*powf(edad, 3)) + ((-0.2253)*powf(edad, 2)) + ((2.426)*edad) + (37.11)
+        let aux_sd3 = ((2.626*powf(10, -10))*powf(edad, 7)) + ((-6.473*powf(10, -8))*powf(edad, 6)) + ((6.597*powf(10, -6))*powf(edad, 5)) + ((-0.0003598)*powf(edad, 4)) + ((0.01137)*powf(edad, 3)) + ((-0.2123)*powf(edad, 2)) + ((2.376)*edad) + (38.34)
+        
+        return (aux_sd0,aux_nsd1,aux_nsd2,aux_nsd3,aux_sd1,aux_sd2,aux_sd3)
+    }
+    
     // Mark: Calculos
     
     func calculos() {
@@ -771,6 +795,26 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
                 e = "Solo aplica para mayores de 3 meses"
             }
             
+            // Perimetro cefalico para la edad
+            let pCefTeo = pCefalicoParaLaEdad0_60F(edad: Float(edadEnMeses))
+            pCefTeo_sd0 = pCefTeo.sd0
+            pCefTeo_sd1 = pCefTeo.sd1
+            pCefTeo_sd2 = pCefTeo.sd2
+            pCefTeo_sd3 = pCefTeo.sd3
+            pCefTeo_nsd1 = pCefTeo.nsd1
+            pCefTeo_nsd2 = pCefTeo.nsd2
+            pCefTeo_nsd3 = pCefTeo.nsd3
+            
+            if pCefMedido > pCefTeo_sd2 {
+                sd6 = "> 2 SD"
+                f = "Factor de Riesgo para el Neurodesarrollo"
+            } else if (pCefTeo_nsd2 <= pCefMedido) && (pCefMedido <= pCefTeo_sd2) {
+                sd6 = "≥ -2 SD a ≤ 2 SD"
+                f = "Normal"
+            } else if (pCefMedido < pCefTeo_nsd2) {
+                sd6 = "< -2 SD"
+                f = "Factor de Riesgo para el Neurodesarrollo"
+            }
             
         }
         if sexo == "Masculino" {
@@ -952,10 +996,31 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
                 sd5 = "N/A"
                 e = "Solo aplica para mayores de 3 meses"
             }
+            
+            // Perimetro cefalico para la edad
+            let pCefTeo = pCefalicoParaLaEdad0_60M(edad: Float(edadEnMeses))
+            pCefTeo_sd0 = pCefTeo.sd0
+            pCefTeo_sd1 = pCefTeo.sd1
+            pCefTeo_sd2 = pCefTeo.sd2
+            pCefTeo_sd3 = pCefTeo.sd3
+            pCefTeo_nsd1 = pCefTeo.nsd1
+            pCefTeo_nsd2 = pCefTeo.nsd2
+            pCefTeo_nsd3 = pCefTeo.nsd3
+            
+            if pCefMedido > pCefTeo_sd2 {
+                sd6 = "> 2 SD"
+                f = "Factor de Riesgo para el Neurodesarrollo"
+            } else if (pCefTeo_nsd2 <= pCefMedido) && (pCefMedido <= pCefTeo_sd2) {
+                sd6 = "≥ -2 SD a ≤ 2 SD"
+                f = "Normal"
+            } else if (pCefMedido < pCefTeo_nsd2) {
+                sd6 = "< -2 SD"
+                f = "Factor de Riesgo para el Neurodesarrollo"
+            }
         }
         
-        puntoDeCorte = ["Punto de corte (desviaciones estandar DE)",sd3, sd1, sd4, sd2, sd5]
-        clasificacion = ["Clasificación antropométrica",c, a, d, b, e]
+        puntoDeCorte = ["Punto de corte (desviaciones estandar DE)",sd3, sd1, sd6, sd4, sd2, sd5]
+        clasificacion = ["Clasificación antropométrica",c, a, f, d, b, e]
     }
     
     @IBAction func salirBtn(_ sender: Any) {
