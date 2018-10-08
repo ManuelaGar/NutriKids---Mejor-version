@@ -22,6 +22,7 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var masculinoBtn: UIButton!
     @IBOutlet weak var femeninoBtn: UIButton!
     @IBOutlet weak var estatura: UITextField!
+    @IBOutlet weak var perimetroCefalico: UITextField!
     @IBOutlet weak var perimetroBraquial: UITextField!
     @IBOutlet weak var continuarBtn: UIButton!
     
@@ -32,6 +33,7 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
     var tipoMedida = 0
     var estaturaMedida: Float = 0
     var MUAC: Float = 0
+    var perimetroC: Float = 0
     var cmX: Float = 0
     var cmY: Float = 0
     var aux = 0
@@ -62,14 +64,19 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
             self.perimetroBraquial.text = ""
             aux = 1
         } else {
+            perimetroC = UserDefaults.standard.float(forKey: "PerCef")/10
             MUAC = UserDefaults.standard.float(forKey: "MUAC")/10
             cmX = UserDefaults.standard.float(forKey: "mmEnX")/10
             cmY = UserDefaults.standard.float(forKey: "mmEnY")/10
+            
             if cmX != 0 && cmY != 0 {
                 estatura.text = "\(cmX)"
             }
             if MUAC != 0 {
                 perimetroBraquial.text = "\(MUAC)"
+            }
+            if perimetroC != 0 {
+                perimetroCefalico.text = "\(perimetroC)"
             }
         }
         check()
@@ -133,11 +140,12 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
             resultados.perimetroBraquialMedido = Float(self.perimetroBraquial.text!) ?? 0
             resultados.edadEnMeses = Int(self.edadMeses) ?? 0
             resultados.sexo = self.sexo
+            resultados.pCefMedido = Float(self.perimetroCefalico.text!) ?? 0
         }
     }
     
     func check() {
-        if nombreBtn.hasText && apellidosBtn.hasText && ID.hasText && edadDD.hasText && edadMM.hasText && edadA.hasText && sexo != "" && PesoKg.hasText && estatura.hasText && perimetroBraquial.hasText {
+        if nombreBtn.hasText && apellidosBtn.hasText && ID.hasText && edadDD.hasText && edadMM.hasText && edadA.hasText && sexo != "" && PesoKg.hasText && estatura.hasText && perimetroBraquial.hasText && perimetroCefalico.hasText {
             continuarBtn.isEnabled = true
             continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
         }
@@ -149,7 +157,7 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == nombreBtn || textField == apellidosBtn || textField == ID || textField == edadDD || textField == edadMM
-            || textField == edadA || textField == PesoKg || textField == estatura || textField == perimetroBraquial {
+            || textField == edadA || textField == PesoKg || textField == estatura || textField == perimetroBraquial || textField == perimetroCefalico {
             check()
         }
     }
@@ -165,9 +173,15 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
             print("MUAC")
             tipoMedida = 2
             performSegue(withIdentifier: "goToMediciones", sender: self)
+        } else if sender.tag == 2 {
+            print("Perimetro cefalico")
+            tipoMedida = 3
+            performSegue(withIdentifier: "goToMediciones", sender: self)
         }
     }
     
+    
+    //TODO: Terminar las condiciones de esta view (fecha de edad no mas de 60...)
     func verificacion() {
         
     }
@@ -208,53 +222,10 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
                 "Sexo": sexo,
                 "PesoKg": PesoKg.text! as NSString,
                 "Estatura": estatura.text! as NSString,
-                "MUAC": perimetroBraquial.text! as NSString
+                "MUAC": perimetroBraquial.text! as NSString,
+                "P Cefalico": perimetroCefalico.text! as NSString
             ])
 
-//        let usuariosDB = Database.database().reference().child("Usuarios")
-//        let usuarioDiccionario =
-//            [
-//                "Email": Auth.auth().currentUser?.email! as Any,
-//                "Nombre": nombreBtn.text!,
-//                "Apellidos": apellidosBtn.text!,
-//                "ID": ID.text!,
-//                "Sexo": sexo,
-//                "Fecha nacimiento": fechaDeNacimiento,
-//                "Edad meses": edadMeses,
-//                "PesoKg": PesoKg.text!,
-//                "Estatura": estatura.text!,
-//                "MUAC": perimetroBraquial.text!,
-//                "Imagen": "",
-//                "Resultado": ""
-//                ] as [String : Any]
-//        let userID = Auth.auth().currentUser?.uid
-//        usuariosDB.child(userID!).setValue(usuarioDiccionario) {
-//            (error, reference) in
-//
-//            if error != nil {
-//                print(error!)
-//            } else {
-//                print("Usuario guardado con exito")
-//                self.nombreBtn.isEnabled = true
-//                self.apellidosBtn.isEnabled = true
-//                self.ID.isEnabled = true
-//                self.edadDD.isEnabled = true
-//                self.edadMM.isEnabled = true
-//                self.edadA.isEnabled = true
-//                self.estatura.isEnabled = true
-//                self.perimetroBraquial.isEnabled = true
-//
-//                self.nombreBtn.text = ""
-//                self.apellidosBtn.text = ""
-//                self.ID.text = ""
-//                self.edadDD.text = ""
-//                self.edadMM.text = ""
-//                self.edadA.text = ""
-//                self.PesoKg.text = ""
-//                self.estatura.text = ""
-//                self.perimetroBraquial.text = ""
-//            }
-//        }
         performSegue(withIdentifier: "goToResultados", sender: self)
     }
     

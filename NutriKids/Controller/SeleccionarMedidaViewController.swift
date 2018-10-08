@@ -59,6 +59,7 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
         perimetroElipse.isHidden = true
         continuarBtn.isEnabled = false
         UserDefaults.standard.set(0, forKey: "MUAC")
+        UserDefaults.standard.set(0, forKey: "PerCef")
         
         if tipoMedida == 1 {
             marcador1Btn.setTitle(" Marcador", for: .normal)
@@ -107,9 +108,8 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
                 continuarBtn.backgroundColor = UIColor.lightGray
                 perimetroElipse.isHidden = true
             }
-        }
-        else if tipoMedida == 2 {
-            //MUAC
+        } else if (tipoMedida == 2 || tipoMedida == 3) {
+            //MUAC o Perimetro cefálico
             if cancel == true && medida == 1 {
                 check3.isHidden = true
             }
@@ -161,27 +161,27 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
         }
     }
     
-    func guardarImagen() {
-        let storageRef = Storage.storage().reference()
-        let data = Data()
-        let stgRef = storageRef.child("images.jpg")
-        _ = stgRef.putData(data, metadata: nil) { (metadata, error) in
-            guard metadata != nil else {
-                print(error!)
-                return
-            }
-            
-            storageRef.downloadURL { (url, error) in
-                guard url != nil else {
-                    print(error!)
-                    return
-                }
-                Database.database().reference().child("Usuarios").child(self.userID!).updateChildValues(
-                    ["Imagen": url ?? ""])
-                print("url: \(String(describing: url))")
-            }
-        }
-    }
+//    func guardarImagen() {
+//        let storageRef = Storage.storage().reference()
+//        let data = Data()
+//        let stgRef = storageRef.child("images.jpg")
+//        _ = stgRef.putData(data, metadata: nil) { (metadata, error) in
+//            guard metadata != nil else {
+//                print(error!)
+//                return
+//            }
+//            
+//            storageRef.downloadURL { (url, error) in
+//                guard url != nil else {
+//                    print(error!)
+//                    return
+//                }
+//                Database.database().reference().child("Usuarios").child(self.userID!).updateChildValues(
+//                    ["Imagen": url ?? ""])
+//                print("url: \(String(describing: url))")
+//            }
+//        }
+//    }
     
     @IBAction func marcador1(_ sender: UIButton) {
         let actionSheet = UIAlertController(title: nil,
@@ -356,12 +356,19 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
         let aux9 = Float.pi*(a+b)
         let c = aux9*aux8
         
-        perimetroElipse.isHidden = false
-        perimetroElipse.text = "MUAC: \(c)"
         print("a \(a)")
         print("b \(b)")
         print("Circunferencia \(c)")
-        UserDefaults.standard.set(c, forKey: "MUAC")
+        
+        if tipoMedida == 2 {
+            perimetroElipse.text = "MUAC: \(c)"
+            UserDefaults.standard.set(c, forKey: "MUAC")
+        } else if tipoMedida == 3 {
+            perimetroElipse.text = "P. Cefálico: \(c)"
+            UserDefaults.standard.set(c, forKey: "PerCef")
+        }
+        
+        perimetroElipse.isHidden = false
     }
     
     @IBAction func salirPressed(_ sender: UIBarButtonItem) {

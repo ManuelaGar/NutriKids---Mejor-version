@@ -24,9 +24,11 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var pesoKg: UITextField!
     @IBOutlet weak var estatura: UITextField!
     @IBOutlet weak var perimetroBraquial: UITextField!
+    @IBOutlet weak var perimetroCefalico: UITextField!
     @IBOutlet weak var continuarBtn: UIButton!
     @IBOutlet weak var medicion1: UIButton!
     @IBOutlet weak var medicion2: UIButton!
+    @IBOutlet weak var medicion3: UIButton!
     @IBOutlet weak var MasculinoBtn: UIButton!
     @IBOutlet weak var FemeninoBtn: UIButton!
     @IBOutlet weak var stackFecha: UIStackView!
@@ -34,6 +36,8 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
     
     var tipoMedida = 0
     var MUAC: Float = 0
+    var perimetroC: Float = 0
+    
     var cmX: Float = 0
     var cmY: Float = 0
     var edadMeses = 0
@@ -52,6 +56,7 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         
         medicion1.isEnabled = false
         medicion2.isEnabled = false
+        medicion3.isEnabled = false
         
         nombre.delegate = self
         apellidos.delegate = self
@@ -61,12 +66,14 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         pesoKg.delegate = self
         estatura.delegate = self
         perimetroBraquial.delegate = self
+        perimetroCefalico.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
         if (self.aux == 0) {
             aux = 1
         } else {
+            perimetroC = UserDefaults.standard.float(forKey: "PerCef")/10
             MUAC = UserDefaults.standard.float(forKey: "MUAC")/10
             cmX = UserDefaults.standard.float(forKey: "mmEnX")/10
             cmY = UserDefaults.standard.float(forKey: "mmEnY")/10
@@ -75,6 +82,9 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
             }
             if MUAC != 0 {
                 perimetroBraquial.text = "\(MUAC)"
+            }
+            if perimetroC != 0 {
+                perimetroCefalico.text = "\(perimetroC)"
             }
         }
     }
@@ -98,6 +108,7 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         pesoKg.resignFirstResponder()
         estatura.resignFirstResponder()
         perimetroBraquial.resignFirstResponder()
+        perimetroCefalico.resignFirstResponder()
         
         return true
     }
@@ -114,6 +125,7 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
             resultados.perimetroBraquialMedido = Float(self.perimetroBraquial.text!) ?? 0
             resultados.edadEnMeses = self.edadMeses
             resultados.sexo = self.sexoMF
+            resultados.pCefMedido = Float(self.perimetroCefalico.text!) ?? 0
         }
     }
     
@@ -129,6 +141,7 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
             self.pesoKg.text = snapshot.childSnapshot(forPath: "PesoKg").value as? String
             self.estatura.text = snapshot.childSnapshot(forPath: "Estatura").value as? String
             self.perimetroBraquial.text = snapshot.childSnapshot(forPath: "MUAC").value as? String
+            self.perimetroCefalico.text = snapshot.childSnapshot(forPath: "P Cefalico").value as? String
             self.edadMeses = Int(snapshot.childSnapshot(forPath: "Edad meses").value as? String ?? "") ?? 0
             print("Edad en meses \(self.edadMeses)")
             self.fechaDeNacimiento = snapshot.childSnapshot(forPath: "Fecha nacimiento").value as? String ?? ""
@@ -138,7 +151,7 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
     }
     
     func check() {
-        if nombre.hasText && apellidos.hasText && ID.hasText && edadMM.hasText && edadA.hasText && edadDD.hasText && sexoMF != "" && pesoKg.hasText && estatura.hasText && perimetroBraquial.hasText {
+        if nombre.hasText && apellidos.hasText && ID.hasText && edadMM.hasText && edadA.hasText && edadDD.hasText && sexoMF != "" && pesoKg.hasText && estatura.hasText && perimetroBraquial.hasText && perimetroCefalico.hasText {
             continuarBtn.isEnabled = true
             continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
         }
@@ -149,7 +162,7 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField == nombre || textField == apellidos || textField == ID || textField == edadDD || textField == edadMM || textField == edadA || textField == pesoKg || textField == estatura || textField == perimetroBraquial {
+        if textField == nombre || textField == apellidos || textField == ID || textField == edadDD || textField == edadMM || textField == edadA || textField == pesoKg || textField == estatura || textField == perimetroBraquial || textField == perimetroCefalico {
             check()
         }
     }
@@ -164,6 +177,11 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
             // MUAC
             print("MUAC")
             tipoMedida = 2
+            performSegue(withIdentifier: "goToMediciones", sender: self)
+        } else if sender.tag == 2 {
+            // Perimetro cefalico
+            print("Perimetro Cefalico")
+            tipoMedida = 3
             performSegue(withIdentifier: "goToMediciones", sender: self)
         }
     }
@@ -224,11 +242,14 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         pesoKg.isEnabled = true
         estatura.isEnabled = true
         perimetroBraquial.isEnabled = true
+        perimetroCefalico.isEnabled = true
         
         medicion1.isEnabled = true
         medicion2.isEnabled = true
+        medicion3.isEnabled = true
         medicion1.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
         medicion2.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
+        medicion3.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
         
         nombre.textColor = UIColor.black
         apellidos.textColor = UIColor.black
@@ -236,6 +257,7 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         pesoKg.textColor = UIColor.black
         estatura.textColor = UIColor.black
         perimetroBraquial.textColor = UIColor.black
+        perimetroCefalico.textColor = UIColor.black
     }
     
     
@@ -249,6 +271,7 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         pesoKg.isEnabled = false
         estatura.isEnabled = false
         perimetroBraquial.isEnabled = false
+        perimetroCefalico.isEnabled = false
         
         nombre.textColor = UIColor.gray
         apellidos.textColor = UIColor.gray
@@ -256,7 +279,7 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         pesoKg.textColor = UIColor.gray
         estatura.textColor = UIColor.gray
         perimetroBraquial.textColor = UIColor.gray
-        
+        perimetroCefalico.textColor = UIColor.gray
         
         Database.database().reference().child("Usuarios").child(userID!).updateChildValues(
             [
@@ -268,7 +291,8 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
                 "Sexo": sexoMF,
                 "PesoKg": pesoKg.text! as NSString,
                 "Estatura": estatura.text! as NSString,
-                "MUAC": perimetroBraquial.text! as NSString
+                "MUAC": perimetroBraquial.text! as NSString,
+                "P Cefalico": perimetroCefalico.text! as NSString
             ])
         
         print("Usuario actualizado y guardado con exito")

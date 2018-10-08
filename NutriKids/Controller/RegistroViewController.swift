@@ -94,6 +94,7 @@ class RegistroViewController: UIViewController,UITextFieldDelegate {
                         "PesoKg": "",
                         "Estatura": "",
                         "MUAC": "",
+                        "P Cefalico": "",
                         "Imagen": "",
                         "Resultado": ""
                         ] as [String : Any]

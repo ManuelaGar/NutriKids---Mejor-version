@@ -53,13 +53,14 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
     var pesoKgTeo_nsd2: Float = 0
     var pesoKgTeo_nsd3: Float = 0
     
-    var pesoLong_sd0: Float = 0
-    var pesoLong_sd1: Float = 0
-    var pesoLong_sd2: Float = 0
-    var pesoLong_sd3: Float = 0
-    var pesoLong_nsd1: Float = 0
-    var pesoLong_nsd2: Float = 0
-    var pesoLong_nsd3: Float = 0
+    var pCefMedido: Float = 0
+    var pCefTeo_sd0: Float = 0
+    var pCefTeo_sd1: Float = 0
+    var pCefTeo_sd2: Float = 0
+    var pCefTeo_sd3: Float = 0
+    var pCefTeo_nsd1: Float = 0
+    var pCefTeo_nsd2: Float = 0
+    var pCefTeo_nsd3: Float = 0
     
     var IMCMedido: Float = 0
     var IMCTeo_sd0: Float = 0
