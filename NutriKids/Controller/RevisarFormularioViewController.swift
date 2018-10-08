@@ -129,8 +129,10 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
             self.pesoKg.text = snapshot.childSnapshot(forPath: "PesoKg").value as? String
             self.estatura.text = snapshot.childSnapshot(forPath: "Estatura").value as? String
             self.perimetroBraquial.text = snapshot.childSnapshot(forPath: "MUAC").value as? String
-            self.edadMeses = snapshot.childSnapshot(forPath: "Edad meses").value as? Int ?? 0
+            self.edadMeses = Int(snapshot.childSnapshot(forPath: "Edad meses").value as? String ?? "") ?? 0
+            print("Edad en meses \(self.edadMeses)")
             self.fechaDeNacimiento = snapshot.childSnapshot(forPath: "Fecha nacimiento").value as? String ?? ""
+            print("Fecha de nacimiento \(self.fechaDeNacimiento)")
         }
         SVProgressHUD.dismiss()
     }
