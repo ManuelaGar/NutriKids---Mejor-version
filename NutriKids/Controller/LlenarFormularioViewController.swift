@@ -30,6 +30,7 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
     var sexo = ""
     var edadMeses = ""
     var fechaDeNacimiento = ""
+    var date = ""
     var tipoMedida = 0
     var estaturaMedida: Float = 0
     var MUAC: Float = 0
@@ -145,7 +146,7 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
     }
     
     func check() {
-        if nombreBtn.hasText && apellidosBtn.hasText && ID.hasText && edadDD.hasText && edadMM.hasText && edadA.hasText && sexo != "" && PesoKg.hasText && estatura.hasText && perimetroBraquial.hasText && perimetroCefalico.hasText {
+        if nombreBtn.hasText && apellidosBtn.hasText && ID.hasText && edadDD.hasText && edadMM.hasText && edadA.hasText && sexo != "" && PesoKg.hasText && estatura.hasText {
             continuarBtn.isEnabled = true
             continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
         }
@@ -203,10 +204,10 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
         let currentDate = NSCalendar.init(calendarIdentifier: NSCalendar.Identifier.gregorian)
 
         if edadMM.hasText && edadA.hasText && edadDD.hasText {
-            let currentYear = (currentDate?.component(NSCalendar.Unit.year, from: Date()) ?? 0)
+            let currentYear = currentDate?.component(NSCalendar.Unit.year, from: Date()) ?? 0
             let currentMonth = currentDate?.component(NSCalendar.Unit.month, from: Date()) ?? 0
-            print(currentYear)
-            print(currentMonth)
+            let currentDay = currentDate?.component(NSCalendar.Unit.day, from: Date()) ?? 0
+            date = "\(currentDay)/\(currentMonth)/\(currentYear)"
             edadMeses = String((currentMonth - Int(edadMM.text!)!) + (currentYear - Int(edadA.text!)!)*12)
         }
 
@@ -218,6 +219,7 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
                 "Apellidos": apellidosBtn.text! as NSString,
                 "ID": ID.text! as NSString,
                 "Fecha nacimiento": fechaDeNacimiento,
+                "Fecha examen": date,
                 "Edad meses": String(edadMeses),
                 "Sexo": sexo,
                 "PesoKg": PesoKg.text! as NSString,

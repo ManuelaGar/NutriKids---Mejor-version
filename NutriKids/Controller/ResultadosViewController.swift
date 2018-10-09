@@ -120,14 +120,15 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func IMC(peso: Float, altura: Float) -> Float {
-        let variable = peso/(powf(altura, 2))
+        let variable = peso/(powf((altura/100), 2))
         return variable
     }
     
     func saveUserInfo() {
         let resultado = ["Indicadores": Indicador, "Punto de corte": puntoDeCorte, "Clasificación": clasificacion]
         Database.database().reference().child("Usuarios").child(userID!).updateChildValues(
-            [ "Resultado": resultado as NSDictionary
+            [ "Resultado": resultado as NSDictionary,
+              "IMC": IMCMedido
             ])
         print("Resultado actualizado y guardado con exito")
     }
@@ -767,53 +768,64 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             
             // MUAC para la edad
-            if edadEnMeses >= 3 {
-                let MUACTeo = MUACparaLaEdad3_60F(edad: Float(edadEnMeses))
-                MUACTeo_sd0 = MUACTeo.sd0
-                MUACTeo_sd1 = MUACTeo.sd1
-                MUACTeo_sd2 = MUACTeo.sd2
-                MUACTeo_sd3 = MUACTeo.sd3
-                MUACTeo_nsd1 = MUACTeo.nsd1
-                MUACTeo_nsd2 = MUACTeo.nsd2
-                MUACTeo_nsd3 = MUACTeo.nsd3
-                
-                if perimetroBraquialMedido < 11.5 {
-                    sd5 = "N/A"
-                    e = "Desnutrición aguda severa y riesgo de muerte por desnutrición"
-                } else if (11.5 < perimetroBraquialMedido) && (perimetroBraquialMedido <= 12.5) {
-                    sd5 = "N/A"
-                    e = "Desnutrición aguda moderada"
-                } else if perimetroBraquialMedido <= 12.5 {
-                    sd5 = "N/A"
-                    e = "Desnutrición aguda global"
-                } else if perimetroBraquialMedido > 12.5 {
-                    sd5 = "N/A"
-                    e = "Perimetro adecuado para la edad"
-                }
+            if perimetroBraquialMedido == 0 {
+                sd5 = "-"
+                e = "-"
             } else {
-                sd5 = "N/A"
-                e = "Solo aplica para mayores de 3 meses"
+                if edadEnMeses >= 3 {
+                    let MUACTeo = MUACparaLaEdad3_60F(edad: Float(edadEnMeses))
+                    MUACTeo_sd0 = MUACTeo.sd0
+                    MUACTeo_sd1 = MUACTeo.sd1
+                    MUACTeo_sd2 = MUACTeo.sd2
+                    MUACTeo_sd3 = MUACTeo.sd3
+                    MUACTeo_nsd1 = MUACTeo.nsd1
+                    MUACTeo_nsd2 = MUACTeo.nsd2
+                    MUACTeo_nsd3 = MUACTeo.nsd3
+                    
+                    if perimetroBraquialMedido < 11.5 {
+                        sd5 = "N/A"
+                        e = "Desnutrición aguda severa y riesgo de muerte por desnutrición"
+                    } else if (11.5 < perimetroBraquialMedido) && (perimetroBraquialMedido <= 12.5) {
+                        sd5 = "N/A"
+                        e = "Desnutrición aguda moderada"
+                    } else if perimetroBraquialMedido <= 12.5 {
+                        sd5 = "N/A"
+                        e = "Desnutrición aguda global"
+                    } else if perimetroBraquialMedido > 12.5 {
+                        sd5 = "N/A"
+                        e = "Perimetro adecuado para la edad"
+                    }
+                } else {
+                    sd5 = "N/A"
+                    e = "Solo aplica para mayores de 3 meses"
+                }
             }
             
-            // Perimetro cefalico para la edad
-            let pCefTeo = pCefalicoParaLaEdad0_60F(edad: Float(edadEnMeses))
-            pCefTeo_sd0 = pCefTeo.sd0
-            pCefTeo_sd1 = pCefTeo.sd1
-            pCefTeo_sd2 = pCefTeo.sd2
-            pCefTeo_sd3 = pCefTeo.sd3
-            pCefTeo_nsd1 = pCefTeo.nsd1
-            pCefTeo_nsd2 = pCefTeo.nsd2
-            pCefTeo_nsd3 = pCefTeo.nsd3
             
-            if pCefMedido > pCefTeo_sd2 {
-                sd6 = "> 2 SD"
-                f = "Factor de Riesgo para el Neurodesarrollo"
-            } else if (pCefTeo_nsd2 <= pCefMedido) && (pCefMedido <= pCefTeo_sd2) {
-                sd6 = "≥ -2 SD a ≤ 2 SD"
-                f = "Normal"
-            } else if (pCefMedido < pCefTeo_nsd2) {
-                sd6 = "< -2 SD"
-                f = "Factor de Riesgo para el Neurodesarrollo"
+            // Perimetro cefalico para la edad
+            if pCefMedido == 0 {
+                sd6 = "-"
+                f = "-"
+            } else {
+                let pCefTeo = pCefalicoParaLaEdad0_60F(edad: Float(edadEnMeses))
+                pCefTeo_sd0 = pCefTeo.sd0
+                pCefTeo_sd1 = pCefTeo.sd1
+                pCefTeo_sd2 = pCefTeo.sd2
+                pCefTeo_sd3 = pCefTeo.sd3
+                pCefTeo_nsd1 = pCefTeo.nsd1
+                pCefTeo_nsd2 = pCefTeo.nsd2
+                pCefTeo_nsd3 = pCefTeo.nsd3
+                
+                if pCefMedido > pCefTeo_sd2 {
+                    sd6 = "> 2 SD"
+                    f = "Factor de Riesgo para el Neurodesarrollo"
+                } else if (pCefTeo_nsd2 <= pCefMedido) && (pCefMedido <= pCefTeo_sd2) {
+                    sd6 = "≥ -2 SD a ≤ 2 SD"
+                    f = "Normal"
+                } else if (pCefMedido < pCefTeo_nsd2) {
+                    sd6 = "< -2 SD"
+                    f = "Factor de Riesgo para el Neurodesarrollo"
+                }
             }
             
         }
@@ -969,53 +981,64 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
             }
             
             // MUAC para la edad
-            if edadEnMeses >= 3 {
-                let MUACTeo = MUACparaLaEdad3_60M(edad: Float(edadEnMeses))
-                MUACTeo_sd0 = MUACTeo.sd0
-                MUACTeo_sd1 = MUACTeo.sd1
-                MUACTeo_sd2 = MUACTeo.sd2
-                MUACTeo_sd3 = MUACTeo.sd3
-                MUACTeo_nsd1 = MUACTeo.nsd1
-                MUACTeo_nsd2 = MUACTeo.nsd2
-                MUACTeo_nsd3 = MUACTeo.nsd3
-                
-                if perimetroBraquialMedido < 11.5 {
-                    sd5 = "N/A"
-                    e = "Desnutrición aguda severa y riesgo de muerte por desnutrición"
-                } else if (11.5 < perimetroBraquialMedido) && (perimetroBraquialMedido <= 12.5) {
-                    sd5 = "N/A"
-                    e = "Desnutrición aguda moderada"
-                } else if perimetroBraquialMedido <= 12.5 {
-                    sd5 = "N/A"
-                    e = "Desnutrición aguda global"
-                } else if perimetroBraquialMedido > 12.5 {
-                    sd5 = "N/A"
-                    e = "Perimetro adecuado para la edad"
-                }
+            if perimetroBraquialMedido == 0 {
+                sd5 = "-"
+                e = "-"
             } else {
-                sd5 = "N/A"
-                e = "Solo aplica para mayores de 3 meses"
+                if edadEnMeses >= 3 {
+                    let MUACTeo = MUACparaLaEdad3_60M(edad: Float(edadEnMeses))
+                    MUACTeo_sd0 = MUACTeo.sd0
+                    MUACTeo_sd1 = MUACTeo.sd1
+                    MUACTeo_sd2 = MUACTeo.sd2
+                    MUACTeo_sd3 = MUACTeo.sd3
+                    MUACTeo_nsd1 = MUACTeo.nsd1
+                    MUACTeo_nsd2 = MUACTeo.nsd2
+                    MUACTeo_nsd3 = MUACTeo.nsd3
+                    
+                    if perimetroBraquialMedido < 11.5 {
+                        sd5 = "N/A"
+                        e = "Desnutrición aguda severa y riesgo de muerte por desnutrición"
+                    } else if (11.5 < perimetroBraquialMedido) && (perimetroBraquialMedido <= 12.5) {
+                        sd5 = "N/A"
+                        e = "Desnutrición aguda moderada"
+                    } else if perimetroBraquialMedido <= 12.5 {
+                        sd5 = "N/A"
+                        e = "Desnutrición aguda global"
+                    } else if perimetroBraquialMedido > 12.5 {
+                        sd5 = "N/A"
+                        e = "Perimetro adecuado para la edad"
+                    }
+                } else {
+                    sd5 = "N/A"
+                    e = "Solo aplica para mayores de 3 meses"
+                }
             }
             
-            // Perimetro cefalico para la edad
-            let pCefTeo = pCefalicoParaLaEdad0_60M(edad: Float(edadEnMeses))
-            pCefTeo_sd0 = pCefTeo.sd0
-            pCefTeo_sd1 = pCefTeo.sd1
-            pCefTeo_sd2 = pCefTeo.sd2
-            pCefTeo_sd3 = pCefTeo.sd3
-            pCefTeo_nsd1 = pCefTeo.nsd1
-            pCefTeo_nsd2 = pCefTeo.nsd2
-            pCefTeo_nsd3 = pCefTeo.nsd3
             
-            if pCefMedido > pCefTeo_sd2 {
-                sd6 = "> 2 SD"
-                f = "Factor de Riesgo para el Neurodesarrollo"
-            } else if (pCefTeo_nsd2 <= pCefMedido) && (pCefMedido <= pCefTeo_sd2) {
-                sd6 = "≥ -2 SD a ≤ 2 SD"
-                f = "Normal"
-            } else if (pCefMedido < pCefTeo_nsd2) {
-                sd6 = "< -2 SD"
-                f = "Factor de Riesgo para el Neurodesarrollo"
+            // Perimetro cefalico para la edad
+            if pCefMedido == 0 {
+                sd6 = "-"
+                f = "-"
+            } else {
+                let pCefTeo = pCefalicoParaLaEdad0_60M(edad: Float(edadEnMeses))
+                pCefTeo_sd0 = pCefTeo.sd0
+                pCefTeo_sd1 = pCefTeo.sd1
+                pCefTeo_sd2 = pCefTeo.sd2
+                pCefTeo_sd3 = pCefTeo.sd3
+                pCefTeo_nsd1 = pCefTeo.nsd1
+                pCefTeo_nsd2 = pCefTeo.nsd2
+                pCefTeo_nsd3 = pCefTeo.nsd3
+                
+                if pCefMedido > pCefTeo_sd2 {
+                    sd6 = "> 2 SD"
+                    f = "Factor de Riesgo para el Neurodesarrollo"
+                } else if (pCefTeo_nsd2 <= pCefMedido) && (pCefMedido <= pCefTeo_sd2) {
+                    sd6 = "≥ -2 SD a ≤ 2 SD"
+                    f = "Normal"
+                } else if (pCefMedido < pCefTeo_nsd2) {
+                    sd6 = "< -2 SD"
+                    f = "Factor de Riesgo para el Neurodesarrollo"
+                }
             }
         }
         

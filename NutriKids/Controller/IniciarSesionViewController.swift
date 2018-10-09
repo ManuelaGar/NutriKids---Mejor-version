@@ -17,15 +17,19 @@ class IniciarSesionViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var inicioSesionBtn: UIButton!
     @IBOutlet weak var mensaje: UILabel!
     
-    
+    var loc : [String : String] = [:]
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         emailTextField.delegate = self
         passwordTextField.delegate = self
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToFormulario2" {
+            let revisarFormularioVC = segue.destination as! RevisarFormularioViewController
+            revisarFormularioVC.loc = self.loc
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -77,7 +81,6 @@ class IniciarSesionViewController: UIViewController, UITextFieldDelegate {
                 self.performSegue(withIdentifier: "goToFormulario2", sender: self)
             }
         }
-        
     }
     
 }

@@ -29,7 +29,7 @@
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="ASn-qe-gdr" kind="show" identifier="" id="ejQ-bK-ggL"/>
+                                    <segue destination="ASn-qe-gdr" kind="show" identifier="goToRegistro" id="ejQ-bK-ggL"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pNL-hg-frL">
@@ -43,7 +43,7 @@
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="MQn-gk-CmA" kind="show" id="TmB-h4-t8c"/>
+                                    <segue destination="MQn-gk-CmA" kind="show" identifier="goToIniciarSesion" id="TmB-h4-t8c"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="group-happy-jumping-children-isolated-white-background-stock-vector-cartoon-illustration-54481498" translatesAutoresizingMaskIntoConstraints="NO" id="XWr-7K-bQp">

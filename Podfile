@@ -16,6 +16,8 @@ pod 'Firebase/Storage'
 pod 'SVProgressHUD'
 pod 'IGRPhotoTweaks', '~> 1.0.0'
 pod 'HorizontalDial'
+pod 'SwiftyJSON'
+pod 'Alamofire'
 
 end
 

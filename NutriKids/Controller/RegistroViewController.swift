@@ -17,6 +17,8 @@ class RegistroViewController: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var registrarseBtn: UIButton!
     @IBOutlet weak var mensaje: UILabel!
     
+    var loc : [String : String] = [:]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         emailTextField.delegate = self
@@ -80,6 +82,7 @@ class RegistroViewController: UIViewController,UITextFieldDelegate {
             }
             else {
                 print("Registro Exitoso")
+                print(self.loc)
                 
                 let usuariosDB = Database.database().reference().child("Usuarios")
                 let usuarioDiccionario =
@@ -90,13 +93,16 @@ class RegistroViewController: UIViewController,UITextFieldDelegate {
                         "ID": "",
                         "Sexo": "",
                         "Fecha nacimiento": "",
+                        "Fecha examen": "",
                         "Edad meses": "",
                         "PesoKg": "",
                         "Estatura": "",
                         "MUAC": "",
+                        "IMC": "",
                         "P Cefalico": "",
                         "Imagen": "",
-                        "Resultado": ""
+                        "Resultado": "",
+                        "Ubicacion": self.loc
                         ] as [String : Any]
                 let userID = Auth.auth().currentUser?.uid
                 usuariosDB.child(userID!).setValue(usuarioDiccionario) {

@@ -33,6 +33,8 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var FemeninoBtn: UIButton!
     @IBOutlet weak var stackFecha: UIStackView!
     
+    var loc : [String : String] = [:]
+    var date = ""
     
     var tipoMedida = 0
     var MUAC: Float = 0
@@ -143,15 +145,14 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
             self.perimetroBraquial.text = snapshot.childSnapshot(forPath: "MUAC").value as? String
             self.perimetroCefalico.text = snapshot.childSnapshot(forPath: "P Cefalico").value as? String
             self.edadMeses = Int(snapshot.childSnapshot(forPath: "Edad meses").value as? String ?? "") ?? 0
-            print("Edad en meses \(self.edadMeses)")
             self.fechaDeNacimiento = snapshot.childSnapshot(forPath: "Fecha nacimiento").value as? String ?? ""
-            print("Fecha de nacimiento \(self.fechaDeNacimiento)")
+            self.date = snapshot.childSnapshot(forPath: "Fecha examen").value as? String ?? ""
         }
         SVProgressHUD.dismiss()
     }
     
     func check() {
-        if nombre.hasText && apellidos.hasText && ID.hasText && edadMM.hasText && edadA.hasText && edadDD.hasText && sexoMF != "" && pesoKg.hasText && estatura.hasText && perimetroBraquial.hasText && perimetroCefalico.hasText {
+        if nombre.hasText && apellidos.hasText && ID.hasText && edadMM.hasText && edadA.hasText && edadDD.hasText && sexoMF != "" && pesoKg.hasText && estatura.hasText {
             continuarBtn.isEnabled = true
             continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
         }
@@ -216,10 +217,11 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         edadA.text = fecha[2]
         
         let currentDate = NSCalendar.init(calendarIdentifier: NSCalendar.Identifier.gregorian)
-        let currentYear = (currentDate?.component(NSCalendar.Unit.year, from: Date()) ?? 0)
+        let currentYear = currentDate?.component(NSCalendar.Unit.year, from: Date()) ?? 0
         let currentMonth = currentDate?.component(NSCalendar.Unit.month, from: Date()) ?? 0
-        print(currentYear)
-        print(currentMonth)
+        let currentDay = currentDate?.component(NSCalendar.Unit.day, from: Date()) ?? 0
+        date = "\(currentDay)/\(currentMonth)/\(currentYear)"
+        
         edadMeses = (currentMonth - Int(edadMM.text!)!) + (currentYear - Int(edadA.text!)!)*12
         fechaDeNacimiento = "\(edadDD.text!)/\(edadMM.text!)/\(edadA.text!)"
         
@@ -287,12 +289,14 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
                 "Apellidos": apellidos.text! as NSString,
                 "ID": ID.text! as NSString,
                 "Fecha nacimiento": fechaDeNacimiento,
+                "Fecha examen": date,
                 "Edad meses": String(edadMeses),
                 "Sexo": sexoMF,
                 "PesoKg": pesoKg.text! as NSString,
                 "Estatura": estatura.text! as NSString,
                 "MUAC": perimetroBraquial.text! as NSString,
-                "P Cefalico": perimetroCefalico.text! as NSString
+                "P Cefalico": perimetroCefalico.text! as NSString,
+                "Ubicacion": self.loc as NSDictionary
             ])
         
         print("Usuario actualizado y guardado con exito")
