@@ -18,6 +18,7 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var edadDD: UITextField!
     @IBOutlet weak var edadMM: UITextField!
     @IBOutlet weak var edadA: UITextField!
+    @IBOutlet weak var alertaEdad: UILabel!
     @IBOutlet weak var PesoKg: UITextField!
     @IBOutlet weak var masculinoBtn: UIButton!
     @IBOutlet weak var femeninoBtn: UIButton!
@@ -146,9 +147,20 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
     }
     
     func check() {
+        if edadDD.hasText && edadMM.hasText && edadA.hasText {
+            edadEnMeses()
+            if edadA.isEditing == false {
+                if (Int(edadMeses) ?? 0) <= 60 {
+                    alertaEdad.isHidden = true
+                } else {
+                    alertaEdad.isHidden = false
+                }
+            }
+        }
         if nombreBtn.hasText && apellidosBtn.hasText && ID.hasText && edadDD.hasText && edadMM.hasText && edadA.hasText && sexo != "" && PesoKg.hasText && estatura.hasText {
             continuarBtn.isEnabled = true
             continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
+            alertaEdad.isHidden = true
         }
         else {
             continuarBtn.isEnabled = false
@@ -181,10 +193,18 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    
-    //TODO: Terminar las condiciones de esta view (fecha de edad no mas de 60...)
-    func verificacion() {
+    func edadEnMeses() {
+        let currentDate = NSCalendar.init(calendarIdentifier: NSCalendar.Identifier.gregorian)
         
+        if edadMM.hasText && edadA.hasText && edadDD.hasText {
+            let currentYear = currentDate?.component(NSCalendar.Unit.year, from: Date()) ?? 0
+            let currentMonth = currentDate?.component(NSCalendar.Unit.month, from: Date()) ?? 0
+            let currentDay = currentDate?.component(NSCalendar.Unit.day, from: Date()) ?? 0
+            date = "\(currentDay)/\(currentMonth)/\(currentYear)"
+            edadMeses = String((currentMonth - Int(edadMM.text!)!) + (currentYear - Int(edadA.text!)!)*12)
+        }
+        
+        fechaDeNacimiento = "\(edadDD.text!)/\(edadMM.text!)/\(edadA.text!)"
     }
     
     
@@ -201,18 +221,7 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
         estatura.isEnabled = false
         perimetroBraquial.isEnabled = false
 
-        let currentDate = NSCalendar.init(calendarIdentifier: NSCalendar.Identifier.gregorian)
-
-        if edadMM.hasText && edadA.hasText && edadDD.hasText {
-            let currentYear = currentDate?.component(NSCalendar.Unit.year, from: Date()) ?? 0
-            let currentMonth = currentDate?.component(NSCalendar.Unit.month, from: Date()) ?? 0
-            let currentDay = currentDate?.component(NSCalendar.Unit.day, from: Date()) ?? 0
-            date = "\(currentDay)/\(currentMonth)/\(currentYear)"
-            edadMeses = String((currentMonth - Int(edadMM.text!)!) + (currentYear - Int(edadA.text!)!)*12)
-        }
-
-        fechaDeNacimiento = "\(edadDD.text!)/\(edadMM.text!)/\(edadA.text!)"
-        
+        edadEnMeses()
         Database.database().reference().child("Usuarios").child(userID!).updateChildValues(
             [
                 "Nombre": nombreBtn.text! as NSString,

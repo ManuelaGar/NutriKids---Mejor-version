@@ -23,7 +23,7 @@ class RegistroViewController: UIViewController,UITextFieldDelegate {
         super.viewDidLoad()
         emailTextField.delegate = self
         passwordTextField.delegate = self
-        registrarseBtn.isEnabled = false
+//        registrarseBtn.isEnabled = false
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,24 +41,6 @@ class RegistroViewController: UIViewController,UITextFieldDelegate {
         passwordTextField.resignFirstResponder()
         
         return true
-    }
-
-    func verificacion() {
-        if emailTextField.text == "" || passwordTextField.text == "" {
-            registrarseBtn.isEnabled = false
-            registrarseBtn.backgroundColor = UIColor.lightGray
-        }
-        if emailTextField.hasText && passwordTextField.hasText {
-            self.registrarseBtn.isEnabled = true
-            self.mensaje.isHidden = true
-            self.registrarseBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
-        }
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField == emailTextField || textField == passwordTextField {
-            verificacion()
-        }
     }
 
     

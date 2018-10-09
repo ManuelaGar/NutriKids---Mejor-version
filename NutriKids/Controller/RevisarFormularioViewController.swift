@@ -20,6 +20,7 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var edadDD: UITextField!
     @IBOutlet weak var edadMM: UITextField!
     @IBOutlet weak var edadA: UITextField!
+    @IBOutlet weak var alertaEdad: UILabel!
     @IBOutlet weak var sexo: UITextField!
     @IBOutlet weak var pesoKg: UITextField!
     @IBOutlet weak var estatura: UITextField!
@@ -64,6 +65,9 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         apellidos.delegate = self
         ID.delegate = self
         fechaNacimiento.delegate = self
+        edadDD.delegate = self
+        edadMM.delegate = self
+        edadA.delegate = self
         sexo.delegate = self
         pesoKg.delegate = self
         estatura.delegate = self
@@ -148,11 +152,12 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
             self.fechaDeNacimiento = snapshot.childSnapshot(forPath: "Fecha nacimiento").value as? String ?? ""
             self.date = snapshot.childSnapshot(forPath: "Fecha examen").value as? String ?? ""
         }
+        check()
         SVProgressHUD.dismiss()
     }
     
     func check() {
-        if nombre.hasText && apellidos.hasText && ID.hasText && edadMM.hasText && edadA.hasText && edadDD.hasText && sexoMF != "" && pesoKg.hasText && estatura.hasText {
+        if nombre.hasText && apellidos.hasText && ID.hasText && fechaNacimiento.hasText && sexoMF != "" && pesoKg.hasText && estatura.hasText {
             continuarBtn.isEnabled = true
             continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
         }
@@ -162,10 +167,46 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField == nombre || textField == apellidos || textField == ID || textField == edadDD || textField == edadMM || textField == edadA || textField == pesoKg || textField == estatura || textField == perimetroBraquial || textField == perimetroCefalico {
-            check()
+    func checkEditar() {
+        if edadDD.hasText && edadMM.hasText && edadA.hasText {
+            edadEnMeses()
+            print("Edad en meses \(edadMeses)")
+            if edadMeses <= 60 {
+                alertaEdad.isHidden = true
+                if nombre.hasText && apellidos.hasText && ID.hasText && edadMM.hasText && edadA.hasText && edadDD.hasText && sexoMF != "" && pesoKg.hasText && estatura.hasText {
+                    continuarBtn.isEnabled = true
+                    continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
+                }
+                else {
+                    continuarBtn.isEnabled = false
+                    continuarBtn.backgroundColor = UIColor.lightGray
+                }
+            } else {
+                alertaEdad.isHidden = false
+                continuarBtn.isEnabled = false
+                continuarBtn.backgroundColor = UIColor.lightGray
+            }
         }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == nombre || textField == apellidos || textField == ID || textField == pesoKg || textField == estatura || textField == edadDD || textField == edadMM || textField == edadA {
+            checkEditar()
+        }
+    }
+    
+    func edadEnMeses() {
+        let currentDate = NSCalendar.init(calendarIdentifier: NSCalendar.Identifier.gregorian)
+        
+        if edadMM.hasText && edadA.hasText && edadDD.hasText {
+            let currentYear = currentDate?.component(NSCalendar.Unit.year, from: Date()) ?? 0
+            let currentMonth = currentDate?.component(NSCalendar.Unit.month, from: Date()) ?? 0
+            let currentDay = currentDate?.component(NSCalendar.Unit.day, from: Date()) ?? 0
+            date = "\(currentDay)/\(currentMonth)/\(currentYear)"
+            edadMeses = (currentMonth - Int(edadMM.text!)!) + (currentYear - Int(edadA.text!)!)*12
+        }
+        
+        fechaDeNacimiento = "\(edadDD.text!)/\(edadMM.text!)/\(edadA.text!)"
     }
     
     @IBAction func medirPressed(_ sender: UIButton) {
@@ -211,19 +252,18 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func editarPressed(_ sender: UIBarButtonItem) {
-        let fecha = fechaDeNacimiento.components(separatedBy: "/")
-        edadDD.text = fecha[0]
-        edadMM.text = fecha[1]
-        edadA.text = fecha[2]
-        
         let currentDate = NSCalendar.init(calendarIdentifier: NSCalendar.Identifier.gregorian)
         let currentYear = currentDate?.component(NSCalendar.Unit.year, from: Date()) ?? 0
         let currentMonth = currentDate?.component(NSCalendar.Unit.month, from: Date()) ?? 0
         let currentDay = currentDate?.component(NSCalendar.Unit.day, from: Date()) ?? 0
         date = "\(currentDay)/\(currentMonth)/\(currentYear)"
         
-        edadMeses = (currentMonth - Int(edadMM.text!)!) + (currentYear - Int(edadA.text!)!)*12
-        fechaDeNacimiento = "\(edadDD.text!)/\(edadMM.text!)/\(edadA.text!)"
+        let fecha = fechaDeNacimiento.components(separatedBy: "/")
+        if fecha[0] != "" {
+            edadDD.text = fecha[0]
+            edadMM.text = fecha[1]
+            edadA.text = fecha[2]
+        }
         
         if sexoMF == "Masculino" {
             MasculinoBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
@@ -260,6 +300,8 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         estatura.textColor = UIColor.black
         perimetroBraquial.textColor = UIColor.black
         perimetroCefalico.textColor = UIColor.black
+        
+        checkEditar()
     }
     
     
@@ -282,6 +324,8 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         estatura.textColor = UIColor.gray
         perimetroBraquial.textColor = UIColor.gray
         perimetroCefalico.textColor = UIColor.gray
+        
+        edadEnMeses()
         
         Database.database().reference().child("Usuarios").child(userID!).updateChildValues(
             [
