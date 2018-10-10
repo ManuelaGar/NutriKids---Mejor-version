@@ -90,6 +90,7 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
         
         if tipoMedida == 1 {
             // Estatura
+            createAlert(title: "Medir estatura", message: "Para medir la estatura del usuario teniendo una foto necesita un marcador (objeto de medidas conocidas) como se ve en la imagen, deberá: \n1. Seleccionar el marcador a usar \n2. Seleccionar una foto que contenga al usuario y el marcador seleccionado \n3. Recortar el marcador en la foto \n4. Recortar al usuario en la foto", imageName: "Kid")
             if cancel == true && medida == 1 {
                 check3.isHidden = true
             }
@@ -110,6 +111,12 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
             }
         } else if (tipoMedida == 2 || tipoMedida == 3) {
             //MUAC o Perimetro cefálico
+            if tipoMedida == 2 {
+                createAlert(title: "Perímetro Brazo", message: "Para medir el perímetro del brazo teniendo una foto necesitará dos marcadores (objeto de medidas conocidas) como se ve en la imagen, deberá: \n1. Seleccionar los marcadores a usar \n2. Seleccionar una foto que contenga el brazo del usuario apoyado sobre una superficie plana con un marcador sobre este y un marcador sobre la superficie \n3. Medida horizontal: \n3.1. Recortar el marcador sobre la superficie \n3.2. Recortar el diametro del brazo \n4. Medida vertical: \n4.1. Recortar el marcador sobre la superficie \n4.2. Recortar el marcador sobre el brazo", imageName: "brazo2")
+            } else {
+                createAlert(title: "Perímetro Cabeza", message: "Para medir el perímetro de la cabeza teniendo una foto necesitará dos marcadores (objeto de medidas conocidas) como se ve en la imagen, deberá: \n1. Seleccionar los marcadores a usar \n2. Seleccionar una foto que contenga la cabeza del usuario apoyada sobre una superficie plana con un marcador sobre esta y un marcador sobre la superficie \n3. Medida horizontal: \n3.1. Recortar el marcador sobre la superficie \n3.2. Recortar el diametro de la cabeza \n4. Medida vertical: \n4.1. Recortar el marcador sobre la superficie \n4.2. Recortar el marcador sobre la cabeza", imageName: "cabeza3")
+            }
+            
             if cancel == true && medida == 1 {
                 check3.isHidden = true
             }
@@ -159,6 +166,16 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
             vc.image = self.image
 
         }
+    }
+    
+    func createAlert(title: String, message: String, imageName: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let image = UIImage(named: imageName)
+        alert.addImage(image: image!)
+        alert.addAction(UIAlertAction(title: "Entiendo", style: .default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
 //    func guardarImagen() {

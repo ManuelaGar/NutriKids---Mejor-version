@@ -24,6 +24,8 @@
 		D0A50F7C2163D8E70063ED44 /* SeleccionarMedidaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A50F7B2163D8E70063ED44 /* SeleccionarMedidaViewController.swift */; };
 		D0A50F7E2163D90D0063ED44 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A50F7D2163D90D0063ED44 /* ViewController.swift */; };
 		D0A50F802163D9200063ED44 /* CropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A50F7F2163D9200063ED44 /* CropViewController.swift */; };
+		D0C4713A216D7782004791F6 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C47139216D7782004791F6 /* UIImage+Resize.swift */; };
+		D0C4713C216D77B3004791F6 /* AlertController+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C4713B216D77B3004791F6 /* AlertController+Image.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +50,8 @@
 		D0A50F7B2163D8E70063ED44 /* SeleccionarMedidaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeleccionarMedidaViewController.swift; sourceTree = "<group>"; };
 		D0A50F7D2163D90D0063ED44 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D0A50F7F2163D9200063ED44 /* CropViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropViewController.swift; sourceTree = "<group>"; };
+		D0C47139216D7782004791F6 /* UIImage+Resize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
+		D0C4713B216D77B3004791F6 /* AlertController+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlertController+Image.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +79,7 @@
 			children = (
 				324468FE211CB3A30031011D /* Default-568h@2x.png */,
 				324468DA211CA0C00031011D /* NutriKids */,
+				D0C47138216D772B004791F6 /* Extensions */,
 				324468D9211CA0C00031011D /* Products */,
 				78A6A660CEDD8245E0AF8920 /* Pods */,
 				1570C8C68EED5D0F13C7CA37 /* Frameworks */,
@@ -135,6 +140,15 @@
 				233EA9548B7A9909375BF103 /* Pods-NutriKids.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		D0C47138216D772B004791F6 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D0C47139216D7782004791F6 /* UIImage+Resize.swift */,
+				D0C4713B216D77B3004791F6 /* AlertController+Image.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -271,10 +285,12 @@
 				324468F2211CACCD0031011D /* LlenarFormularioViewController.swift in Sources */,
 				324468DE211CA0C00031011D /* InicioViewController.swift in Sources */,
 				324468F4211CAD170031011D /* IniciarSesionViewController.swift in Sources */,
+				D0C4713A216D7782004791F6 /* UIImage+Resize.swift in Sources */,
 				324468F6211CAD480031011D /* RevisarFormularioViewController.swift in Sources */,
 				D079E4042167C8E300DFC916 /* ResultadosViewControllerTableViewCell.swift in Sources */,
 				324468F0211CAC7C0031011D /* RegistroViewController.swift in Sources */,
 				324468FA211CAD9E0031011D /* ResultadosViewController.swift in Sources */,
+				D0C4713C216D77B3004791F6 /* AlertController+Image.swift in Sources */,
 				D0A50F802163D9200063ED44 /* CropViewController.swift in Sources */,
 				324468DC211CA0C00031011D /* AppDelegate.swift in Sources */,
 			);
