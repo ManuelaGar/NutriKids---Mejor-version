@@ -195,7 +195,7 @@ class CropViewController: IGRPhotoTweakViewController {
             m = 30
             DF = 3163.39985
         case 11:
-            m = 0
+            m = 316
             DF = 0
         default:
             // Moneda de 1000

@@ -81,6 +81,7 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        alertaEdad.isHidden = true
         retrieveUserInfo()
         addObservers()
     }
@@ -217,11 +218,39 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
     }
     
     func checkEditar() {
+        if edadDD.hasText {
+            print(edadDD.text!)
+            if (Int(edadDD.text!) ?? 0) >= 32 {
+                edadDD.text = ""
+                alertaEdad.isHidden = false
+                alertaEdad.text = "*El día no puede ser mayor a 31"
+            } else {
+                alertaEdad.isHidden = true
+            }
+        }
+        if edadMM.hasText {
+            print(edadMM.text!)
+            if (Int(edadMM.text!) ?? 0) >= 13 {
+                edadMM.text = ""
+                alertaEdad.isHidden = false
+                alertaEdad.text = "*El mes no puede ser mayor a 12"
+            } else {
+                alertaEdad.isHidden = true
+            }
+        }
+        if edadA.hasText {
+            let currentYear = NSCalendar.init(calendarIdentifier: NSCalendar.Identifier.gregorian)?.component(NSCalendar.Unit.year, from: Date()) ?? 0
+            if ((Int(edadA.text!) ?? 0) < (currentYear - 5)) || ((Int(edadA.text!) ?? 0) > currentYear) {
+                edadA.text = ""
+                alertaEdad.isHidden = false
+                alertaEdad.text = "*El año no puede ser menor a \(currentYear - 5) o mayor al actual"
+            }
+        }
         if edadDD.hasText && edadMM.hasText && edadA.hasText {
             edadEnMeses()
             print("Edad en meses \(edadMeses)")
             if edadMeses <= 60 {
-                alertaEdad.alpha = 0
+                alertaEdad.isHidden = true
                 if nombre.hasText && apellidos.hasText && ID.hasText && edadMM.hasText && edadA.hasText && edadDD.hasText && sexoMF != "" && pesoKg.hasText && estatura.hasText {
                     continuarBtn.isEnabled = true
                     continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
@@ -231,7 +260,8 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
                     continuarBtn.backgroundColor = UIColor.lightGray
                 }
             } else {
-                alertaEdad.alpha = 1
+                alertaEdad.isHidden = false
+                alertaEdad.text = "*El usuario debe ser menor a 5 años"
                 continuarBtn.isEnabled = false
                 continuarBtn.backgroundColor = UIColor.lightGray
             }

@@ -154,10 +154,6 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let userPickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             self.image = userPickedImage
@@ -218,7 +214,7 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
                                             message: nil,
                                             preferredStyle: .actionSheet)
         if tipoMedida == 1 {
-            actionSheet.addAction(UIAlertAction(title: "Botella CocaCola 2 Litros", style: .default) { (action) in
+            actionSheet.addAction(UIAlertAction(title: "Botella CocaCola 1.5 Litros", style: .default) { (action) in
                 self.tipoMarcador = 11
                 self.check1.isHidden = false
             })
@@ -283,7 +279,7 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
                                             message: nil,
                                             preferredStyle: .actionSheet)
         if tipoMedida == 1 {
-            actionSheet.addAction(UIAlertAction(title: "Botella CocaCola 2 Litros", style: .default) { (action) in
+            actionSheet.addAction(UIAlertAction(title: "Botella CocaCola 1.5 Litros", style: .default) { (action) in
                 self.tipoMarcador = 11
                 self.check1.isHidden = false
             })

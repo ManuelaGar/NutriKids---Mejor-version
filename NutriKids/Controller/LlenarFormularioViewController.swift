@@ -72,6 +72,7 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addObservers()
+        alertaEdad.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -189,12 +190,41 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
     }
     
     func check() {
+        if edadDD.hasText {
+            print(edadDD.text!)
+            if (Int(edadDD.text!) ?? 0) >= 32 {
+                edadDD.text = ""
+                alertaEdad.isHidden = false
+                alertaEdad.text = "*El día no puede ser mayor a 31"
+            } else {
+                alertaEdad.isHidden = true
+            }
+        }
+        if edadMM.hasText {
+            print(edadMM.text!)
+            if (Int(edadMM.text!) ?? 0) >= 13 {
+                edadMM.text = ""
+                alertaEdad.isHidden = false
+                alertaEdad.text = "*El mes no puede ser mayor a 12"
+            } else {
+                alertaEdad.isHidden = true
+            }
+        }
+        if edadA.hasText {
+            let currentYear = NSCalendar.init(calendarIdentifier: NSCalendar.Identifier.gregorian)?.component(NSCalendar.Unit.year, from: Date()) ?? 0
+            if ((Int(edadA.text!) ?? 0) < (currentYear - 5)) || ((Int(edadA.text!) ?? 0) > currentYear) {
+                edadA.text = ""
+                alertaEdad.isHidden = false
+                alertaEdad.text = "*El año no puede ser menor a \(currentYear - 5) o mayor al actual"
+            }
+        }
         if edadDD.hasText && edadMM.hasText && edadA.hasText {
             edadEnMeses()
             if edadA.isEditing == false {
                 if (Int(edadMeses) ?? 0) <= 60 {
                     alertaEdad.isHidden = true
                 } else {
+                    alertaEdad.text = "*El usuario debe ser menor a 5 años"
                     alertaEdad.isHidden = false
                 }
             }
