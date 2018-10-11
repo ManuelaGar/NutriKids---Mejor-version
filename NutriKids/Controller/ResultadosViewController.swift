@@ -640,15 +640,15 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
         
             if estaturaMedida >= estaturaTeo_nsd1 {
                 // Talla adecuada para la edad
-                sd1 = "≥ -1 SD"
+                sd1 = "≥ -1 DE"
                 a = "Talla adecuada para la edad"
             } else if (estaturaTeo_nsd2 <= estaturaMedida) && (estaturaMedida < estaturaTeo_nsd1) {
                 // Riesgo de talla baja
-                sd1 = "≥ -2 SD a < -1 SD"
+                sd1 = "≥ -2 DE a < -1 DE"
                 a = "Riesgo de talla baja"
             } else if estaturaMedida < estaturaTeo_nsd2 {
                 // Talla Baja para la Edad o Retraso en Talla
-                sd1 = "< -2 SD"
+                sd1 = "< -2 DE"
                 a = "Talla Baja para la Edad o Retraso en Talla"
             }
             
@@ -657,19 +657,19 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
             
             if pesoParaEdad.sd1 < pesoKgMedido {
                 // No Aplica (Verificar con IMC/E)
-                sd2 = "≥ -1 SD a < a 1 SD"
+                sd2 = "≥ -1 DE a < a 1 DE"
                 b = "No Aplica (Verificar con IMC/E)"
             } else if (pesoParaEdad.nsd1 <= pesoKgMedido) && (pesoKgMedido <= pesoParaEdad.sd1) {
                 // Peso Adecuado para la Edad
-                sd2 = "≥ -1 SD a < a 1 SD"
+                sd2 = "≥ -1 DE a < a 1 DE"
                 b = "Peso Adecuado para la Edad"
             } else if (pesoParaEdad.nsd2 <= pesoKgMedido) && (pesoKgMedido < pesoParaEdad.nsd1) {
                 // Riesgo de Desnutrición Global
-                sd2 = "≥ -2 SD a < a -1 SD"
+                sd2 = "≥ -2 DE a < a -1 DE"
                 b = "Riesgo de Desnutrición Global"
             } else if pesoKgMedido < pesoParaEdad.nsd2 {
                 // Desnutrición Global
-                sd2 = "< -2 SD"
+                sd2 = "< -2 DE"
                 b = "Desnutrición Global"
             }
             
@@ -697,31 +697,31 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
             
             if pesoKgMedido > pesoKgTeo_sd3 {
                 // Obesidad
-                sd3 = "> 3 SD"
+                sd3 = "> 3 DE"
                 c = "Obesidad"
             } else if (pesoKgTeo_sd2 < pesoKgMedido) && (pesoKgMedido <= pesoKgTeo_sd3) {
                 // Sobrepeso
-                sd3 = "> 2 SD a ≤ 3 SD"
+                sd3 = "> 2 DE a ≤ 3 DE"
                 c = "Sobrepeso"
             } else if (pesoKgTeo_sd1 < pesoKgMedido) && (pesoKgMedido <= pesoKgTeo_sd2) {
                 // Riesgo de Sobrepeso
-                sd3 = "> 1 SD a ≤ 2 SD"
+                sd3 = "> 1 DE a ≤ 2 DE"
                 c = "Riesgo de Sobrepeso"
             } else if (pesoKgTeo_nsd1 <= pesoKgMedido) && (pesoKgMedido <= pesoKgTeo_sd1) {
                 // Peso Adecuado para la Talla
-                sd3 = "≥ -1 SD a ≤ 1 SD"
+                sd3 = "≥ -1 DE a ≤ 1 DE"
                 c = "Peso Adecuado para la Talla"
             } else if (pesoKgTeo_nsd2 <= pesoKgMedido) && (pesoKgMedido < pesoKgTeo_nsd1) {
                 // Riesgo de Desnutrición Aguda
-                sd3 = "≥ -2 SD a < -1 SD"
+                sd3 = "≥ -2 DE a < -1 DE"
                 c = "Riesgo de Desnutrición Aguda"
             } else if (pesoKgTeo_nsd3 <= pesoKgMedido) && (pesoKgMedido < pesoKgTeo_nsd2) {
                 // Desnutrición Aguda Moderada
-                sd3 = "≥ -3 SD a < -2 SD"
+                sd3 = "≥ -3 DE a < -2 DE"
                 c = "Desnutrición Aguda Moderada"
             } else if pesoKgMedido < pesoKgTeo_nsd3 {
                 // Desnutrición Aguda Severa
-                sd3 = "< -3 SD"
+                sd3 = "< -3 DE"
                 c = "Desnutrición Aguda Severa"
             }
             
@@ -749,21 +749,21 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
             
             if IMCMedido > IMCTeo_sd3 {
                 // Obesidad
-                sd4 = "> 3 SD"
+                sd4 = "> 3 DE"
                 d = "Obesidad"
                 
             } else if (IMCTeo_sd2 < IMCMedido) && (IMCMedido <= IMCTeo_sd3) {
                 // Sobrepeso
-                sd4 = "> 2 SD a ≤ 3 SD"
+                sd4 = "> 2 DE a ≤ 3 DE"
                 d = "Sobrepeso"
                 
             } else if (IMCTeo_sd1 < IMCMedido) && (IMCMedido <= IMCTeo_sd2) {
                 // Riesgo de Sobrepeso
-                sd4 = "> 1 SD a ≤ 2 SD"
+                sd4 = "> 1 DE a ≤ 2 DE"
                 d = "Riesgo de Sobrepeso"
             } else if IMCTeo_sd1 >= IMCMedido {
                 // No Aplica (Verificar con P/T)
-                sd4 = "≤ 1 SD"
+                sd4 = "≤ 1 DE"
                 d = "No Aplica (Verificar con P/T)"
             }
             
@@ -817,13 +817,13 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
                 pCefTeo_nsd3 = pCefTeo.nsd3
                 
                 if pCefMedido > pCefTeo_sd2 {
-                    sd6 = "> 2 SD"
+                    sd6 = "> 2 DE"
                     f = "Factor de Riesgo para el Neurodesarrollo"
                 } else if (pCefTeo_nsd2 <= pCefMedido) && (pCefMedido <= pCefTeo_sd2) {
-                    sd6 = "≥ -2 SD a ≤ 2 SD"
+                    sd6 = "≥ -2 DE a ≤ 2 DE"
                     f = "Normal"
                 } else if (pCefMedido < pCefTeo_nsd2) {
-                    sd6 = "< -2 SD"
+                    sd6 = "< -2 DE"
                     f = "Factor de Riesgo para el Neurodesarrollo"
                 }
             }
@@ -853,15 +853,15 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
             
             if estaturaMedida >= estaturaTeo_nsd1 {
                 // Talla adecuada para la edad
-                sd1 = "≥ -1 SD"
+                sd1 = "≥ -1 DE"
                 a = "Talla adecuada para la edad"
             } else if (estaturaTeo_nsd2 <= estaturaMedida) && (estaturaMedida < estaturaTeo_nsd1) {
                 // Riesgo de talla baja
-                sd1 = "≥ -2 SD a < -1 SD"
+                sd1 = "≥ -2 DE a < -1 DE"
                 a = "Riesgo de talla baja"
             } else if estaturaMedida < estaturaTeo_nsd2 {
                 // Talla Baja para la Edad o Retraso en Talla
-                sd1 = "< -2 SD"
+                sd1 = "< -2 DE"
                 a = "Talla Baja para la Edad o Retraso en Talla"
             }
             
@@ -870,19 +870,19 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
             
             if pesoParaEdad.sd1 < pesoKgMedido {
                 // No Aplica (Verificar con IMC/E)
-                sd2 = "≥ -1 SD a < a 1 SD"
+                sd2 = "≥ -1 DE a < a 1 DE"
                 b = "No Aplica (Verificar con IMC/E)"
             } else if (pesoParaEdad.nsd1 <= pesoKgMedido) && (pesoKgMedido <= pesoParaEdad.sd1) {
                 // Peso Adecuado para la Edad
-                sd2 = "≥ -1 SD a < a 1 SD"
+                sd2 = "≥ -1 DE a < a 1 DE"
                 b = "Peso Adecuado para la Edad"
             } else if (pesoParaEdad.nsd2 <= pesoKgMedido) && (pesoKgMedido < pesoParaEdad.nsd1) {
                 // Riesgo de Desnutrición Global
-                sd2 = "≥ -2 SD a < a -1 SD"
+                sd2 = "≥ -2 DE a < a -1 DE"
                 b = "Riesgo de Desnutrición Global"
             } else if pesoKgMedido < pesoParaEdad.nsd2 {
                 // Desnutrición Global
-                sd2 = "< -2 SD"
+                sd2 = "< -2 DE"
                 b = "Desnutrición Global"
             }
             
@@ -910,31 +910,31 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
             
             if pesoKgMedido > pesoKgTeo_sd3 {
                 // Obesidad
-                sd3 = "> 3 SD"
+                sd3 = "> 3 DE"
                 c = "Obesidad"
             } else if (pesoKgTeo_sd2 < pesoKgMedido) && (pesoKgMedido <= pesoKgTeo_sd3) {
                 // Sobrepeso
-                sd3 = "> 2 SD a ≤ 3 SD"
+                sd3 = "> 2 DE a ≤ 3 DE"
                 c = "Sobrepeso"
             } else if (pesoKgTeo_sd1 < pesoKgMedido) && (pesoKgMedido <= pesoKgTeo_sd2) {
                 // Riesgo de Sobrepeso
-                sd3 = "> 1 SD a ≤ 2 SD"
+                sd3 = "> 1 DE a ≤ 2 DE"
                 c = "Riesgo de Sobrepeso"
             } else if (pesoKgTeo_nsd1 <= pesoKgMedido) && (pesoKgMedido <= pesoKgTeo_sd1) {
                 // Peso Adecuado para la Talla
-                sd3 = "≥ -1 SD a ≤ 1 SD"
+                sd3 = "≥ -1 DE a ≤ 1 DE"
                 c = "Peso Adecuado para la Talla"
             } else if (pesoKgTeo_nsd2 <= pesoKgMedido) && (pesoKgMedido < pesoKgTeo_nsd1) {
                 // Riesgo de Desnutrición Aguda
-                sd3 = "≥ -2 SD a < -1 SD"
+                sd3 = "≥ -2 DE a < -1 DE"
                 c = "Riesgo de Desnutrición Aguda"
             } else if (pesoKgTeo_nsd3 <= pesoKgMedido) && (pesoKgMedido < pesoKgTeo_nsd2) {
                 // Desnutrición Aguda Moderada
-                sd3 = "≥ -3 SD a < -2 SD"
+                sd3 = "≥ -3 DE a < -2 DE"
                 c = "Desnutrición Aguda Moderada"
             } else if pesoKgMedido < pesoKgTeo_nsd3 {
                 // Desnutrición Aguda Severa
-                sd3 = "< -3 SD"
+                sd3 = "< -3 DE"
                 c = "Desnutrición Aguda Severa"
             }
             
@@ -962,21 +962,21 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
             
             if IMCMedido > IMCTeo_sd3 {
                 // Obesidad
-                sd4 = "> 3 SD"
+                sd4 = "> 3 DE"
                 d = "Obesidad"
                 
             } else if (IMCTeo_sd2 < IMCMedido) && (IMCMedido <= IMCTeo_sd3) {
                 // Sobrepeso
-                sd4 = "> 2 SD a ≤ 3 SD"
+                sd4 = "> 2 DE a ≤ 3 DE"
                 d = "Sobrepeso"
                 
             } else if (IMCTeo_sd1 < IMCMedido) && (IMCMedido <= IMCTeo_sd2) {
                 // Riesgo de Sobrepeso
-                sd4 = "> 1 SD a ≤ 2 SD"
+                sd4 = "> 1 DE a ≤ 2 DE"
                 d = "Riesgo de Sobrepeso"
             } else if IMCTeo_sd1 >= IMCMedido {
                 // No Aplica (Verificar con P/T)
-                sd4 = "≤ 1 SD"
+                sd4 = "≤ 1 DE"
                 d = "No Aplica (Verificar con P/T)"
             }
             
@@ -1030,13 +1030,13 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
                 pCefTeo_nsd3 = pCefTeo.nsd3
                 
                 if pCefMedido > pCefTeo_sd2 {
-                    sd6 = "> 2 SD"
+                    sd6 = "> 2 DE"
                     f = "Factor de Riesgo para el Neurodesarrollo"
                 } else if (pCefTeo_nsd2 <= pCefMedido) && (pCefMedido <= pCefTeo_sd2) {
-                    sd6 = "≥ -2 SD a ≤ 2 SD"
+                    sd6 = "≥ -2 DE a ≤ 2 DE"
                     f = "Normal"
                 } else if (pCefMedido < pCefTeo_nsd2) {
-                    sd6 = "< -2 SD"
+                    sd6 = "< -2 DE"
                     f = "Factor de Riesgo para el Neurodesarrollo"
                 }
             }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WebKit
 import Firebase
 import SVProgressHUD
 
@@ -27,6 +28,7 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var perimetroBraquial: UITextField!
     @IBOutlet weak var continuarBtn: UIButton!
     
+    @IBOutlet weak var scrollView: UIScrollView!
     
     var sexo = ""
     var edadMeses = ""
@@ -46,6 +48,11 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.scrollView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(keyBoardHideOnTap))
+        tap.numberOfTapsRequired = 1
+        self.scrollView.addGestureRecognizer(tap)
+        
         continuarBtn.isEnabled = false
         
         self.nombreBtn.delegate = self
@@ -54,13 +61,21 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
         self.edadDD.delegate = self
         self.edadMM.delegate = self
         self.edadA.delegate = self
+        self.PesoKg.delegate = self
         self.estatura.delegate = self
         self.perimetroBraquial.delegate = self
+        self.perimetroCefalico.delegate = self
         
         SVProgressHUD.dismiss()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        addObservers()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         if (self.aux == 0) {
             self.estatura.text = ""
             self.perimetroBraquial.text = ""
@@ -83,9 +98,41 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
         }
         check()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeObservers()
+    }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    func addObservers() {
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) { (notification) in
+            self.keyboardWillShow(notification: notification)
+        }
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil) { (notification) in
+            self.keyboardWillHide(notification: notification)
+        }
+    }
+    
+    func removeObservers() {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    func keyboardWillShow(notification: Notification) {
+        guard let userInfo = notification.userInfo,
+            let frame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+                return
+        }
+        let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: frame.height, right: 0)
+        scrollView.contentInset = contentInset
+    }
+    
+    func keyboardWillHide(notification: Notification) {
+        scrollView.contentInset = UIEdgeInsets.zero
+    }
+    
+    @objc func keyBoardHideOnTap() {
+        // do something cool here
+        self.scrollView.endEditing(true)
     }
     
     @IBAction func salirPressed(_ sender: AnyObject) {
@@ -108,11 +155,6 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
         sexo = "Femenino"
         femeninoBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
         masculinoBtn.backgroundColor = UIColor.lightGray
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //Para esconder el teclado si toca por fuera de este
-        self.view.endEditing(true)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -175,6 +217,20 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    func edadEnMeses() {
+        let currentDate = NSCalendar.init(calendarIdentifier: NSCalendar.Identifier.gregorian)
+        
+        if edadMM.hasText && edadA.hasText && edadDD.hasText {
+            let currentYear = currentDate?.component(NSCalendar.Unit.year, from: Date()) ?? 0
+            let currentMonth = currentDate?.component(NSCalendar.Unit.month, from: Date()) ?? 0
+            let currentDay = currentDate?.component(NSCalendar.Unit.day, from: Date()) ?? 0
+            date = "\(currentDay)/\(currentMonth)/\(currentYear)"
+            edadMeses = String((currentMonth - Int(edadMM.text!)!) + (currentYear - Int(edadA.text!)!)*12)
+        }
+        
+        fechaDeNacimiento = "\(edadDD.text!)/\(edadMM.text!)/\(edadA.text!)"
+    }
+    
     @IBAction func medirPressed(_ sender: UIButton) {
         if sender.tag == 0 {
             // estatura
@@ -191,20 +247,6 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
             tipoMedida = 3
             performSegue(withIdentifier: "goToMediciones", sender: self)
         }
-    }
-    
-    func edadEnMeses() {
-        let currentDate = NSCalendar.init(calendarIdentifier: NSCalendar.Identifier.gregorian)
-        
-        if edadMM.hasText && edadA.hasText && edadDD.hasText {
-            let currentYear = currentDate?.component(NSCalendar.Unit.year, from: Date()) ?? 0
-            let currentMonth = currentDate?.component(NSCalendar.Unit.month, from: Date()) ?? 0
-            let currentDay = currentDate?.component(NSCalendar.Unit.day, from: Date()) ?? 0
-            date = "\(currentDay)/\(currentMonth)/\(currentYear)"
-            edadMeses = String((currentMonth - Int(edadMM.text!)!) + (currentYear - Int(edadA.text!)!)*12)
-        }
-        
-        fechaDeNacimiento = "\(edadDD.text!)/\(edadMM.text!)/\(edadA.text!)"
     }
     
     

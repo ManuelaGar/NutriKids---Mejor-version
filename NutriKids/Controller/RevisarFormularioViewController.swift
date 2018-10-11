@@ -16,12 +16,10 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var nombre: UITextField!
     @IBOutlet weak var apellidos: UITextField!
     @IBOutlet weak var ID: UITextField!
-    @IBOutlet weak var fechaNacimiento: UITextField!
     @IBOutlet weak var edadDD: UITextField!
     @IBOutlet weak var edadMM: UITextField!
     @IBOutlet weak var edadA: UITextField!
     @IBOutlet weak var alertaEdad: UILabel!
-    @IBOutlet weak var sexo: UITextField!
     @IBOutlet weak var pesoKg: UITextField!
     @IBOutlet weak var estatura: UITextField!
     @IBOutlet weak var perimetroBraquial: UITextField!
@@ -33,6 +31,7 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var MasculinoBtn: UIButton!
     @IBOutlet weak var FemeninoBtn: UIButton!
     @IBOutlet weak var stackFecha: UIStackView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     var loc : [String : String] = [:]
     var date = ""
@@ -52,7 +51,13 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        retrieveUserInfo()
+        
+        SVProgressHUD.dismiss()
+        
+        self.scrollView.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(keyBoardHideOnTap))
+        tap.numberOfTapsRequired = 1
+        self.scrollView.addGestureRecognizer(tap)
         
         continuarBtn.isEnabled = true
         continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
@@ -64,18 +69,23 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         nombre.delegate = self
         apellidos.delegate = self
         ID.delegate = self
-        fechaNacimiento.delegate = self
         edadDD.delegate = self
         edadMM.delegate = self
         edadA.delegate = self
-        sexo.delegate = self
         pesoKg.delegate = self
         estatura.delegate = self
         perimetroBraquial.delegate = self
         perimetroCefalico.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        retrieveUserInfo()
+        addObservers()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         if (self.aux == 0) {
             aux = 1
         } else {
@@ -95,13 +105,40 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        removeObservers()
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //Para esconder el teclado si toca por fuera de este
-        self.view.endEditing(true)
+    func addObservers() {
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: nil) { (notification) in
+            self.keyboardWillShow(notification: notification)
+        }
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: nil) { (notification) in
+            self.keyboardWillHide(notification: notification)
+        }
+    }
+    
+    func removeObservers() {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    func keyboardWillShow(notification: Notification) {
+        guard let userInfo = notification.userInfo,
+            let frame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+                return
+        }
+        let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: frame.height, right: 0)
+        scrollView.contentInset = contentInset
+    }
+    
+    func keyboardWillHide(notification: Notification) {
+        scrollView.contentInset = UIEdgeInsets.zero
+    }
+    
+    @objc func keyBoardHideOnTap() {
+        // do something cool here
+        self.scrollView.endEditing(true)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -109,10 +146,11 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         nombre.resignFirstResponder()
         apellidos.resignFirstResponder()
         ID.resignFirstResponder()
-        fechaNacimiento.resignFirstResponder()
-        sexo.resignFirstResponder()
         pesoKg.resignFirstResponder()
         estatura.resignFirstResponder()
+        edadDD.resignFirstResponder()
+        edadMM.resignFirstResponder()
+        edadA.resignFirstResponder()
         perimetroBraquial.resignFirstResponder()
         perimetroCefalico.resignFirstResponder()
         
@@ -141,8 +179,6 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
             self.nombre.text = snapshot.childSnapshot(forPath: "Nombre").value as? String
             self.apellidos.text = snapshot.childSnapshot(forPath: "Apellidos").value as? String
             self.ID.text = snapshot.childSnapshot(forPath: "ID").value as? String
-            self.fechaNacimiento.text = snapshot.childSnapshot(forPath: "Fecha nacimiento").value as? String
-            self.sexo.text = snapshot.childSnapshot(forPath: "Sexo").value as? String
             self.sexoMF = (snapshot.childSnapshot(forPath: "Sexo").value as? String ?? "")
             self.pesoKg.text = snapshot.childSnapshot(forPath: "PesoKg").value as? String
             self.estatura.text = snapshot.childSnapshot(forPath: "Estatura").value as? String
@@ -151,13 +187,26 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
             self.edadMeses = Int(snapshot.childSnapshot(forPath: "Edad meses").value as? String ?? "") ?? 0
             self.fechaDeNacimiento = snapshot.childSnapshot(forPath: "Fecha nacimiento").value as? String ?? ""
             self.date = snapshot.childSnapshot(forPath: "Fecha examen").value as? String ?? ""
+            
+            if self.sexoMF == "Masculino"{
+                self.MasculinoBtn.backgroundColor = UIColor.darkGray
+                self.FemeninoBtn.backgroundColor = UIColor.lightGray
+            } else if self.sexoMF == "Femenino" {
+                self.FemeninoBtn.backgroundColor = UIColor.darkGray
+                self.MasculinoBtn.backgroundColor = UIColor.lightGray
+            }
+            let fecha = self.fechaDeNacimiento.components(separatedBy: "/")
+            if fecha[0] != "" {
+                self.edadDD.text = fecha[0]
+                self.edadMM.text = fecha[1]
+                self.edadA.text = fecha[2]
+            }
         }
         check()
-        SVProgressHUD.dismiss()
     }
     
     func check() {
-        if nombre.hasText && apellidos.hasText && ID.hasText && fechaNacimiento.hasText && sexoMF != "" && pesoKg.hasText && estatura.hasText {
+        if nombre.hasText && apellidos.hasText && ID.hasText && fechaDeNacimiento != "" && sexoMF != "" && pesoKg.hasText && estatura.hasText {
             continuarBtn.isEnabled = true
             continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
         }
@@ -276,11 +325,11 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         nombre.isEnabled = true
         apellidos.isEnabled = true
         ID.isEnabled = true
-        fechaNacimiento.isHidden = true
-        stackFecha.isHidden = false
-        sexo.isHidden = true
-        MasculinoBtn.isHidden = false
-        FemeninoBtn.isHidden = false
+        edadDD.isEnabled = true
+        edadMM.isEnabled = true
+        edadA.isEnabled = true
+        MasculinoBtn.isEnabled = true
+        FemeninoBtn.isEnabled = true
         pesoKg.isEnabled = true
         estatura.isEnabled = true
         perimetroBraquial.isEnabled = true
@@ -296,6 +345,9 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         nombre.textColor = UIColor.black
         apellidos.textColor = UIColor.black
         ID.textColor = UIColor.black
+        edadDD.textColor = UIColor.black
+        edadMM.textColor = UIColor.black
+        edadA.textColor = UIColor.black
         pesoKg.textColor = UIColor.black
         estatura.textColor = UIColor.black
         perimetroBraquial.textColor = UIColor.black
@@ -311,7 +363,11 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         nombre.isEnabled = false
         apellidos.isEnabled = false
         ID.isEnabled = false
-        fechaNacimiento.isEnabled = false
+        edadDD.isEnabled = false
+        edadMM.isEnabled = false
+        edadA.isEnabled = false
+        MasculinoBtn.isEnabled = false
+        FemeninoBtn.isEnabled = false
         pesoKg.isEnabled = false
         estatura.isEnabled = false
         perimetroBraquial.isEnabled = false
@@ -320,6 +376,9 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         nombre.textColor = UIColor.gray
         apellidos.textColor = UIColor.gray
         ID.textColor = UIColor.gray
+        edadDD.textColor = UIColor.gray
+        edadMM.textColor = UIColor.gray
+        edadA.textColor = UIColor.gray
         pesoKg.textColor = UIColor.gray
         estatura.textColor = UIColor.gray
         perimetroBraquial.textColor = UIColor.gray
