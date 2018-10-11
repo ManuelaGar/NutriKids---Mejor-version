@@ -194,10 +194,13 @@ class CropViewController: IGRPhotoTweakViewController {
             // Tapa CocaCola
             m = 30
             DF = 3163.39985
+        case 11:
+            m = 0
+            DF = 0
         default:
-            // Tapa CocaCola
-            m = 30
-            DF = 3163.39985
+            // Moneda de 1000
+            m = 26.75
+            DF = 2958.2775
         }
         print("macador \(m)")
         return (m,DF)

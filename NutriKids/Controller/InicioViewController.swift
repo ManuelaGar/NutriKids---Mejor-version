@@ -55,7 +55,7 @@ class InicioViewController: UIViewController, CLLocationManagerDelegate {
                                     }
                                 }
                             }
-                            
+                            print(self.loc)
                         }
                     }
                 }

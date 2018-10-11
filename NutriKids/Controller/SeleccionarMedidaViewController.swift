@@ -28,6 +28,7 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
     @IBOutlet weak var medidaHBnt: UIButton!
     @IBOutlet weak var medidaVBtn: UIButton!
     @IBOutlet weak var marcadoresLabel: UILabel!
+    @IBOutlet weak var notaLabel: UILabel!
     @IBOutlet weak var medidaLabel: UILabel!
     
     
@@ -35,6 +36,7 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
     var tipoMedida = 0
     var tipoMarcador = 0
     var tipoMarcador2 = 0
+    var notShow = 0
     var cancel = false
     var mmX: Float = 0
     var mmY: Float = 0
@@ -90,7 +92,9 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
         
         if tipoMedida == 1 {
             // Estatura
-            createAlert(title: "Medir estatura", message: "Para medir la estatura del usuario teniendo una foto necesita un marcador (objeto de medidas conocidas) como se ve en la imagen, deberá: \n1. Seleccionar el marcador a usar \n2. Seleccionar una foto que contenga al usuario y el marcador seleccionado \n3. Recortar el marcador en la foto \n4. Recortar al usuario en la foto", imageName: "Kid")
+            if notShow == 0 {
+                createAlert(title: "Medir estatura", message: "Para medir la estatura del usuario teniendo una foto necesita un marcador (objeto de medidas conocidas) como se ve en la imagen, deberá: \n1. Seleccionar el marcador a usar \n2. Seleccionar una foto que contenga al usuario y el marcador seleccionado \n3. Recortar el marcador en la foto \n4. Recortar al usuario en la foto", imageName: "Kid")
+            }
             if cancel == true && medida == 1 {
                 check3.isHidden = true
             }
@@ -112,9 +116,13 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
         } else if (tipoMedida == 2 || tipoMedida == 3) {
             //MUAC o Perimetro cefálico
             if tipoMedida == 2 {
-                createAlert(title: "Perímetro Brazo", message: "Para medir el perímetro del brazo teniendo una foto necesitará dos marcadores (objeto de medidas conocidas) como se ve en la imagen, deberá: \n1. Seleccionar los marcadores a usar \n2. Seleccionar una foto que contenga el brazo del usuario apoyado sobre una superficie plana con un marcador sobre este y un marcador sobre la superficie \n3. Medida horizontal: \n3.1. Recortar el marcador sobre la superficie \n3.2. Recortar el diametro del brazo \n4. Medida vertical: \n4.1. Recortar el marcador sobre la superficie \n4.2. Recortar el marcador sobre el brazo", imageName: "brazo2")
+                if notShow == 0 {
+                    createAlert(title: "Perímetro Brazo", message: "Para medir el perímetro del brazo teniendo una foto necesitará dos marcadores (objeto de medidas conocidas) como se ve en la imagen, deberá: \n1. Seleccionar los marcadores a usar \n2. Seleccionar una foto que contenga el brazo no dominante del usuario apoyado sobre una superficie plana con el marcador 1 sobre dicha superficie y el marcador 2 sobre el brazo \n3. Medida horizontal: \n3.1. Recortar el marcador 1 sobre la superficie \n3.2. Recortar el diametro aproximadamente en la mitad del brazo  \n4. Medida vertical: \n4.1. Recortar el marcador 1 sobre la superficie \n4.2. Recortar el marcador 2 sobre el brazo", imageName: "brazo2")
+                }
             } else {
-                createAlert(title: "Perímetro Cabeza", message: "Para medir el perímetro de la cabeza teniendo una foto necesitará dos marcadores (objeto de medidas conocidas) como se ve en la imagen, deberá: \n1. Seleccionar los marcadores a usar \n2. Seleccionar una foto que contenga la cabeza del usuario apoyada sobre una superficie plana con un marcador sobre esta y un marcador sobre la superficie \n3. Medida horizontal: \n3.1. Recortar el marcador sobre la superficie \n3.2. Recortar el diametro de la cabeza \n4. Medida vertical: \n4.1. Recortar el marcador sobre la superficie \n4.2. Recortar el marcador sobre la cabeza", imageName: "cabeza3")
+                if notShow == 0 {
+                   createAlert(title: "Perímetro Cabeza", message: "Para medir el perímetro de la cabeza teniendo una foto necesitará dos marcadores (objeto de medidas conocidas) como se ve en la imagen, deberá: \n1. Seleccionar los marcadores a usar \n2. Seleccionar una foto que contenga la cabeza del usuario apoyada sobre una superficie plana con el marcador 1 sobre dicha superficie y el marcador 2 sobre la cabeza \n3. Medida horizontal: \n3.1. Recortar el marcador 1 sobre la superficie \n3.2. Recortar el diametro de la cabeza \n4. Medida vertical: \n4.1. Recortar el marcador 1 sobre la superficie \n4.2. Recortar el marcador 2 sobre la cabeza", imageName: "cabeza3")
+                }
             }
             
             if cancel == true && medida == 1 {
@@ -124,7 +132,8 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
                 check4.isHidden = true
             }
             if check3.isHidden == false && medida == 1 {
-                d1 = mmX
+                d1 = mmY
+                notaLabel.isHidden = false
                 print("r1: \(d1)")
             }
             if check4.isHidden == false && medida == 2 {
@@ -175,6 +184,10 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
         alert.addAction(UIAlertAction(title: "Entiendo", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
         }))
+        alert.addAction(UIAlertAction(title: "No mostrar otra vez", style: .default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+            self.notShow = 1
+        }))
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -204,58 +217,62 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
         let actionSheet = UIAlertController(title: nil,
                                             message: nil,
                                             preferredStyle: .actionSheet)
-        
-        
-        actionSheet.addAction(UIAlertAction(title: "Moneda de 50 vieja", style: .default) { (action) in
-            self.tipoMarcador = 1
-            self.check1.isHidden = false
-        })
-        
-        actionSheet.addAction(UIAlertAction(title: "Moneda de 50 nueva", style: .default) { (action) in
-            self.tipoMarcador = 2
-            self.check1.isHidden = false
-        })
-        
-        actionSheet.addAction(UIAlertAction(title: "Moneda de 100 vieja", style: .default) { (action) in
-            self.tipoMarcador = 3
-            self.check1.isHidden = false
-        })
-        
-        actionSheet.addAction(UIAlertAction(title: "Moneda de 100 nueva", style: .default) { (action) in
-            self.tipoMarcador = 4
-            self.check1.isHidden = false
-        })
-        
-        actionSheet.addAction(UIAlertAction(title: "Moneda de 200 vieja", style: .default) { (action) in
-            self.tipoMarcador = 5
-            self.check1.isHidden = false
-        })
-        
-        actionSheet.addAction(UIAlertAction(title: "Moneda de 200 nueva", style: .default) { (action) in
-            self.tipoMarcador = 6
-            self.check1.isHidden = false
-        })
-        
-        actionSheet.addAction(UIAlertAction(title: "Moneda de 500 vieja", style: .default) { (action) in
-            self.tipoMarcador = 7
-            self.check1.isHidden = false
-        })
-        
-        actionSheet.addAction(UIAlertAction(title: "Moneda de 500 nueva", style: .default) { (action) in
-            self.tipoMarcador = 8
-            self.check1.isHidden = false
-        })
-        
-        actionSheet.addAction(UIAlertAction(title: "Moneda de 1000", style: .default) { (action) in
-            self.tipoMarcador = 9
-            self.check1.isHidden = false
-        })
-        
-        actionSheet.addAction(UIAlertAction(title: "Tapa de CocaCola", style: .default) { (action) in
-            self.tipoMarcador = 10
-            self.check1.isHidden = false
-        })
-        
+        if tipoMedida == 1 {
+            actionSheet.addAction(UIAlertAction(title: "Botella CocaCola 2 Litros", style: .default) { (action) in
+                self.tipoMarcador = 11
+                self.check1.isHidden = false
+            })
+        } else if tipoMedida == 2 || tipoMedida == 3 {
+//            actionSheet.addAction(UIAlertAction(title: "Moneda de 50 vieja", style: .default) { (action) in
+//                self.tipoMarcador = 1
+//                self.check1.isHidden = false
+//            })
+//
+//            actionSheet.addAction(UIAlertAction(title: "Moneda de 50 nueva", style: .default) { (action) in
+//                self.tipoMarcador = 2
+//                self.check1.isHidden = false
+//            })
+            
+            actionSheet.addAction(UIAlertAction(title: "Moneda de 100 vieja", style: .default) { (action) in
+                self.tipoMarcador = 3
+                self.check1.isHidden = false
+            })
+            
+            actionSheet.addAction(UIAlertAction(title: "Moneda de 100 nueva", style: .default) { (action) in
+                self.tipoMarcador = 4
+                self.check1.isHidden = false
+            })
+            
+            actionSheet.addAction(UIAlertAction(title: "Moneda de 200 vieja", style: .default) { (action) in
+                self.tipoMarcador = 5
+                self.check1.isHidden = false
+            })
+            
+            actionSheet.addAction(UIAlertAction(title: "Moneda de 200 nueva", style: .default) { (action) in
+                self.tipoMarcador = 6
+                self.check1.isHidden = false
+            })
+            
+            actionSheet.addAction(UIAlertAction(title: "Moneda de 500 vieja", style: .default) { (action) in
+                self.tipoMarcador = 7
+                self.check1.isHidden = false
+            })
+            
+            actionSheet.addAction(UIAlertAction(title: "Moneda de 500 nueva", style: .default) { (action) in
+                self.tipoMarcador = 8
+                self.check1.isHidden = false
+            })
+            
+            actionSheet.addAction(UIAlertAction(title: "Moneda de 1000", style: .default) { (action) in
+                self.tipoMarcador = 9
+                self.check1.isHidden = false
+            })
+            
+//            actionSheet.addAction(UIAlertAction(title: "Tapa de CocaCola", style: .default) { (action) in
+//                self.tipoMarcador = 10
+//                self.check1.isHidden = false
+//            })
+        }
         actionSheet.addAction(UIAlertAction(title: "Cancelar", style: .cancel))
         present(actionSheet, animated: true, completion: nil)
     }
@@ -265,58 +282,63 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
         let actionSheet = UIAlertController(title: nil,
                                             message: nil,
                                             preferredStyle: .actionSheet)
-        
-        
-        actionSheet.addAction(UIAlertAction(title: "Moneda de 50 vieja", style: .default) { (action) in
-            self.tipoMarcador2 = 1
-            self.check2.isHidden = false
-        })
-        
-        actionSheet.addAction(UIAlertAction(title: "Moneda de 50 nueva", style: .default) { (action) in
-            self.tipoMarcador2 = 2
-            self.check2.isHidden = false
-        })
-        
-        actionSheet.addAction(UIAlertAction(title: "Moneda de 100 vieja", style: .default) { (action) in
-            self.tipoMarcador2 = 3
-            self.check2.isHidden = false
-        })
-        
-        actionSheet.addAction(UIAlertAction(title: "Moneda de 100 nueva", style: .default) { (action) in
-            self.tipoMarcador2 = 4
-            self.check2.isHidden = false
-        })
-        
-        actionSheet.addAction(UIAlertAction(title: "Moneda de 200 vieja", style: .default) { (action) in
-            self.tipoMarcador2 = 5
-            self.check2.isHidden = false
-        })
-        
-        actionSheet.addAction(UIAlertAction(title: "Moneda de 200 nueva", style: .default) { (action) in
-            self.tipoMarcador2 = 6
-            self.check2.isHidden = false
-        })
-        
-        actionSheet.addAction(UIAlertAction(title: "Moneda de 500 vieja", style: .default) { (action) in
-            self.tipoMarcador2 = 7
-            self.check2.isHidden = false
-        })
-        
-        actionSheet.addAction(UIAlertAction(title: "Moneda de 500 nueva", style: .default) { (action) in
-            self.tipoMarcador2 = 8
-            self.check2.isHidden = false
-        })
-        
-        actionSheet.addAction(UIAlertAction(title: "Moneda de 1000", style: .default) { (action) in
-            self.tipoMarcador2 = 9
-            self.check2.isHidden = false
-        })
-        
-        actionSheet.addAction(UIAlertAction(title: "Tapa de CocaCola", style: .default) { (action) in
-            self.tipoMarcador2 = 10
-            self.check2.isHidden = false
-        })
-        
+        if tipoMedida == 1 {
+            actionSheet.addAction(UIAlertAction(title: "Botella CocaCola 2 Litros", style: .default) { (action) in
+                self.tipoMarcador = 11
+                self.check1.isHidden = false
+            })
+        }
+        else if tipoMedida == 2 || tipoMedida == 3 {
+            //        actionSheet.addAction(UIAlertAction(title: "Moneda de 50 vieja", style: .default) { (action) in
+            //            self.tipoMarcador2 = 1
+            //            self.check2.isHidden = false
+            //        })
+            //
+            //        actionSheet.addAction(UIAlertAction(title: "Moneda de 50 nueva", style: .default) { (action) in
+            //            self.tipoMarcador2 = 2
+            //            self.check2.isHidden = false
+            //        })
+            
+            actionSheet.addAction(UIAlertAction(title: "Moneda de 100 vieja", style: .default) { (action) in
+                self.tipoMarcador2 = 3
+                self.check2.isHidden = false
+            })
+            
+            actionSheet.addAction(UIAlertAction(title: "Moneda de 100 nueva", style: .default) { (action) in
+                self.tipoMarcador2 = 4
+                self.check2.isHidden = false
+            })
+            
+            actionSheet.addAction(UIAlertAction(title: "Moneda de 200 vieja", style: .default) { (action) in
+                self.tipoMarcador2 = 5
+                self.check2.isHidden = false
+            })
+            
+            actionSheet.addAction(UIAlertAction(title: "Moneda de 200 nueva", style: .default) { (action) in
+                self.tipoMarcador2 = 6
+                self.check2.isHidden = false
+            })
+            
+            actionSheet.addAction(UIAlertAction(title: "Moneda de 500 vieja", style: .default) { (action) in
+                self.tipoMarcador2 = 7
+                self.check2.isHidden = false
+            })
+            
+            actionSheet.addAction(UIAlertAction(title: "Moneda de 500 nueva", style: .default) { (action) in
+                self.tipoMarcador2 = 8
+                self.check2.isHidden = false
+            })
+            
+            actionSheet.addAction(UIAlertAction(title: "Moneda de 1000", style: .default) { (action) in
+                self.tipoMarcador2 = 9
+                self.check2.isHidden = false
+            })
+            
+//            actionSheet.addAction(UIAlertAction(title: "Tapa de CocaCola", style: .default) { (action) in
+//                self.tipoMarcador2 = 10
+//                self.check2.isHidden = false
+//            })
+        }
         actionSheet.addAction(UIAlertAction(title: "Cancelar", style: .cancel))
         present(actionSheet, animated: true, completion: nil)
     }
@@ -355,6 +377,7 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
         // Si la medida es vertical
         self.medida = 2
         self.performSegue(withIdentifier: "showMedida", sender: self)
+        notShow = 1
         self.check4.isHidden = false
     }
     
@@ -398,6 +421,17 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
         }
     }
     
+    @IBAction func ayudaPressed(_ sender: UIBarButtonItem) {
+        notShow = 0
+        if tipoMedida == 1 {
+            // Estatura
+            createAlert(title: "Medir estatura", message: "Para medir la estatura del usuario teniendo una foto necesita un marcador (objeto de medidas conocidas) como se ve en la imagen, deberá: \n1. Seleccionar el marcador a usar \n2. Seleccionar una foto que contenga al usuario y el marcador seleccionado \n3. Recortar el marcador en la foto \n4. Recortar al usuario en la foto", imageName: "Kid")
+        } else if tipoMedida == 2 {
+            createAlert(title: "Perímetro Brazo", message: "Para medir el perímetro del brazo teniendo una foto necesitará dos marcadores (objeto de medidas conocidas) como se ve en la imagen, deberá: \n1. Seleccionar los marcadores a usar \n2. Seleccionar una foto que contenga el brazo no dominante del usuario apoyado sobre una superficie plana con el marcador 1 sobre dicha superficie y el marcador 2 sobre el brazo \n3. Medida horizontal: \n3.1. Recortar el marcador 1 sobre la superficie \n3.2. Recortar el diametro aproximadamente en la mitad del brazo  \n4. Medida vertical: \n4.1. Recortar el marcador 1 sobre la superficie \n4.2. Recortar el marcador 2 sobre el brazo", imageName: "brazo2")
+        } else if tipoMedida == 3 {
+            createAlert(title: "Perímetro Cabeza", message: "Para medir el perímetro de la cabeza teniendo una foto necesitará dos marcadores (objeto de medidas conocidas) como se ve en la imagen, deberá: \n1. Seleccionar los marcadores a usar \n2. Seleccionar una foto que contenga la cabeza del usuario apoyada sobre una superficie plana con el marcador 1 sobre dicha superficie y el marcador 2 sobre la cabeza \n3. Medida horizontal: \n3.1. Recortar el marcador 1 sobre la superficie \n3.2. Recortar el diametro de la cabeza \n4. Medida vertical: \n4.1. Recortar el marcador 1 sobre la superficie \n4.2. Recortar el marcador 2 sobre la cabeza", imageName: "cabeza3")
+        }
+    }
     
     @IBAction func continuarPressed(_ sender: UIButton) {
         //guardarImagen()

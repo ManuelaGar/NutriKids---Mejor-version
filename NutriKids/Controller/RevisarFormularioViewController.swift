@@ -53,6 +53,7 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         SVProgressHUD.dismiss()
+        print(loc)
         
         self.scrollView.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(keyBoardHideOnTap))
@@ -202,7 +203,6 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
                 self.edadA.text = fecha[2]
             }
         }
-        check()
     }
     
     func check() {
@@ -221,7 +221,7 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
             edadEnMeses()
             print("Edad en meses \(edadMeses)")
             if edadMeses <= 60 {
-                alertaEdad.isHidden = true
+                alertaEdad.alpha = 0
                 if nombre.hasText && apellidos.hasText && ID.hasText && edadMM.hasText && edadA.hasText && edadDD.hasText && sexoMF != "" && pesoKg.hasText && estatura.hasText {
                     continuarBtn.isEnabled = true
                     continuarBtn.backgroundColor = UIColor(red:0.00, green:0.10, blue:0.58, alpha:1.0)
@@ -231,7 +231,7 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
                     continuarBtn.backgroundColor = UIColor.lightGray
                 }
             } else {
-                alertaEdad.isHidden = false
+                alertaEdad.alpha = 1
                 continuarBtn.isEnabled = false
                 continuarBtn.backgroundColor = UIColor.lightGray
             }
