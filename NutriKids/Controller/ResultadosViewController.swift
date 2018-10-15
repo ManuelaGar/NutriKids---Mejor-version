@@ -100,7 +100,6 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
     var ref: DatabaseReference!
     let userID = Auth.auth().currentUser?.uid
     
-    
     let Indicador = ["Indicador", "Peso para la talla", "Talla para la edad", "P. cefálico para la edad", "IMC para la edad", "Peso para la edad", "P. brazo para la edad"]
     var puntoDeCorte = ["Punto de corte (desviaciones estandar DE)", "sd1", "sd2", "sd3", "sd4", "sd5", "sd6"]
     var clasificacion = ["Clasificación antropométrica", "a", "b", "c", "d", "e", "f"]
@@ -131,6 +130,14 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
               "IMC": IMCMedido
             ])
         print("Resultado actualizado y guardado con exito")
+    }
+    
+    func createAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Listo", style: .default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     // MARK: Funciones para Mujeres
@@ -1044,6 +1051,11 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
         
         puntoDeCorte = ["Punto de corte (desviaciones estandar DE)",sd3, sd1, sd6, sd4, sd2, sd5]
         clasificacion = ["Clasificación antropométrica",c, a, f, d, b, e]
+    }
+    
+    
+    @IBAction func infoPressed(_ sender: UIBarButtonItem) {
+        createAlert(title: "Indicadores del estado nutricional", message: "Los siguientes son todos indicadores del estado nutricional de un niño menor de 5 años: \nPeso para la talla (P/T) \nTalla para la edad (T/E) \nP. cefálico para la edad (PC/E) \nP. cefálico para la edad (PC/E) \nIndice de masa corporal para la edad (IMC/E) \nPeso para la edad (P/E) \nP. brazo para la edad (MUAC) - Medida complementaria e independiente")
     }
     
     @IBAction func salirBtn(_ sender: Any) {

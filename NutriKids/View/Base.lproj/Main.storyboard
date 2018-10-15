@@ -729,11 +729,18 @@
                         <viewLayoutGuide key="safeArea" id="ITp-cB-vGY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Resutlados" id="LrL-un-Gmz">
-                        <barButtonItem key="leftBarButtonItem" title="Salir" id="Pdh-0K-Lpg">
-                            <connections>
-                                <action selector="salirBtn:" destination="ufc-j7-RM6" id="KfO-lQ-9el"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Salir" id="Pdh-0K-Lpg">
+                                <connections>
+                                    <action selector="salirBtn:" destination="ufc-j7-RM6" id="KfO-lQ-9el"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Info" id="tIT-6d-d5n">
+                                <connections>
+                                    <action selector="infoPressed:" destination="ufc-j7-RM6" id="thw-RZ-CBj"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="xdi-Fr-WMy" id="w2o-ni-pXG"/>
@@ -891,7 +898,7 @@
                             </imageView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OdM-15-cej">
                                 <rect key="frame" x="58" y="487" width="262" height="58"/>
-                                <string key="text">*Nota: en caso de no poder recortar alguno de los marcadores en la imagen porque son muy pequeños, seleccione una nueva imagen donde los marcadores se vean más cerca y reptia el proceso desde el paso 2</string>
+                                <string key="text">*Nota: en caso de no poder recortar alguno de los marcadores en la imagen porque son muy pequeños, seleccione una nueva imagen donde los marcadores se vean más cerca y repita el proceso desde el paso 2</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -1582,7 +1589,7 @@
         <image name="group-happy-jumping-children-isolated-white-background-stock-vector-cartoon-illustration-54481498" width="800" height="496"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="rdS-a0-nm7"/>
-        <segue reference="U1n-1y-C1X"/>
+        <segue reference="0Ev-5q-2sB"/>
+        <segue reference="SUb-aT-Si2"/>
     </inferredMetricsTieBreakers>
 </document>
