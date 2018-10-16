@@ -550,7 +550,7 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
             aux_sd1 = 17.1
         } else if (32 <= edad) && (edad <= 34) {
             aux_sd1 = 17
-        } else if (34 <= edad) && (edad <= 37) {
+        } else if (35 <= edad) && (edad <= 37) {
             aux_sd1 = 16.9
         } else if (38 <= edad) && (edad <= 42) {
             aux_sd1 = 16.8

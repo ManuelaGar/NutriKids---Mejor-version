@@ -132,6 +132,7 @@ class CropViewController: IGRPhotoTweakViewController {
     
     @IBOutlet weak var angleSlider: UISlider!
     @IBOutlet weak var angleLabel: UILabel!
+    @IBOutlet weak var imageGuide: UIImageView!
     
     @IBOutlet weak fileprivate var horizontalDial: HorizontalDial? {
         didSet {
@@ -170,8 +171,14 @@ class CropViewController: IGRPhotoTweakViewController {
         UserDefaults.standard.set(0, forKey: "altura")
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    override func viewWillAppear(_ animated: Bool) {
+        if tipoMedida == 1 {
+            imageGuide.image = UIImage(named: "cuerpo")
+        } else if tipoMedida == 2 {
+            imageGuide.image = UIImage(named: "Brazo-1")
+        } else if tipoMedida == 3 {
+            imageGuide.image = UIImage(named: "Cabeza")
+        }
     }
     
     //FIXME: Themes Preview

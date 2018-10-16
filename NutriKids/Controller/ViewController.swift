@@ -33,6 +33,7 @@ class ViewController: UIViewController {
     var mmY: Float = 0
     var altura: Float = 0
     var aux = 0
+    var aux2 = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,13 +53,33 @@ class ViewController: UIViewController {
         mmEnImagenCortada()
         if (self.aux == 0) {
             edit(image: image)
+            if tipoMedida == 1 {
+                createAlert(title: "Paso 1", message: "Recorte el marcador")
+            } else if tipoMedida == 2 || tipoMedida == 3 {
+                createAlert(title: "Paso 1", message: "Recorte el marcador 1 que está sobre la superficie")
+            }
+            
             self.medidaLabel?.text = ""
             aux = 1
+            
+        } else if ((aux == 1) && (aux2 == 0)) {
+            if medida == 1 {
+                if tipoMedida == 1 {
+                    createAlert(title: "Paso 2", message: "Recorte al usuario para medir estatura")
+                } else if tipoMedida == 2 {
+                    createAlert(title: "Paso 2", message: "Recorte el diámetro del brazo")
+                } else if tipoMedida == 3 {
+                    createAlert(title: "Paso 2", message: "Recorte el diámetro de la cabeza")
+                }
+            } else if medida == 2 {
+                if tipoMedida == 2 {
+                    createAlert(title: "Paso 2", message: "Recorte el marcador 2 que está sobre el brazo del usuario")
+                } else if tipoMedida == 3 {
+                    createAlert(title: "Paso 2", message: "Recorte el marcador 2 que está sobre la cabeza del usuario")
+                }
+            }
+            aux2 = 1
         }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
     
     // MARK: - Navigation
@@ -82,6 +103,14 @@ class ViewController: UIViewController {
     
     func edit(image: UIImage) {
         self.performSegue(withIdentifier: "showCrop", sender: image)
+    }
+    
+    func createAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Listo", style: .default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     @IBAction func editPressed(_ sender: UIBarButtonItem) {

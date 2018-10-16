@@ -88,7 +88,7 @@ class LlenarFormularioViewController: UIViewController, UITextFieldDelegate {
             cmY = UserDefaults.standard.float(forKey: "mmEnY")/10
             
             if cmX != 0 && cmY != 0 {
-                estatura.text = "\(cmX)"
+                estatura.text = "\(cmY)"
             }
             if MUAC != 0 {
                 perimetroBraquial.text = "\(MUAC)"

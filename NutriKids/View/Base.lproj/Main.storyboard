@@ -1049,6 +1049,13 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GXP-rC-cKJ">
+                                <rect key="frame" x="286" y="495" width="89" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="89" id="QzL-Kl-6va"/>
+                                    <constraint firstAttribute="height" constant="128" id="lE5-Oh-SS4"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1060,17 +1067,20 @@
                             <constraint firstItem="yfN-sP-fyE" firstAttribute="bottom" secondItem="UbN-ef-k63" secondAttribute="bottom" id="o3C-xg-GJe"/>
                             <constraint firstItem="Ldl-Ng-ZnB" firstAttribute="bottom" secondItem="spG-Mr-H2Q" secondAttribute="bottom" id="ozD-rv-fJd"/>
                             <constraint firstItem="Ldl-Ng-ZnB" firstAttribute="leading" secondItem="uiC-fw-f0P" secondAttribute="leadingMargin" id="s3Z-ts-yua"/>
+                            <constraint firstItem="GXP-rC-cKJ" firstAttribute="trailing" secondItem="UbN-ef-k63" secondAttribute="trailing" id="v5i-an-Wn2"/>
+                            <constraint firstItem="yfN-sP-fyE" firstAttribute="top" secondItem="GXP-rC-cKJ" secondAttribute="bottom" id="z1b-6h-VBo"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="UbN-ef-k63"/>
                     </view>
                     <connections>
                         <outlet property="angleLabel" destination="spG-Mr-H2Q" id="bL0-jV-Ag6"/>
                         <outlet property="angleSlider" destination="Ldl-Ng-ZnB" id="Hi7-d1-a49"/>
+                        <outlet property="imageGuide" destination="GXP-rC-cKJ" id="1Uo-QW-haZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UTt-M0-wWY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6534" y="-206"/>
+            <point key="canvasLocation" x="6533.6000000000004" y="-206.44677661169416"/>
         </scene>
         <!--Medida-->
         <scene sceneID="ZTp-gC-tM6">
