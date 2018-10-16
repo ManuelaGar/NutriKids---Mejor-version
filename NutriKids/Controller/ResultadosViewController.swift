@@ -96,6 +96,7 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
     
     var edadEnMeses = 0
     var sexo = ""
+    var mensaje = ""
     
     var ref: DatabaseReference!
     let userID = Auth.auth().currentUser?.uid
@@ -115,12 +116,24 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
         super.viewWillAppear(animated)
         calculos()
         tableView.reloadData()
+        recomendacion()
         saveUserInfo()
     }
     
     func IMC(peso: Float, altura: Float) -> Float {
         let variable = peso/(powf((altura/100), 2))
         return variable
+    }
+    
+    func recomendacion() {
+        if (c == "Obesidad" || c == "Sobrepeso") {
+            mensaje = "El usuario podría tener un peso para la talla por encima de lo normal. Se recomienda acudir a un profesional de la salud para realizar un examen más especializado y descartar un problema nutricional."
+        } else if (c == "Desnutrición Aguda Moderada" || c == "Desnutrición Aguda Severa") {
+            mensaje = "El usuario podría tener un peso para la talla por debajo de lo normal. Se recomienda acudir a un profesional de la salud para realizar un examen más especializado y descartar un posible caso de desnutrición."
+        } else {
+            mensaje = "El usuario tiene un peso para la talla normal. En caso de duda, se recomienda acudir a un profesional de la salud para realizar un examen más especializado y descartar un problema nutricional."
+        }
+        createAlert(title: "Recomendación", message: mensaje)
     }
     
     func saveUserInfo() {
@@ -134,7 +147,7 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func createAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Listo", style: .default, handler: { (action) in
+        alert.addAction(UIAlertAction(title: "Entiendo", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
         }))
         self.present(alert, animated: true, completion: nil)
@@ -157,7 +170,7 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
     func estaturaParaLaEdad24_60F(edad: Float) -> (sd0: Float,nsd1: Float,nsd2: Float,nsd3: Float,sd1: Float,sd2: Float, sd3: Float) {
         let aux_sd0 = ((7.103*powf(10, -5))*powf(edad, 3)) + ((-0.01341)*powf(edad, 2)) + ((1.386)*edad) + (59.22)
         let aux_nsd1 = ((6.626*powf(10, -5))*powf(edad, 3)) + ((-0.01259)*powf(edad, 2)) + ((1.302)*edad) + (57.61)
-        let aux_nsd2 = ((6.626*powf(10, -5))*powf(edad, 3)) + ((-0.01259)*powf(edad, 2)) + ((1.302)*edad) + (57.61)
+        let aux_nsd2 = ((6.05*powf(10, -5))*powf(edad, 3)) + ((-0.01162)*powf(edad, 2)) + ((1.21)*edad) + (56.11)
         let aux_nsd3 = ((5.784*powf(10, -5))*powf(edad, 3)) + ((-0.0111)*powf(edad, 2)) + ((1.138)*edad) + (54.36)
         let aux_sd1 = ((6.96*powf(10, -5))*powf(edad, 3)) + ((-0.0135)*powf(edad, 2)) + ((1.444)*edad) + (61.15)
         let aux_sd2 = ((7.057*powf(10, -5))*powf(edad, 3)) + ((-0.01391)*powf(edad, 2)) + ((1.515)*edad) + (62.89)

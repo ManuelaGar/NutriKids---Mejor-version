@@ -96,7 +96,7 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
             cmX = UserDefaults.standard.float(forKey: "mmEnX")/10
             cmY = UserDefaults.standard.float(forKey: "mmEnY")/10
             if cmX != 0 && cmY != 0 {
-                estatura.text = "\(cmX)"
+                estatura.text = "\(cmY)"
             }
             if MUAC != 0 {
                 perimetroBraquial.text = "\(MUAC)"
@@ -162,7 +162,6 @@ class RevisarFormularioViewController: UIViewController, UITextFieldDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToMediciones" {
             let vc = segue.destination as! SeleccionarMedidaViewController
-            
             vc.tipoMedida = self.tipoMedida
         } else if segue.identifier == "goToResultados" {
             let resultados = segue.destination as! ResultadosViewController

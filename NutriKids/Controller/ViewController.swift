@@ -25,6 +25,7 @@ class ViewController: UIViewController {
     
     var imageWasTapped = false
     var medida = 0
+    var tipoMedida = 0
     var tipoMarcador = 0
     var tipoMarcador2 = 0
     var tap = 0
@@ -32,12 +33,9 @@ class ViewController: UIViewController {
     var mmY: Float = 0
     var altura: Float = 0
     var aux = 0
-//    let pickerView = UIImagePickerController.init()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        pickerView.delegate = self
-//        pickerView.allowsEditing = false
         print("tipomarcador3 \(tipoMarcador)")
         print("tipomarcador4 \(tipoMarcador2)")
         if self.medida == 1 {
@@ -69,6 +67,7 @@ class ViewController: UIViewController {
         let vc1 = segue.destination as! CropViewController
         vc1.tap1 = self.tap
         vc1.medida = self.medida
+        vc1.tipoMedida = self.tipoMedida
         vc1.tipoMarcador = self.tipoMarcador
         vc1.tipoMarcador2 = self.tipoMarcador2
         

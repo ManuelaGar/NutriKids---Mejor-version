@@ -166,6 +166,7 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
             let vc = segue.destination as! ViewController
             
             vc.medida = self.medida
+            vc.tipoMedida = self.tipoMedida
             vc.tipoMarcador = self.tipoMarcador
             vc.tipoMarcador2 = self.tipoMarcador2
             vc.image = self.image

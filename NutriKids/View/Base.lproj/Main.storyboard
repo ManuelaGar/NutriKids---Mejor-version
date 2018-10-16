@@ -25,7 +25,7 @@
                                     <constraint firstAttribute="height" constant="45" id="55F-Jn-WfO"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
-                                <state key="normal" title="Nuevo usuario">
+                                <state key="normal" title="Nuevo Usuario">
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -39,7 +39,7 @@
                                     <constraint firstAttribute="height" constant="45" id="DpE-yU-jE7"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
-                                <state key="normal" title="Iniciar sesion">
+                                <state key="normal" title="Iniciar Sesion">
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>

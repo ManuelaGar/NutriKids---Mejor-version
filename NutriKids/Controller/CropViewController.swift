@@ -79,6 +79,46 @@ extension IGRPhotoTweakViewController {
         return (mmTotalesX, mmTotalesY, pixelsInCroppedImageX, pixelsInCroppedImageY)
     }
     
+    public func mmEnImagenCortadaY(mmxPixelX: Float, mmxPixelY: Float) -> (mmTotalesX: Float, mmTotalesX: Float, PX: Float, PY: Float) {
+        var transform = CGAffineTransform.identity
+        // translate
+        let translation: CGPoint = self.photoView.photoTranslation
+        transform = transform.translatedBy(x: translation.x, y: translation.y)
+        let t: CGAffineTransform = self.photoView.photoContentView.transform
+        let xScale: CGFloat = sqrt(t.a * t.a + t.c * t.c)
+        let yScale: CGFloat = sqrt(t.b * t.b + t.d * t.d)
+        
+        let pixelsInCroppedImageX = Float(image.size.width/xScale)
+        let pixelsInCroppedImageY = Float(image.size.height/yScale)
+        
+        var mmTotalesX: Float = 0
+        var mmTotalesY: Float = 0
+        
+        let aspect = UserDefaults.standard.float(forKey: "aspect")
+        print("aspect \(aspect)")
+        
+        if aspect < 1 {
+            mmTotalesX = pixelsInCroppedImageY * mmxPixelX
+            mmTotalesY = mmTotalesX*aspect
+        } else if aspect == 1 {
+            mmTotalesX = pixelsInCroppedImageY * mmxPixelX
+            mmTotalesY = mmTotalesX
+            //pixelsInCroppedImageY * mmxPixelX
+        } else {
+            mmTotalesY = pixelsInCroppedImageX * mmxPixelX
+            mmTotalesX = mmTotalesY/aspect
+        }
+        
+        print("xScale \(xScale)")
+        print("yScale \(yScale)")
+        print("height \(image.size.height)")
+        print("width \(image.size.width)")
+        print(pixelsInCroppedImageX)
+        print(pixelsInCroppedImageY)
+        
+        return (mmTotalesX, mmTotalesY, pixelsInCroppedImageX, pixelsInCroppedImageY)
+    }
+    
     public func Calibracion(mmDiametro: Float, pixelesDiametro: Float) -> (Float) {
         let h: Float = 153.8
         let distanciaFocal = (pixelesDiametro * h)/mmDiametro
@@ -101,6 +141,7 @@ class CropViewController: IGRPhotoTweakViewController {
     
     var tap1 = 0
     var medida = 0
+    var tipoMedida = 0
     var tipoMarcador = 0
     var tipoMarcador2 = 0
     var distanciaFocal: Float = 0
@@ -268,9 +309,15 @@ class CropViewController: IGRPhotoTweakViewController {
                 let mmPPX = UserDefaults.standard.float(forKey: "mmPPX")
                 let mmPPY = UserDefaults.standard.float(forKey: "mmPPY")
                 
-                let mmEnImagen = mmEnImagenCortada(mmxPixelX: mmPPX, mmxPixelY: mmPPY)
-                self.mmX = mmEnImagen.0
-                self.mmY = mmEnImagen.1
+                if tipoMedida == 1 {
+                    let mmEnImagen = mmEnImagenCortadaY(mmxPixelX: mmPPX, mmxPixelY: mmPPY)
+                    self.mmX = mmEnImagen.0
+                    self.mmY = mmEnImagen.1
+                } else if (tipoMedida == 2 || tipoMedida == 3) {
+                    let mmEnImagen = mmEnImagenCortada(mmxPixelX: mmPPX, mmxPixelY: mmPPY)
+                    self.mmX = mmEnImagen.0
+                    self.mmY = mmEnImagen.1
+                }
                 
                 print("Los mm x: \(mmX), y son: \(mmY)")
                 
