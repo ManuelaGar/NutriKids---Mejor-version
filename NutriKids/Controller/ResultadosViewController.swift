@@ -142,7 +142,7 @@ class ResultadosViewController: UIViewController, UITableViewDelegate, UITableVi
             [ "Resultado": resultado as NSDictionary,
               "IMC": IMCMedido
             ])
-        print("Resultado actualizado y guardado con exito")
+        print("Resultado actualizado y guardado con éxito")
     }
     
     func createAlert(title: String, message: String) {

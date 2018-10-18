@@ -117,11 +117,11 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
             //MUAC o Perimetro cefálico
             if tipoMedida == 2 {
                 if notShow == 0 {
-                    createAlert(title: "Perímetro Brazo", message: "Para medir el perímetro del brazo teniendo una foto necesitará dos marcadores (objeto de medidas conocidas) como se ve en la imagen, deberá: \n1. Seleccionar los marcadores a usar \n2. Seleccionar una foto que contenga el brazo no dominante del usuario apoyado sobre una superficie plana con el marcador 1 sobre dicha superficie y el marcador 2 sobre el brazo \n3. Medida horizontal: \n3.1. Recortar el marcador 1 sobre la superficie \n3.2. Recortar el diametro aproximadamente en la mitad del brazo  \n4. Medida vertical: \n4.1. Recortar el marcador 1 sobre la superficie \n4.2. Recortar el marcador 2 sobre el brazo", imageName: "brazo2")
+                    createAlert(title: "Perímetro Brazo", message: "Para medir el perímetro del brazo teniendo una foto necesitará dos marcadores (objeto de medidas conocidas) como se ve en la imagen, deberá: \n1. Seleccionar los marcadores a usar \n2. Seleccionar una foto que contenga el brazo no dominante del usuario apoyado sobre una superficie plana con el marcador 1 sobre dicha superficie y el marcador 2 sobre el brazo \n3. Medida horizontal: \n3.1. Recortar el marcador 1 sobre la superficie \n3.2. Recortar el diámetro aproximadamente en la mitad del brazo  \n4. Medida vertical: \n4.1. Recortar el marcador 1 sobre la superficie \n4.2. Recortar el marcador 2 sobre el brazo", imageName: "brazo2")
                 }
             } else {
                 if notShow == 0 {
-                   createAlert(title: "Perímetro Cabeza", message: "Para medir el perímetro de la cabeza teniendo una foto necesitará dos marcadores (objeto de medidas conocidas) como se ve en la imagen, deberá: \n1. Seleccionar los marcadores a usar \n2. Seleccionar una foto que contenga la cabeza del usuario apoyada sobre una superficie plana con el marcador 1 sobre dicha superficie y el marcador 2 sobre la cabeza \n3. Medida horizontal: \n3.1. Recortar el marcador 1 sobre la superficie \n3.2. Recortar el diametro de la cabeza \n4. Medida vertical: \n4.1. Recortar el marcador 1 sobre la superficie \n4.2. Recortar el marcador 2 sobre la cabeza", imageName: "cabeza3")
+                   createAlert(title: "Perímetro Cabeza", message: "Para medir el perímetro de la cabeza teniendo una foto necesitará dos marcadores (objeto de medidas conocidas) como se ve en la imagen, deberá: \n1. Seleccionar los marcadores a usar \n2. Seleccionar una foto que contenga la cabeza del usuario apoyada sobre una superficie plana con el marcador 1 sobre dicha superficie y el marcador 2 sobre la cabeza \n3. Medida horizontal: \n3.1. Recortar el marcador 1 sobre la superficie \n3.2. Recortar el diámetro de la cabeza \n4. Medida vertical: \n4.1. Recortar el marcador 1 sobre la superficie \n4.2. Recortar el marcador 2 sobre la cabeza", imageName: "cabeza3")
                 }
             }
             
@@ -184,6 +184,13 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
         alert.addAction(UIAlertAction(title: "No mostrar otra vez", style: .default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
             self.notShow = 1
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    func createAlert2(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Entiendo", style: .default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
         }))
         self.present(alert, animated: true, completion: nil)
     }
@@ -345,14 +352,14 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
         let actionSheet = UIAlertController(title: nil,
                                             message: nil,
                                             preferredStyle: .actionSheet)
-        actionSheet.addAction(UIAlertAction(title: "Camara de fotos", style: .default) { (action) in
+        actionSheet.addAction(UIAlertAction(title: "Cámara de fotos", style: .default) { (action) in
             // Abrir camara
             self.pickerView.sourceType = UIImagePickerController.SourceType.camera
             self.present(self.pickerView, animated: true, completion: nil)
             self.check5.isHidden = false
         })
         
-        actionSheet.addAction(UIAlertAction(title: "Librería de imagenes", style: .default) { (action) in
+        actionSheet.addAction(UIAlertAction(title: "Librería de imágenes", style: .default) { (action) in
             // Abrir librería
             self.pickerView.sourceType = UIImagePickerController.SourceType.photoLibrary
             self.present(self.pickerView, animated: true, completion: nil)
@@ -365,17 +372,26 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
     
     @IBAction func medidaHorizontal(_ sender: UIButton) {
         // Si la medida es horizontal
-        self.medida = 1
-        self.performSegue(withIdentifier: "showMedida", sender: self)
-        self.check3.isHidden = false
+        if image != nil {
+            self.medida = 1
+            self.performSegue(withIdentifier: "showMedida", sender: self)
+            self.check3.isHidden = false
+        } else {
+            createAlert2(title: "Error", message: "Debe seleccionar una imagen antes de acceder a esta función")
+        }
+        
     }
     
     @IBAction func medidaVertical(_ sender: UIButton) {
         // Si la medida es vertical
-        self.medida = 2
-        self.performSegue(withIdentifier: "showMedida", sender: self)
-        notShow = 1
-        self.check4.isHidden = false
+        if image != nil {
+            self.medida = 2
+            self.performSegue(withIdentifier: "showMedida", sender: self)
+            notShow = 1
+            self.check4.isHidden = false
+        } else {
+            createAlert2(title: "Error", message: "Debe seleccionar una imagen antes de acceder a esta función")
+        }
     }
     
     func perElipse(mmX: Float,mmY: Float,mmZ: Float) {
@@ -424,9 +440,9 @@ class SeleccionarMedidaViewController: UIViewController, UIImagePickerController
             // Estatura
             createAlert(title: "Medir estatura", message: "Para medir la estatura del usuario teniendo una foto necesita un marcador (objeto de medidas conocidas) como se ve en la imagen, deberá: \n1. Seleccionar el marcador a usar \n2. Seleccionar una foto que contenga al usuario y el marcador seleccionado \n3. Recortar el marcador en la foto \n4. Recortar al usuario en la foto", imageName: "Kid")
         } else if tipoMedida == 2 {
-            createAlert(title: "Perímetro Brazo", message: "Para medir el perímetro del brazo teniendo una foto necesitará dos marcadores (objeto de medidas conocidas) como se ve en la imagen, deberá: \n1. Seleccionar los marcadores a usar \n2. Seleccionar una foto que contenga el brazo no dominante del usuario apoyado sobre una superficie plana con el marcador 1 sobre dicha superficie y el marcador 2 sobre el brazo \n3. Medida horizontal: \n3.1. Recortar el marcador 1 sobre la superficie \n3.2. Recortar el diametro aproximadamente en la mitad del brazo  \n4. Medida vertical: \n4.1. Recortar el marcador 1 sobre la superficie \n4.2. Recortar el marcador 2 sobre el brazo", imageName: "brazo2")
+            createAlert(title: "Perímetro Brazo", message: "Para medir el perímetro del brazo teniendo una foto necesitará dos marcadores (objeto de medidas conocidas) como se ve en la imagen, deberá: \n1. Seleccionar los marcadores a usar \n2. Seleccionar una foto que contenga el brazo no dominante del usuario apoyado sobre una superficie plana con el marcador 1 sobre dicha superficie y el marcador 2 sobre el brazo \n3. Medida horizontal: \n3.1. Recortar el marcador 1 sobre la superficie \n3.2. Recortar el diámetro aproximadamente en la mitad del brazo  \n4. Medida vertical: \n4.1. Recortar el marcador 1 sobre la superficie \n4.2. Recortar el marcador 2 sobre el brazo", imageName: "brazo2")
         } else if tipoMedida == 3 {
-            createAlert(title: "Perímetro Cabeza", message: "Para medir el perímetro de la cabeza teniendo una foto necesitará dos marcadores (objeto de medidas conocidas) como se ve en la imagen, deberá: \n1. Seleccionar los marcadores a usar \n2. Seleccionar una foto que contenga la cabeza del usuario apoyada sobre una superficie plana con el marcador 1 sobre dicha superficie y el marcador 2 sobre la cabeza \n3. Medida horizontal: \n3.1. Recortar el marcador 1 sobre la superficie \n3.2. Recortar el diametro de la cabeza \n4. Medida vertical: \n4.1. Recortar el marcador 1 sobre la superficie \n4.2. Recortar el marcador 2 sobre la cabeza", imageName: "cabeza3")
+            createAlert(title: "Perímetro Cabeza", message: "Para medir el perímetro de la cabeza teniendo una foto necesitará dos marcadores (objeto de medidas conocidas) como se ve en la imagen, deberá: \n1. Seleccionar los marcadores a usar \n2. Seleccionar una foto que contenga la cabeza del usuario apoyada sobre una superficie plana con el marcador 1 sobre dicha superficie y el marcador 2 sobre la cabeza \n3. Medida horizontal: \n3.1. Recortar el marcador 1 sobre la superficie \n3.2. Recortar el diámetro de la cabeza \n4. Medida vertical: \n4.1. Recortar el marcador 1 sobre la superficie \n4.2. Recortar el marcador 2 sobre la cabeza", imageName: "cabeza3")
         }
     }
     

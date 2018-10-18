@@ -475,7 +475,7 @@
                                                             <constraint firstAttribute="height" constant="30" id="z1s-UW-GTQ"/>
                                                         </constraints>
                                                     </stackView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Perimetro cefálico (cm)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n5F-al-Avl">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Perímetro cefálico (cm)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n5F-al-Avl">
                                                         <rect key="frame" x="0.0" y="66.5" width="188.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -509,7 +509,7 @@
                                                             <constraint firstItem="w1w-tV-xCQ" firstAttribute="width" secondItem="KC5-b7-wBl" secondAttribute="width" multiplier="2.15" id="ioA-eh-z5s"/>
                                                         </constraints>
                                                     </stackView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Perimetro braquial (cm)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nlq-UF-cz3">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Perímetro braquial (cm)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nlq-UF-cz3">
                                                         <rect key="frame" x="0.0" y="133" width="190.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -631,7 +631,7 @@
             </objects>
             <point key="canvasLocation" x="3900" y="-206"/>
         </scene>
-        <!--Resutlados-->
+        <!--Resultados-->
         <scene sceneID="PTz-Y5-pfu">
             <objects>
                 <viewController id="ufc-j7-RM6" customClass="ResultadosViewController" customModule="NutriKids" customModuleProvider="target" sceneMemberID="viewController">
@@ -728,7 +728,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ITp-cB-vGY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Resutlados" id="LrL-un-Gmz">
+                    <navigationItem key="navigationItem" title="Resultados" id="LrL-un-Gmz">
                         <rightBarButtonItems>
                             <barButtonItem title="Salir" id="Pdh-0K-Lpg">
                                 <connections>
@@ -1137,7 +1137,7 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click aqui para recortar el objeto a medir" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wlQ-tA-IZL">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Click aquí para recortar el objeto a medir" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wlQ-tA-IZL">
                                 <rect key="frame" x="16" y="363" width="343" height="216"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1423,7 +1423,7 @@
                                                             <constraint firstAttribute="height" constant="30" id="Qm2-8T-43g"/>
                                                         </constraints>
                                                     </stackView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Perimetro cefálico (cm)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbB-iv-AK8">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Perímetro cefálico (cm)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lbB-iv-AK8">
                                                         <rect key="frame" x="0.0" y="66.5" width="188.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1457,7 +1457,7 @@
                                                             <constraint firstItem="GEc-45-oz2" firstAttribute="width" secondItem="qZv-dV-Og5" secondAttribute="width" multiplier="2.15" id="l1T-fl-UDs"/>
                                                         </constraints>
                                                     </stackView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Perimetro braquial (cm)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OdH-nS-n6N">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Perímetro braquial (cm)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OdH-nS-n6N">
                                                         <rect key="frame" x="0.0" y="133" width="190.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1599,7 +1599,7 @@
         <image name="group-happy-jumping-children-isolated-white-background-stock-vector-cartoon-illustration-54481498" width="800" height="496"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0Ev-5q-2sB"/>
-        <segue reference="SUb-aT-Si2"/>
+        <segue reference="rdS-a0-nm7"/>
+        <segue reference="U1n-1y-C1X"/>
     </inferredMetricsTieBreakers>
 </document>
